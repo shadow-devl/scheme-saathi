@@ -128,29 +128,46 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
 }
 
+const DUMMY_SCHEMES = [
+  { scheme_id: 'SCH_01', name: 'Micro-Finance Startup Fund', category: 'MICRO_FINANCE', max_loan_percentage: 80, annual_interest_rate: 4.5, moratorium_months: 6 },
+  { scheme_id: 'SCH_02', name: 'Agriculture Tech Grant', category: 'AGRICULTURE', max_loan_percentage: 90, annual_interest_rate: 3.0, moratorium_months: 12 },
+  { scheme_id: 'SCH_03', name: 'Education Sector Loan', category: 'EDUCATION', max_loan_percentage: 75, annual_interest_rate: 5.0, moratorium_months: 6 },
+  { scheme_id: 'SCH_04', name: 'General Term Loan', category: 'TERM_LOAN', max_loan_percentage: 70, annual_interest_rate: 7.0, moratorium_months: 3 }
+];
+
+const DUMMY_PARTNERS = [
+  { partner_id: 'P_01', partner_name: 'State Bank of India', latitude: 31.25, longitude: 75.70, allocated_budget: 5000000, disbursed_budget: 1000000, is_active: 1, npa_percentage: 2.5 },
+  { partner_id: 'P_02', partner_name: 'HDFC Microfinance', latitude: 31.30, longitude: 75.75, allocated_budget: 2000000, disbursed_budget: 1500000, is_active: 1, npa_percentage: 4.0 },
+  { partner_id: 'P_03', partner_name: 'Punjab National Bank', latitude: 31.20, longitude: 75.65, allocated_budget: 8000000, disbursed_budget: 2000000, is_active: 1, npa_percentage: 1.5 }
+];
+
 app.post('/api/match', async (req, res) => {
-  const { category, annual_family_income, project_type, estimated_cost, age, gender, education, business_sector } = req.body;
-  
-  const schemes = await prisma.scheme.findMany();
-  let recommendedScheme = null;
-  
-  if (project_type.toLowerCase() === 'education') {
-    recommendedScheme = schemes.find(s => s.category === 'EDUCATION');
-  } else if (project_type.toLowerCase() === 'agriculture') {
-    recommendedScheme = schemes.find(s => s.category === 'AGRICULTURE') || schemes.find(s => s.category === 'TERM_LOAN');
-  } else {
-    if (estimated_cost <= 200000) {
-      recommendedScheme = schemes.find(s => s.category === 'MICRO_FINANCE');
+  try {
+    const { category, annual_family_income, project_type, estimated_cost, age, gender, education, business_sector } = req.body;
+    
+    let recommendedScheme = null;
+    
+    if (project_type && project_type.toLowerCase() === 'education') {
+      recommendedScheme = DUMMY_SCHEMES.find(s => s.category === 'EDUCATION');
+    } else if (project_type && project_type.toLowerCase() === 'agriculture') {
+      recommendedScheme = DUMMY_SCHEMES.find(s => s.category === 'AGRICULTURE') || DUMMY_SCHEMES.find(s => s.category === 'TERM_LOAN');
     } else {
-      recommendedScheme = schemes.find(s => s.category === 'TERM_LOAN');
+      if (estimated_cost <= 200000) {
+        recommendedScheme = DUMMY_SCHEMES.find(s => s.category === 'MICRO_FINANCE');
+      } else {
+        recommendedScheme = DUMMY_SCHEMES.find(s => s.category === 'TERM_LOAN');
+      }
     }
-  }
 
-  if (!recommendedScheme && schemes.length > 0) {
-    recommendedScheme = schemes[0];
-  }
+    if (!recommendedScheme && DUMMY_SCHEMES.length > 0) {
+      recommendedScheme = DUMMY_SCHEMES[0];
+    }
 
-  res.json({ scheme: recommendedScheme });
+    res.json({ scheme: recommendedScheme });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
 });
 
 app.post('/api/calculate-emi', (req, res) => {
@@ -163,14 +180,18 @@ app.post('/api/calculate-emi', (req, res) => {
 });
 
 app.post('/api/nearest-partners', async (req, res) => {
-  const { latitude, longitude, required_loan_amount } = req.body;
-  const partners = await prisma.partner.findMany();
-  const eligiblePartners = partners
-    .map(p => ({ ...p, distance: getDistanceFromLatLonInKm(latitude, longitude, p.latitude, p.longitude), remaining_budget: p.allocated_budget - p.disbursed_budget }))
-    .filter(p => p.is_active === 1 && p.npa_percentage <= 10.0 && p.remaining_budget >= (required_loan_amount || 0))
-    .sort((a, b) => a.distance - b.distance);
+  try {
+    const { latitude, longitude, required_loan_amount } = req.body;
+    const eligiblePartners = DUMMY_PARTNERS
+      .map(p => ({ ...p, distance: getDistanceFromLatLonInKm(latitude, longitude, p.latitude, p.longitude), remaining_budget: p.allocated_budget - p.disbursed_budget }))
+      .filter(p => p.is_active === 1 && p.npa_percentage <= 10.0 && p.remaining_budget >= (required_loan_amount || 0))
+      .sort((a, b) => a.distance - b.distance);
 
-  res.json({ partners: eligiblePartners });
+    res.json({ partners: eligiblePartners });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
 });
 
 // ----------------------------------------
