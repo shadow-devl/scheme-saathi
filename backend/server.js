@@ -172,11 +172,22 @@ app.post('/api/match', async (req, res) => {
 
 app.post('/api/calculate-emi', (req, res) => {
   const { principal, annual_interest_rate, tenure_months, moratorium_months } = req.body;
-  const repay_months = tenure_months - (moratorium_months || 0);
-  const monthly_rate = (annual_interest_rate / 100) / 12;
-  const emi = monthly_rate === 0 ? principal / repay_months : principal * monthly_rate * Math.pow(1 + monthly_rate, repay_months) / (Math.pow(1 + monthly_rate, repay_months) - 1);
+  const safe_principal = Number(principal) || 0;
+  const safe_rate = Number(annual_interest_rate) || 0;
+  const safe_tenure = Number(tenure_months) || 12;
+  const safe_moratorium = Number(moratorium_months) || 0;
+  
+  const repay_months = Math.max(safe_tenure - safe_moratorium, 1);
+  const monthly_rate = (safe_rate / 100) / 12;
+  
+  let emi = 0;
+  if (monthly_rate === 0) {
+    emi = safe_principal / repay_months;
+  } else {
+    emi = safe_principal * monthly_rate * Math.pow(1 + monthly_rate, repay_months) / (Math.pow(1 + monthly_rate, repay_months) - 1);
+  }
 
-  res.json({ emi: Math.round(emi * 100) / 100, moratorium_months });
+  res.json({ emi: Math.round(emi * 100) / 100 || 0, moratorium_months: safe_moratorium });
 });
 
 app.post('/api/nearest-partners', async (req, res) => {
