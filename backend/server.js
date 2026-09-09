@@ -211,19 +211,22 @@ app.post('/api/nearest-partners', async (req, res) => {
 
 app.post('/api/applications', authenticate, requireRole('APPLICANT'), async (req, res) => {
   try {
-    const { partner_id, scheme_id, amount } = req.body;
-    res.json({ 
-      success: true, 
-      application: {
+    const { partner_id, scheme_id, amount, estimated_cost } = req.body;
+    const loanAmount = parseFloat(amount) || parseFloat(estimated_cost) || 0;
+    
+    const newApp = await prisma.application.create({
+      data: {
         application_id: 'APP_' + Date.now(),
         user_id: req.user.id,
-        partner_id,
-        scheme_id,
+        partner_id: partner_id || 'UNKNOWN',
+        scheme_id: scheme_id || 'UNKNOWN',
         status: 'PENDING',
-        amount: parseFloat(amount) || 0,
+        amount: loanAmount,
         created_at: new Date().toISOString()
       }
     });
+    
+    res.json({ success: true, application: newApp });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error' });
@@ -231,27 +234,64 @@ app.post('/api/applications', authenticate, requireRole('APPLICANT'), async (req
 });
 
 app.get('/api/applications/me', authenticate, requireRole('APPLICANT'), async (req, res) => {
-  res.json([]);
+  try {
+    const apps = await prisma.application.findMany({
+      where: { user_id: req.user.id },
+      orderBy: { created_at: 'desc' }
+    });
+    
+    // Map amount to estimated_cost for frontend
+    const mapped = apps.map(a => ({ ...a, estimated_cost: a.amount }));
+    res.json(mapped);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
 });
 
 app.get('/api/partner/applications', authenticate, requireRole('PARTNER'), async (req, res) => {
-  res.json([
-    { application_id: 'APP_1001', user_id: 'user_1', partner_id: req.user.partner_id, scheme_id: 'SCH_01', status: 'PENDING', amount: 500000, created_at: new Date().toISOString() },
-    { application_id: 'APP_1002', user_id: 'user_2', partner_id: req.user.partner_id, scheme_id: 'SCH_02', status: 'APPROVED', amount: 1200000, created_at: new Date().toISOString() }
-  ]);
+  try {
+    const partnerId = req.user.partner_id || 'SCA_01'; // Fallback for testing
+    const apps = await prisma.application.findMany({
+      where: { partner_id: partnerId },
+      orderBy: { created_at: 'desc' }
+    });
+    const mapped = apps.map(a => ({ ...a, estimated_cost: a.amount }));
+    res.json(mapped);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
 });
 
 app.patch('/api/partner/applications/:id', authenticate, requireRole('PARTNER'), async (req, res) => {
-  res.json({ success: true });
+  try {
+    const { status } = req.body;
+    await prisma.application.update({
+      where: { application_id: req.params.id },
+      data: { status }
+    });
+    res.json({ success: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
 });
 
 app.get('/api/admin/analytics', authenticate, requireRole('ADMIN'), async (req, res) => {
   try {
+    const apps = await prisma.application.findMany();
+    
+    let totalApplications = apps.length;
+    let approvedApplications = apps.filter(a => a.status === 'APPROVED' || a.status === 'DISBURSED').length;
+    let pendingApplications = apps.filter(a => a.status === 'PENDING').length;
+    let totalDisbursed = apps.filter(a => a.status === 'DISBURSED' || a.status === 'APPROVED').reduce((sum, a) => sum + (a.amount || 0), 0);
+    
     const stats = {
-      totalApplications: 1240,
-      approvedApplications: 850,
-      pendingApplications: 290,
-      totalDisbursed: 14500000,
+      totalApplications,
+      approvedApplications,
+      pendingApplications,
+      totalDisbursed,
       totalAllocated: 50000000,
       partnerNpas: DUMMY_PARTNERS.map(p => ({ name: p.partner_name, npa: p.npa_percentage }))
     };
