@@ -12,10 +12,15 @@ async function main() {
     return;
   }
 
-  console.log("Seeding database from db.json...");
-  const dbJsonPath = path.join(__dirname, 'db.json');
-  const dbDataRaw = await fs.readFile(dbJsonPath, 'utf8');
-  const dbData = JSON.parse(dbDataRaw);
+  let dbData = { schemes: [], partners: [] };
+  try {
+    console.log("Seeding database from db.json...");
+    const dbJsonPath = path.join(__dirname, 'db.json');
+    const dbDataRaw = await fs.readFile(dbJsonPath, 'utf8');
+    dbData = JSON.parse(dbDataRaw);
+  } catch (e) {
+    console.log("db.json not found, skipping legacy scheme/partner seeding.");
+  }
 
   const salt = await bcrypt.genSalt(10);
 

@@ -3,6 +3,9 @@
 ![Avenik Platform](https://img.shields.io/badge/Status-In%20Development-emerald.svg)
 ![Tech Stack](https://img.shields.io/badge/Stack-React%20%7C%20Node.js%20%7C%20Prisma-blue.svg)
 
+### 🌐 Live Platform: [https://shadow-devl.github.io/avenik-entrepreneur-os](https://shadow-devl.github.io/avenik-entrepreneur-os)
+
+
 **Avenik** is a comprehensive, all-in-one entrepreneurial ecosystem designed to guide founders through every stage of their business journey: from ideation and validation to business creation, funding, operations, and growth.
 
 Rather than a loose collection of tools, Avenik acts as a cohesive "Business Graph," providing a unified experience with shared identity, authorization, and trust across all its modules.

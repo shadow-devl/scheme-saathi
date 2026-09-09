@@ -51,7 +51,7 @@ export default function Chatbot() {
           <div className="bg-emerald-600/90 backdrop-blur-md text-white p-4 flex justify-between items-center shadow-lg border-b border-emerald-500/50">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg overflow-hidden shadow-inner border border-emerald-400/30">
-                <img src="/logo.jpg" alt="Avenik Core AI" className="w-full h-full object-cover" />
+                <img src="./logo.jpg" alt="Avenik Core AI" className="w-full h-full object-cover" />
               </div>
               <div>
                 <h3 className="font-bold text-sm leading-none">Avenik Core AI</h3>

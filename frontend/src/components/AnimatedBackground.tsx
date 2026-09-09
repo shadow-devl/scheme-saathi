@@ -10,16 +10,16 @@ export default function AnimatedBackground() {
 
       {/* Floating Logos / Geometric Shapes */}
       <div className="absolute top-[15%] left-[10%] opacity-20 animate-float-slow mix-blend-screen">
-        <img src="/logo.jpg" className="w-32 h-32 rounded-3xl blur-[1px] brightness-125" alt="Background Logo" />
+        <img src="./logo.jpg" className="w-32 h-32 rounded-3xl blur-[1px] brightness-125" alt="Background Logo" />
       </div>
       <div className="absolute top-[60%] right-[15%] opacity-15 animate-float-medium mix-blend-screen">
-         <img src="/logo.jpg" className="w-48 h-48 rounded-[2.5rem] blur-[2px] brightness-125" alt="Background Logo" />
+         <img src="./logo.jpg" className="w-48 h-48 rounded-[2.5rem] blur-[2px] brightness-125" alt="Background Logo" />
       </div>
       <div className="absolute bottom-[20%] left-[25%] opacity-20 animate-float-fast mix-blend-screen">
-         <img src="/logo.jpg" className="w-24 h-24 rounded-2xl brightness-150" alt="Background Logo" />
+         <img src="./logo.jpg" className="w-24 h-24 rounded-2xl brightness-150" alt="Background Logo" />
       </div>
       <div className="absolute top-[30%] right-[30%] opacity-10 animate-float-slow mix-blend-screen">
-         <img src="/logo.jpg" className="w-64 h-64 rounded-full blur-[4px] brightness-110" alt="Background Logo" />
+         <img src="./logo.jpg" className="w-64 h-64 rounded-full blur-[4px] brightness-110" alt="Background Logo" />
       </div>
       
       {/* Abstract blurred orbs */}
