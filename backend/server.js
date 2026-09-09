@@ -11,6 +11,15 @@ app.use(express.json());
 const prisma = new PrismaClient();
 const JWT_SECRET = 'super_secret_suraj_key_2026';
 
+// Health check endpoint for the root URL
+app.get('/', (req, res) => {
+  res.json({
+    status: 'success',
+    message: 'Avenik Entrepreneur OS Backend API is running successfully!',
+    version: '1.0.0'
+  });
+});
+
 // Middleware for JWT Authentication
 const authenticate = async (req, res, next) => {
   const authHeader = req.headers.authorization;
