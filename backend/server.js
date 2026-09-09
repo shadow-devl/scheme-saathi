@@ -129,10 +129,10 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
 }
 
 const DUMMY_SCHEMES = [
-  { scheme_id: 'SCH_01', name: 'Micro-Finance Startup Fund', category: 'MICRO_FINANCE', max_loan_percentage: 80, annual_interest_rate: 4.5, moratorium_months: 6 },
-  { scheme_id: 'SCH_02', name: 'Agriculture Tech Grant', category: 'AGRICULTURE', max_loan_percentage: 90, annual_interest_rate: 3.0, moratorium_months: 12 },
-  { scheme_id: 'SCH_03', name: 'Education Sector Loan', category: 'EDUCATION', max_loan_percentage: 75, annual_interest_rate: 5.0, moratorium_months: 6 },
-  { scheme_id: 'SCH_04', name: 'General Term Loan', category: 'TERM_LOAN', max_loan_percentage: 70, annual_interest_rate: 7.0, moratorium_months: 3 }
+  { scheme_id: 'SCH_01', scheme_name: 'Micro-Finance Startup Fund', category: 'MICRO_FINANCE', corporation_code: 'NSFDC', max_loan_percentage: 80, interest_rate_beneficiary: 4.5, max_repayment_months: 60, max_moratorium_months: 6 },
+  { scheme_id: 'SCH_02', scheme_name: 'Agriculture Tech Grant', category: 'AGRICULTURE', corporation_code: 'NSKFDC', max_loan_percentage: 90, interest_rate_beneficiary: 3.0, max_repayment_months: 84, max_moratorium_months: 12 },
+  { scheme_id: 'SCH_03', scheme_name: 'Education Sector Loan', category: 'EDUCATION', corporation_code: 'NBCFDC', max_loan_percentage: 75, interest_rate_beneficiary: 5.0, max_repayment_months: 48, max_moratorium_months: 6 },
+  { scheme_id: 'SCH_04', scheme_name: 'General Term Loan', category: 'TERM_LOAN', corporation_code: 'NSFDC', max_loan_percentage: 70, interest_rate_beneficiary: 7.0, max_repayment_months: 36, max_moratorium_months: 3 }
 ];
 
 const DUMMY_PARTNERS = [
