@@ -11,6 +11,6 @@ services:
           name: avenik-db
           property: connectionString
 
-  - type: psql
-    name: avenik-db
+databases:
+  - name: avenik-db
     plan: free
