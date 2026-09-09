@@ -1,0 +1,386 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String         @id @default(uuid())
+  email          String         @unique
+  password       String
+  name           String
+  avatar         String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  
+  // Roles assigned to this user
+  roles          UserRole[]
+  // Active sessions
+  sessions       Session[]
+  // Audit logs triggered by this user
+  auditLogs      AuditLog[]
+
+  // Business associations (as founder, member, etc.)
+  businessMembers BusinessMember[]
+  
+  // Org associations (e.g., investor, incubator)
+  orgMembers      OrganizationMember[]
+}
+
+model Role {
+  id          String     @id @default(uuid())
+  name        String     @unique // e.g., "Founder", "Investor", "Mentor", "Admin"
+  description String?
+  createdAt   DateTime   @default(now())
+  users       UserRole[]
+}
+
+model UserRole {
+  userId String
+  roleId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role   Role   @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@id([userId, roleId])
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Business {
+  id          String           @id @default(uuid())
+  name        String
+  description String?
+  website     String?
+  stage       String?          // e.g., "Idea", "MVP", "Seed", "Series A"
+  sector      String?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  
+  members     BusinessMember[]
+  
+  // Funding rounds
+  funding     FundingRound[]
+  
+  // Verified badges (Trust Engine)
+  verifications Verification[]
+
+  // Phase 2 Extensions
+  customers    Customer[]
+  leads        Lead[]
+  pipelines    Pipeline[]
+  deals        Deal[]
+  projects     Project[]
+  invoices     Invoice[]
+  transactions Transaction[]
+  products     Product[]
+  orders       Order[]
+  workflows    AIWorkflow[]
+  agents       AIAgent[]
+}
+
+model BusinessMember {
+  userId     String
+  businessId String
+  roleInBiz  String   // e.g., "CEO", "CTO", "Employee"
+  isOwner    Boolean  @default(false)
+  
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  @@id([userId, businessId])
+}
+
+model Organization {
+  id          String               @id @default(uuid())
+  name        String
+  type        String               // e.g., "VC", "Incubator", "Corporate"
+  description String?
+  website     String?
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
+  
+  members     OrganizationMember[]
+}
+
+model OrganizationMember {
+  userId         String
+  organizationId String
+  title          String? // e.g., "Managing Partner"
+  
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@id([userId, organizationId])
+}
+
+// Funding & Investment Tracking
+model FundingRound {
+  id           String   @id @default(uuid())
+  businessId   String
+  roundType    String   // "Pre-seed", "Seed", etc.
+  amountRaised Float
+  date         DateTime
+  
+  business     Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+}
+
+// Trust & Verification Engine
+model Verification {
+  id           String   @id @default(uuid())
+  businessId   String
+  type         String   // "Identity", "Financials", "Legal"
+  status       String   // "Pending", "Verified", "Rejected"
+  verifiedAt   DateTime?
+  
+  business     Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+}
+
+// Audit Logs (Data Provenance)
+model AuditLog {
+  id        String   @id @default(uuid())
+  userId    String
+  action    String
+  entity    String
+  entityId  String
+  timestamp DateTime @default(now())
+  
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// ----------------------------------------
+// LEGACY MODELS (V1 Prototypes)
+// ----------------------------------------
+model Scheme {
+  scheme_id                 String  @id
+  corporation_code          String
+  scheme_name               String
+  category                  String
+  min_project_cost          Float
+  max_project_cost          Float
+  max_loan_percentage       Float
+  interest_rate_beneficiary Float
+  max_repayment_months      Int
+  max_moratorium_months     Int
+  income_ceiling            Float
+}
+
+model Partner {
+  partner_id       String  @id
+  partner_name     String
+  partner_type     String
+  latitude         Float
+  longitude        Float
+  allocated_budget Float
+  disbursed_budget Float
+  npa_percentage   Float
+  is_active        Int
+}
+
+model Application {
+  application_id String  @id
+  user_id        String
+  partner_id     String
+  scheme_id      String
+  status         String
+  amount         Float?
+  created_at     String
+}
+
+// ----------------------------------------
+// PHASE 2 MODELS (Entrepreneur Platform)
+// ----------------------------------------
+
+// --- CRM & Sales ---
+model Customer {
+  id         String   @id @default(uuid())
+  businessId String
+  name       String
+  email      String?
+  phone      String?
+  status     String   @default("Active") // Active, Inactive
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  deals      Deal[]
+}
+
+model Lead {
+  id         String   @id @default(uuid())
+  businessId String
+  name       String
+  email      String?
+  source     String?
+  score      Int      @default(0)
+  status     String   @default("New") // New, Contacted, Qualified, Lost
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+}
+
+model Pipeline {
+  id         String   @id @default(uuid())
+  businessId String
+  name       String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  deals      Deal[]
+}
+
+model Deal {
+  id         String   @id @default(uuid())
+  pipelineId String
+  customerId String?
+  businessId String
+  name       String
+  amount     Float
+  stage      String   // Prospecting, Negotiation, Won, Lost
+  probability Int     @default(50)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  pipeline   Pipeline @relation(fields: [pipelineId], references: [id], onDelete: Cascade)
+  customer   Customer? @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+}
+
+// --- Project Management ---
+model Project {
+  id         String   @id @default(uuid())
+  businessId String
+  name       String
+  description String?
+  status     String   @default("Planning") // Planning, Active, Completed, On Hold
+  startDate  DateTime?
+  endDate    DateTime?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  tasks      Task[]
+  milestones Milestone[]
+}
+
+model Task {
+  id          String   @id @default(uuid())
+  projectId   String
+  assigneeId  String?
+  title       String
+  description String?
+  status      String   @default("To Do") // To Do, In Progress, Review, Done
+  priority    String   @default("Medium") // Low, Medium, High, Urgent
+  dueDate     DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model Milestone {
+  id          String   @id @default(uuid())
+  projectId   String
+  title       String
+  date        DateTime
+  isCompleted Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+// --- Finance & Invoicing ---
+model Invoice {
+  id         String   @id @default(uuid())
+  businessId String
+  customerId String?
+  number     String   // e.g., INV-001
+  amount     Float
+  status     String   @default("Draft") // Draft, Sent, Paid, Overdue
+  issueDate  DateTime @default(now())
+  dueDate    DateTime?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+}
+
+model Transaction {
+  id         String   @id @default(uuid())
+  businessId String
+  type       String   // Income, Expense
+  amount     Float
+  category   String
+  date       DateTime @default(now())
+  description String?
+  createdAt  DateTime @default(now())
+
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+}
+
+// --- E-commerce ---
+model Product {
+  id          String   @id @default(uuid())
+  businessId  String
+  name        String
+  description String?
+  price       Float
+  sku         String?
+  stock       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  business    Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+}
+
+model Order {
+  id          String   @id @default(uuid())
+  businessId  String
+  customerId  String?
+  totalAmount Float
+  status      String   @default("Pending") // Pending, Processing, Shipped, Delivered, Cancelled
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  business    Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+}
+
+// --- AI & Automation ---
+model AIWorkflow {
+  id          String   @id @default(uuid())
+  businessId  String
+  name        String
+  trigger     String   // e.g., "New Lead"
+  action      String   // e.g., "Send Email"
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  business    Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+}
+
+model AIAgent {
+  id          String   @id @default(uuid())
+  businessId  String
+  name        String
+  purpose     String   // e.g., "Sales Support"
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  business    Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+}

@@ -1,0 +1,9 @@
+{
+  "name": "avenik-core",
+  "version": "1.0.0",
+  "description": "Root package to redirect commands",
+  "scripts": {
+    "dev": "cd frontend && npm run dev",
+    "start-backend": "cd backend && node server.js"
+  }
+}

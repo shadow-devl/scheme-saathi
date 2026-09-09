@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #0B0E14;
+    color: #F3F4F6;
+    overflow-x: hidden;
+  }
+
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+      monospace;
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    background: rgba(20, 25, 40, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  }
+
+  .glass-panel-light {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-input {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+  }
+  
+  .glass-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+  }
+}
+
+@keyframes float-slow {
+  0% { transform: translate(0px, 0px) rotate(0deg); }
+  33% { transform: translate(50px, -50px) rotate(15deg); }
+  66% { transform: translate(-30px, 30px) rotate(-5deg); }
+  100% { transform: translate(0px, 0px) rotate(0deg); }
+}
+
+@keyframes float-medium {
+  0% { transform: translate(0px, 0px) rotate(0deg) scale(1); }
+  33% { transform: translate(-40px, -60px) rotate(-15deg) scale(1.1); }
+  66% { transform: translate(40px, 20px) rotate(10deg) scale(0.9); }
+  100% { transform: translate(0px, 0px) rotate(0deg) scale(1); }
+}
+
+@keyframes float-fast {
+  0% { transform: translate(0px, 0px) rotate(0deg); }
+  33% { transform: translate(30px, 40px) rotate(25deg); }
+  66% { transform: translate(-40px, -20px) rotate(-15deg); }
+  100% { transform: translate(0px, 0px) rotate(0deg); }
+}
+
+.animate-float-slow {
+  animation: float-slow 20s ease-in-out infinite;
+}
+.animate-float-medium {
+  animation: float-medium 15s ease-in-out infinite;
+}
+.animate-float-fast {
+  animation: float-fast 10s ease-in-out infinite;
+}
