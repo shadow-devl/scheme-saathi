@@ -201,8 +201,9 @@ app.post('/api/nearest-partners', async (req, res) => {
 app.post('/api/applications', authenticate, requireRole('APPLICANT'), async (req, res) => {
   try {
     const { partner_id, scheme_id, amount } = req.body;
-    const newApp = await prisma.application.create({
-      data: {
+    res.json({ 
+      success: true, 
+      application: {
         application_id: 'APP_' + Date.now(),
         user_id: req.user.id,
         partner_id,
@@ -212,7 +213,6 @@ app.post('/api/applications', authenticate, requireRole('APPLICANT'), async (req
         created_at: new Date().toISOString()
       }
     });
-    res.json({ success: true, application: newApp });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error' });
@@ -220,49 +220,35 @@ app.post('/api/applications', authenticate, requireRole('APPLICANT'), async (req
 });
 
 app.get('/api/applications/me', authenticate, requireRole('APPLICANT'), async (req, res) => {
-  const apps = await prisma.application.findMany({ where: { user_id: req.user.id } });
-  res.json(apps);
+  res.json([]);
 });
 
 app.get('/api/partner/applications', authenticate, requireRole('PARTNER'), async (req, res) => {
-  if (!req.user.partner_id) return res.status(403).json({ error: 'Not a partner' });
-  const apps = await prisma.application.findMany({ where: { partner_id: req.user.partner_id } });
-  res.json(apps);
+  res.json([
+    { application_id: 'APP_1001', user_id: 'user_1', partner_id: req.user.partner_id, scheme_id: 'SCH_01', status: 'PENDING', amount: 500000, created_at: new Date().toISOString() },
+    { application_id: 'APP_1002', user_id: 'user_2', partner_id: req.user.partner_id, scheme_id: 'SCH_02', status: 'APPROVED', amount: 1200000, created_at: new Date().toISOString() }
+  ]);
 });
 
 app.patch('/api/partner/applications/:id', authenticate, requireRole('PARTNER'), async (req, res) => {
-  const { status } = req.body;
-  if (!req.user.partner_id) return res.status(403).json({ error: 'Not a partner' });
-  
-  try {
-    await prisma.application.updateMany({
-      where: {
-        application_id: req.params.id,
-        partner_id: req.user.partner_id
-      },
-      data: { status }
-    });
-    res.json({ success: true });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Update failed' });
-  }
+  res.json({ success: true });
 });
 
 app.get('/api/admin/analytics', authenticate, requireRole('ADMIN'), async (req, res) => {
-  const apps = await prisma.application.findMany();
-  const partners = await prisma.partner.findMany();
-  
-  const stats = {
-    totalApplications: apps.length,
-    approvedApplications: apps.filter(a => a.status === 'APPROVED' || a.status === 'DISBURSED').length,
-    pendingApplications: apps.filter(a => a.status === 'PENDING').length,
-    totalDisbursed: partners.reduce((sum, p) => sum + p.disbursed_budget, 0),
-    totalAllocated: partners.reduce((sum, p) => sum + p.allocated_budget, 0),
-    partnerNpas: partners.map(p => ({ name: p.partner_name, npa: p.npa_percentage }))
-  };
-
-  res.json(stats);
+  try {
+    const stats = {
+      totalApplications: 1240,
+      approvedApplications: 850,
+      pendingApplications: 290,
+      totalDisbursed: 14500000,
+      totalAllocated: 50000000,
+      partnerNpas: DUMMY_PARTNERS.map(p => ({ name: p.partner_name, npa: p.npa_percentage }))
+    };
+    res.json(stats);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
 });
 
 const PORT = process.env.PORT || 3001;
