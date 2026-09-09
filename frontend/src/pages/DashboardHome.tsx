@@ -25,7 +25,7 @@ export default function DashboardHome() {
           <h1 className="text-2xl font-bold text-gray-100">Welcome back, {user?.name || 'Entrepreneur'}</h1>
           <p className="text-gray-400 mt-1">Here is what's happening with your business today.</p>
         </div>
-        <button className="glass-panel px-4 py-2 flex items-center gap-2 hover:bg-emerald-500/10 hover:border-emerald-500/50 transition-colors text-emerald-400 font-medium">
+        <button className="glass-panel px-4 py-2 flex items-center gap-2 hover:bg-blue-500/10 hover:border-blue-500/50 transition-colors text-blue-400 font-medium">
           New Quick Action
         </button>
       </div>
@@ -34,10 +34,10 @@ export default function DashboardHome() {
         {stats.map((stat) => (
           <div key={stat.name} className="glass-panel p-6 flex flex-col">
             <div className="flex items-center justify-between">
-              <div className="p-2 bg-emerald-500/10 rounded-lg border border-emerald-500/20">
-                <stat.icon className="h-5 w-5 text-emerald-400" />
+              <div className="p-2 bg-blue-500/10 rounded-lg border border-blue-500/20">
+                <stat.icon className="h-5 w-5 text-blue-400" />
               </div>
-              <span className="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              <span className="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20">
                 {stat.change}
                 <ArrowUpRight className="ml-1 h-3 w-3" />
               </span>
@@ -67,8 +67,8 @@ export default function DashboardHome() {
             {recentActivity.map((activity) => (
               <div key={activity.id} className="flex gap-4 relative">
                 <div className="w-px h-full bg-gray-800 absolute left-2.5 top-6"></div>
-                <div className="relative z-10 w-5 h-5 rounded-full bg-gray-900 border border-emerald-500/50 flex items-center justify-center shrink-0 mt-0.5">
-                  <div className="w-2 h-2 rounded-full bg-emerald-400"></div>
+                <div className="relative z-10 w-5 h-5 rounded-full bg-gray-900 border border-blue-500/50 flex items-center justify-center shrink-0 mt-0.5">
+                  <div className="w-2 h-2 rounded-full bg-blue-400"></div>
                 </div>
                 <div>
                   <p className="text-sm text-gray-200">{activity.text}</p>

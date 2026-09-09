@@ -58,16 +58,16 @@ export default function Results() {
         {/* Left Column: Scheme & Financials */}
         <div className="lg:col-span-2 space-y-8">
           {/* Scheme Card */}
-          <div className="glass-panel rounded-3xl shadow-[0_0_30px_rgba(34,197,94,0.15)] border border-green-500/30 overflow-hidden relative">
+          <div className="glass-panel rounded-3xl shadow-[0_0_30px_rgba(34,197,94,0.15)] border border-blue-500/30 overflow-hidden relative">
             <div className="absolute top-0 right-0 p-6 opacity-30">
-              <CheckCircle2 className="h-24 w-24 text-green-500" />
+              <CheckCircle2 className="h-24 w-24 text-blue-500" />
             </div>
             <div className="p-8 relative z-10">
-              <span className="inline-block px-3 py-1 bg-green-500/20 text-green-200 border border-green-500/30 text-xs font-semibold rounded-full mb-4 shadow-sm backdrop-blur-md">
+              <span className="inline-block px-3 py-1 bg-blue-500/20 text-blue-200 border border-blue-500/30 text-xs font-semibold rounded-full mb-4 shadow-sm backdrop-blur-md">
                 Recommended Match
               </span>
               <h2 className="text-3xl font-bold text-white mb-2 drop-shadow-md">{scheme.scheme_name}</h2>
-              <p className="text-emerald-200 mb-8 font-medium text-sm">Provided by {scheme.corporation_code}</p>
+              <p className="text-blue-200 mb-8 font-medium text-sm">Provided by {scheme.corporation_code}</p>
               
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
                 <div className="bg-white/5 p-4 rounded-xl border border-white/10 backdrop-blur-md">
@@ -76,7 +76,7 @@ export default function Results() {
                 </div>
                 <div className="bg-white/5 p-4 rounded-xl border border-white/10 backdrop-blur-md">
                   <p className="text-sm text-gray-300 mb-1">Interest Rate</p>
-                  <p className="text-2xl font-bold text-emerald-300 drop-shadow-sm">{scheme.interest_rate_beneficiary}% <span className="text-sm font-normal">p.a.</span></p>
+                  <p className="text-2xl font-bold text-blue-300 drop-shadow-sm">{scheme.interest_rate_beneficiary}% <span className="text-sm font-normal">p.a.</span></p>
                 </div>
                 <div className="bg-white/5 p-4 rounded-xl border border-white/10 backdrop-blur-md">
                   <p className="text-sm text-gray-300 mb-1">Max Tenure</p>
@@ -90,19 +90,19 @@ export default function Results() {
           {emiData && (
             <div className="glass-panel rounded-3xl shadow-lg border border-white/10 p-8">
               <div className="flex items-center gap-3 mb-6">
-                <Calculator className="h-6 w-6 text-emerald-400" />
+                <Calculator className="h-6 w-6 text-blue-400" />
                 <h3 className="text-xl font-bold text-white drop-shadow-sm">Financial Breakdown</h3>
               </div>
               <div className="bg-white/5 border border-white/10 rounded-2xl p-6 grid grid-cols-1 sm:grid-cols-2 gap-6 backdrop-blur-md">
                 <div>
                   <p className="text-sm font-medium text-gray-300">Eligible Loan Amount</p>
                   <p className="text-3xl font-bold text-white mt-1 drop-shadow-sm">₹{eligibleLoan.toLocaleString('en-IN')}</p>
-                  <p className="text-xs text-emerald-200 mt-2 font-medium">({scheme.max_loan_percentage}% of ₹{data.payload.estimated_cost.toLocaleString('en-IN')})</p>
+                  <p className="text-xs text-blue-200 mt-2 font-medium">({scheme.max_loan_percentage}% of ₹{data.payload.estimated_cost.toLocaleString('en-IN')})</p>
                 </div>
                 <div className="sm:border-l sm:border-white/10 sm:pl-6 pt-4 sm:pt-0 border-t border-white/10 sm:border-t-0">
                   <p className="text-sm font-medium text-gray-300">Estimated EMI</p>
-                  <p className="text-3xl font-bold text-emerald-400 mt-1 drop-shadow-sm">₹{emiData.emi.toLocaleString('en-IN')}<span className="text-lg text-emerald-200">/mo</span></p>
-                  <p className="text-xs text-emerald-200 mt-2 font-medium">After {emiData.moratorium_months} months moratorium</p>
+                  <p className="text-3xl font-bold text-blue-400 mt-1 drop-shadow-sm">₹{emiData.emi.toLocaleString('en-IN')}<span className="text-lg text-blue-200">/mo</span></p>
+                  <p className="text-xs text-blue-200 mt-2 font-medium">After {emiData.moratorium_months} months moratorium</p>
                 </div>
               </div>
             </div>
@@ -113,7 +113,7 @@ export default function Results() {
         <div className="lg:col-span-1">
           <div className="glass-panel rounded-3xl shadow-lg border border-white/10 p-6 h-full flex flex-col">
             <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2 drop-shadow-sm">
-              <Building className="h-6 w-6 text-emerald-400" /> Nearest Partners
+              <Building className="h-6 w-6 text-blue-400" /> Nearest Partners
             </h3>
             
             {partners.length === 0 ? (
@@ -124,13 +124,13 @@ export default function Results() {
             ) : (
               <div className="space-y-4 overflow-y-auto pr-2 flex-grow">
                 {partners.map((partner: any) => (
-                  <div key={partner.partner_id} className="p-4 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 hover:border-emerald-400/50 hover:shadow-[0_0_15px_rgba(79,70,229,0.3)] transition-all group cursor-pointer backdrop-blur-md">
-                    <h4 className="font-bold text-white text-base group-hover:text-emerald-300 transition-colors drop-shadow-sm">{partner.partner_name}</h4>
+                  <div key={partner.partner_id} className="p-4 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 hover:border-blue-400/50 hover:shadow-[0_0_15px_rgba(79,70,229,0.3)] transition-all group cursor-pointer backdrop-blur-md">
+                    <h4 className="font-bold text-white text-base group-hover:text-blue-300 transition-colors drop-shadow-sm">{partner.partner_name}</h4>
                     <div className="flex justify-between items-center mt-3">
-                      <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-medium bg-black/40 text-emerald-200 border border-white/5">
+                      <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-medium bg-black/40 text-blue-200 border border-white/5">
                         {partner.distance.toFixed(1)} km away
                       </span>
-                      <span className="text-xs font-semibold text-green-400 bg-green-500/10 px-2 py-1 rounded-lg border border-green-500/20">Funds Available</span>
+                      <span className="text-xs font-semibold text-blue-400 bg-blue-500/10 px-2 py-1 rounded-lg border border-blue-500/20">Funds Available</span>
                     </div>
                   </div>
                 ))}
@@ -170,7 +170,7 @@ export default function Results() {
                     alert('An error occurred during submission.');
                   }
                 }} 
-                className="w-full bg-emerald-600/80 hover:bg-emerald-600 text-white font-medium py-4 px-4 rounded-xl transition-all shadow-[0_0_20px_rgba(79,70,229,0.4)] hover:shadow-[0_0_30px_rgba(79,70,229,0.6)] transform hover:-translate-y-1 border border-emerald-500/50 backdrop-blur-md"
+                className="w-full bg-blue-600/80 hover:bg-blue-600 text-white font-medium py-4 px-4 rounded-xl transition-all shadow-[0_0_20px_rgba(79,70,229,0.4)] hover:shadow-[0_0_30px_rgba(79,70,229,0.6)] transform hover:-translate-y-1 border border-blue-500/50 backdrop-blur-md"
               >
                 Proceed with Nearest Partner
               </button>

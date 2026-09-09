@@ -107,7 +107,7 @@ export default function GlobalSchemes() {
     <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
       <div className="mb-10 text-center">
         <h1 className="text-4xl font-extrabold text-white tracking-tight flex items-center justify-center gap-3">
-          <Globe className="h-10 w-10 text-emerald-400" />
+          <Globe className="h-10 w-10 text-blue-400" />
           Global Government Schemes
         </h1>
         <p className="mt-4 text-xl text-gray-300 max-w-3xl mx-auto">
@@ -124,7 +124,7 @@ export default function GlobalSchemes() {
             placeholder="Search schemes..." 
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-gray-700 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent outline-none bg-gray-900/60 backdrop-blur-md text-white border-gray-700"
+            className="w-full pl-10 pr-4 py-2 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none bg-gray-900/60 backdrop-blur-md text-white border-gray-700"
           />
         </div>
         
@@ -133,7 +133,7 @@ export default function GlobalSchemes() {
           <select 
             value={selectedCountry}
             onChange={(e) => setSelectedCountry(e.target.value)}
-            className="w-full sm:w-48 bg-gray-800/50 border border-gray-700 text-white text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-500 block p-2.5"
+            className="w-full sm:w-48 bg-gray-800/50 border border-gray-700 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
           >
             {countries.map(c => (
               <option key={c} value={c}>{c}</option>
@@ -147,7 +147,7 @@ export default function GlobalSchemes() {
         {currentSchemes.map((scheme) => (
           <div key={scheme.id} className="bg-gray-900/60 backdrop-blur-md border-gray-800 rounded-2xl p-6 shadow-sm border border-gray-700 hover:shadow-md transition-shadow flex flex-col">
             <div className="flex justify-between items-start mb-4">
-              <span className="px-3 py-1 bg-emerald-100 text-emerald-800 text-xs font-semibold rounded-full uppercase tracking-wider">
+              <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full uppercase tracking-wider">
                 {scheme.country}
               </span>
             </div>
@@ -158,7 +158,7 @@ export default function GlobalSchemes() {
               href={scheme.url} 
               target="_blank" 
               rel="noopener noreferrer"
-              className="mt-auto inline-flex items-center text-emerald-400 hover:text-emerald-800 font-medium"
+              className="mt-auto inline-flex items-center text-blue-400 hover:text-blue-800 font-medium"
             >
               Visit Official Website <ExternalLink className="ml-1.5 h-4 w-4" />
             </a>
@@ -177,7 +177,7 @@ export default function GlobalSchemes() {
           <button 
             onClick={handlePrev}
             disabled={currentPage === 1}
-            className="flex items-center gap-2 px-4 py-2 bg-emerald-600/20 text-emerald-400 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-emerald-600/40 transition-colors border border-emerald-500/30"
+            className="flex items-center gap-2 px-4 py-2 bg-blue-600/20 text-blue-400 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-600/40 transition-colors border border-blue-500/30"
           >
             <ChevronLeft className="w-4 h-4" /> Previous
           </button>
@@ -192,7 +192,7 @@ export default function GlobalSchemes() {
                 value={pageInput}
                 onChange={(e) => setPageInput(e.target.value)}
                 onBlur={handlePageSubmit}
-                className="w-16 px-2 py-1 text-center bg-black/40 border border-gray-700 rounded-md focus:ring-2 focus:ring-emerald-500 outline-none text-white"
+                className="w-16 px-2 py-1 text-center bg-black/40 border border-gray-700 rounded-md focus:ring-2 focus:ring-blue-500 outline-none text-white"
               />
             </form>
             <span>of {totalPages}</span>
@@ -201,7 +201,7 @@ export default function GlobalSchemes() {
           <button 
             onClick={handleNext}
             disabled={currentPage === totalPages}
-            className="flex items-center gap-2 px-4 py-2 bg-emerald-600/20 text-emerald-400 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-emerald-600/40 transition-colors border border-emerald-500/30"
+            className="flex items-center gap-2 px-4 py-2 bg-blue-600/20 text-blue-400 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-600/40 transition-colors border border-blue-500/30"
           >
             Next <ChevronRight className="w-4 h-4" />
           </button>

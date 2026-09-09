@@ -6,15 +6,15 @@ export default function Terms() {
         
         <div className="space-y-10 text-gray-300">
           <section>
-            <h2 className="text-2xl font-bold text-white mb-3 flex items-center"><span className="text-emerald-400 mr-3">1.</span> Acceptance of Terms</h2>
+            <h2 className="text-2xl font-bold text-white mb-3 flex items-center"><span className="text-blue-400 mr-3">1.</span> Acceptance of Terms</h2>
             <p className="leading-relaxed pl-8">By accessing and using the Avenik Core platform, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our services.</p>
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-white mb-3 flex items-center"><span className="text-emerald-400 mr-3">2.</span> Data Privacy & Collection</h2>
+            <h2 className="text-2xl font-bold text-white mb-3 flex items-center"><span className="text-blue-400 mr-3">2.</span> Data Privacy & Collection</h2>
             <div className="pl-8">
               <p className="mb-4 leading-relaxed">Avenik Core respects your privacy. During the scheme matching process, we collect demographic, financial, and geographical data. This data is strictly used for:</p>
-              <ul className="list-disc pl-6 space-y-2 text-emerald-100">
+              <ul className="list-disc pl-6 space-y-2 text-blue-100">
                 <li>Matching you with eligible government schemes.</li>
                 <li>Locating nearby channel partners and banks.</li>
                 <li>Aggregated analytics for government administration (anonymized).</li>
@@ -23,12 +23,12 @@ export default function Terms() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-white mb-3 flex items-center"><span className="text-emerald-400 mr-3">3.</span> External Links Disclaimer</h2>
+            <h2 className="text-2xl font-bold text-white mb-3 flex items-center"><span className="text-blue-400 mr-3">3.</span> External Links Disclaimer</h2>
             <p className="leading-relaxed pl-8">The Global Schemes directory contains links to external government websites. Avenik Core is not responsible for the content, privacy policies, or practices of any third-party websites. Users are advised to read the terms and conditions of those external sites.</p>
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-white mb-3 flex items-center"><span className="text-emerald-400 mr-3">4.</span> Limitation of Liability</h2>
+            <h2 className="text-2xl font-bold text-white mb-3 flex items-center"><span className="text-blue-400 mr-3">4.</span> Limitation of Liability</h2>
             <p className="leading-relaxed pl-8">While we strive for accuracy, the loan amounts, interest rates, and eligibility criteria displayed by the matching engine are estimates based on available data. Final loan approval and terms are strictly at the discretion of the respective channel partner and government guidelines.</p>
           </section>
 

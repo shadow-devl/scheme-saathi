@@ -46,10 +46,10 @@ export default function PartnerDashboard() {
           <h1 className="text-3xl font-bold text-white drop-shadow-md">Partner Portal</h1>
           <p className="text-gray-300 mt-2">{user?.name} - Application Queue</p>
         </div>
-        <div className="bg-emerald-900/40 p-4 rounded-xl border border-emerald-400/30 flex items-center gap-4 shadow-inner backdrop-blur-md">
-          <Users className="text-emerald-400 h-8 w-8" />
+        <div className="bg-blue-900/40 p-4 rounded-xl border border-blue-400/30 flex items-center gap-4 shadow-inner backdrop-blur-md">
+          <Users className="text-blue-400 h-8 w-8" />
           <div>
-            <p className="text-sm font-medium text-emerald-200">Pending Applications</p>
+            <p className="text-sm font-medium text-blue-200">Pending Applications</p>
             <p className="text-2xl font-bold text-white drop-shadow-md">{applications.filter((a: any) => a.status === 'PENDING').length}</p>
           </div>
         </div>
@@ -78,7 +78,7 @@ export default function PartnerDashboard() {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className={`px-3 py-1 inline-flex text-xs leading-5 font-bold rounded-full shadow-sm backdrop-blur-md ${
                       app.status === 'PENDING' ? 'bg-yellow-500/20 text-yellow-200 border border-yellow-500/30' :
-                      app.status === 'APPROVED' || app.status === 'DISBURSED' ? 'bg-green-500/20 text-green-200 border border-green-500/30' :
+                      app.status === 'APPROVED' || app.status === 'DISBURSED' ? 'bg-blue-500/20 text-blue-200 border border-blue-500/30' :
                       'bg-red-500/20 text-red-200 border border-red-500/30'
                     }`}>
                       {app.status}
@@ -87,7 +87,7 @@ export default function PartnerDashboard() {
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     {app.status === 'PENDING' && (
                       <div className="flex justify-end gap-2">
-                        <button onClick={() => updateStatus(app.application_id, 'APPROVED')} className="text-green-400 hover:text-green-300 p-2 hover:bg-green-500/20 rounded-xl transition-all" title="Approve">
+                        <button onClick={() => updateStatus(app.application_id, 'APPROVED')} className="text-blue-400 hover:text-blue-300 p-2 hover:bg-blue-500/20 rounded-xl transition-all" title="Approve">
                           <Check className="h-5 w-5" />
                         </button>
                         <button onClick={() => updateStatus(app.application_id, 'REJECTED')} className="text-red-400 hover:text-red-300 p-2 hover:bg-red-500/20 rounded-xl transition-all" title="Reject">
@@ -96,7 +96,7 @@ export default function PartnerDashboard() {
                       </div>
                     )}
                     {app.status === 'APPROVED' && (
-                       <button onClick={() => updateStatus(app.application_id, 'DISBURSED')} className="text-emerald-300 hover:text-white font-bold border border-emerald-400/50 px-4 py-2 rounded-xl hover:bg-emerald-500/30 transition-all shadow-sm">
+                       <button onClick={() => updateStatus(app.application_id, 'DISBURSED')} className="text-blue-300 hover:text-white font-bold border border-blue-400/50 px-4 py-2 rounded-xl hover:bg-blue-500/30 transition-all shadow-sm">
                          Mark Disbursed
                        </button>
                     )}

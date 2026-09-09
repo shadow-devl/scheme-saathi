@@ -192,7 +192,7 @@ export default function PrivateInvestors() {
     <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 relative z-10">
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-white mb-4 drop-shadow-md">Global Private Investors & VCs</h1>
-        <p className="text-xl text-emerald-100 max-w-3xl mx-auto drop-shadow-sm">
+        <p className="text-xl text-blue-100 max-w-3xl mx-auto drop-shadow-sm">
           Connect with top-tier venture capital firms, angel networks, and private equity available to invest in startups and businesses worldwide.
         </p>
       </div>
@@ -206,18 +206,18 @@ export default function PrivateInvestors() {
             placeholder="Search by investor name or sector (e.g., AI, Fintech)..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-3 bg-black/40 border border-white/10 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-white placeholder-gray-400 transition-all"
+            className="w-full pl-10 pr-4 py-3 bg-black/40 border border-white/10 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-gray-400 transition-all"
           />
         </div>
         <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-2 md:pb-0 hide-scrollbar">
-          <Filter className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+          <Filter className="w-5 h-5 text-blue-400 flex-shrink-0" />
           {REGIONS.map(region => (
             <button
               key={region}
               onClick={() => setSelectedRegion(region)}
               className={`px-4 py-2 rounded-xl whitespace-nowrap text-sm font-medium transition-all ${
                 selectedRegion === region 
-                  ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-500/30' 
+                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30' 
                   : 'bg-black/40 text-gray-300 hover:bg-white/10 border border-white/5'
               }`}
             >
@@ -230,26 +230,26 @@ export default function PrivateInvestors() {
       {/* Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {currentInvestors.map(inv => (
-          <div key={inv.id} className="glass-panel rounded-2xl overflow-hidden border border-white/10 hover:border-emerald-500/50 transition-all hover:-translate-y-1 shadow-lg hover:shadow-emerald-500/20 flex flex-col">
+          <div key={inv.id} className="glass-panel rounded-2xl overflow-hidden border border-white/10 hover:border-blue-500/50 transition-all hover:-translate-y-1 shadow-lg hover:shadow-blue-500/20 flex flex-col">
             <div className="p-6 flex-1">
               <div className="flex justify-between items-start mb-4">
                 <h3 className="text-xl font-bold text-white leading-tight">{inv.name}</h3>
-                <Building className="w-6 h-6 text-emerald-400 opacity-80 flex-shrink-0" />
+                <Building className="w-6 h-6 text-blue-400 opacity-80 flex-shrink-0" />
               </div>
               
               <div className="space-y-3 mb-6">
                 <div className="flex items-center gap-2 text-sm text-gray-300">
-                  <Globe className="w-4 h-4 text-emerald-500" />
+                  <Globe className="w-4 h-4 text-blue-500" />
                   <span><strong className="text-gray-400">Region:</strong> {inv.region}</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-gray-300">
-                  <TrendingUp className="w-4 h-4 text-emerald-500" />
+                  <TrendingUp className="w-4 h-4 text-blue-500" />
                   <span><strong className="text-gray-400">Stage:</strong> {inv.focus}</span>
                 </div>
               </div>
 
               <div className="mb-4">
-                <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400/80 mb-2">Focus Sectors</p>
+                <p className="text-xs font-semibold uppercase tracking-wider text-blue-400/80 mb-2">Focus Sectors</p>
                 <div className="flex flex-wrap gap-2">
                   {inv.sectors.split(',').map(sector => (
                     <span key={sector} className="px-2 py-1 bg-white/5 border border-white/10 rounded-md text-xs text-gray-300">
@@ -269,7 +269,7 @@ export default function PrivateInvestors() {
                 href={inv.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full flex items-center justify-center gap-2 bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white py-3 rounded-xl transition-all border border-emerald-500/30 hover:border-transparent font-medium"
+                className="w-full flex items-center justify-center gap-2 bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white py-3 rounded-xl transition-all border border-blue-500/30 hover:border-transparent font-medium"
               >
                 Visit Investor Website <ExternalLink className="w-4 h-4" />
               </a>
@@ -292,7 +292,7 @@ export default function PrivateInvestors() {
           <button 
             onClick={handlePrev}
             disabled={currentPage === 1}
-            className="flex items-center gap-2 px-4 py-2 bg-emerald-600/20 text-emerald-400 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-emerald-600/40 transition-colors border border-emerald-500/30"
+            className="flex items-center gap-2 px-4 py-2 bg-blue-600/20 text-blue-400 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-600/40 transition-colors border border-blue-500/30"
           >
             <ChevronLeft className="w-4 h-4" /> Previous
           </button>
@@ -307,7 +307,7 @@ export default function PrivateInvestors() {
                 value={pageInput}
                 onChange={(e) => setPageInput(e.target.value)}
                 onBlur={handlePageSubmit}
-                className="w-16 px-2 py-1 text-center bg-black/40 border border-white/10 rounded-md focus:ring-2 focus:ring-emerald-500 outline-none text-white"
+                className="w-16 px-2 py-1 text-center bg-black/40 border border-white/10 rounded-md focus:ring-2 focus:ring-blue-500 outline-none text-white"
               />
             </form>
             <span>of {totalPages}</span>
@@ -316,7 +316,7 @@ export default function PrivateInvestors() {
           <button 
             onClick={handleNext}
             disabled={currentPage === totalPages}
-            className="flex items-center gap-2 px-4 py-2 bg-emerald-600/20 text-emerald-400 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-emerald-600/40 transition-colors border border-emerald-500/30"
+            className="flex items-center gap-2 px-4 py-2 bg-blue-600/20 text-blue-400 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-600/40 transition-colors border border-blue-500/30"
           >
             Next <ChevronRight className="w-4 h-4" />
           </button>

@@ -35,22 +35,22 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           <Link to="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-emerald-500/30 border border-emerald-500/20">
+            <div className="w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-blue-500/30 border border-blue-500/20">
               <img src="./logo.jpg" alt="Avenik Core Logo" className="w-full h-full object-cover" />
             </div>
             <span className="text-xl font-bold text-white tracking-tight">Avenik Core</span>
           </Link>
           <div className="flex items-center gap-4">
-            <Link to="/" className="text-gray-300 hover:text-emerald-400 font-medium transition-colors">
+            <Link to="/" className="text-gray-300 hover:text-blue-400 font-medium transition-colors">
               Home
             </Link>
-            <Link to="/apply" className="text-gray-300 hover:text-emerald-400 font-medium transition-colors">
+            <Link to="/apply" className="text-gray-300 hover:text-blue-400 font-medium transition-colors">
               {lang === 'EN' ? 'Find Schemes' : 'योजनाएं खोजें'}
             </Link>
-            <Link to="/compare" className="text-gray-300 hover:text-emerald-400 font-medium transition-colors">Compare</Link>
-            <Link to="/global-schemes" className="text-gray-300 hover:text-emerald-400 font-medium transition-colors">Global Gov</Link>
-            <Link to="/investors" className="text-gray-300 hover:text-emerald-400 font-medium transition-colors flex items-center gap-1">
-               Investors <span className="px-1.5 py-0.5 bg-emerald-500/20 border border-emerald-500/50 rounded-md text-[10px] text-emerald-300 font-bold tracking-wider">VC</span>
+            <Link to="/compare" className="text-gray-300 hover:text-blue-400 font-medium transition-colors">Compare</Link>
+            <Link to="/global-schemes" className="text-gray-300 hover:text-blue-400 font-medium transition-colors">Global Gov</Link>
+            <Link to="/investors" className="text-gray-300 hover:text-blue-400 font-medium transition-colors flex items-center gap-1">
+               Investors <span className="px-1.5 py-0.5 bg-blue-500/20 border border-blue-500/50 rounded-md text-[10px] text-blue-300 font-bold tracking-wider">VC</span>
             </Link>
             
             {/* A11y & Localization Tools */}
@@ -77,7 +77,7 @@ export default function Navbar() {
 
             {user ? (
               <div className="flex items-center gap-4 ml-4 pl-4 border-l border-white/10">
-                <Link to={getDashboardLink()} className="flex items-center gap-2 text-gray-300 hover:text-emerald-400 font-medium">
+                <Link to={getDashboardLink()} className="flex items-center gap-2 text-gray-300 hover:text-blue-400 font-medium">
                   <User className="h-4 w-4" /> Dashboard
                 </Link>
                 <button onClick={handleLogout} className="flex items-center gap-2 text-gray-400 hover:text-red-400 text-sm font-medium">
@@ -85,7 +85,7 @@ export default function Navbar() {
                 </button>
               </div>
             ) : (
-              <Link to="/login" className="ml-4 px-4 py-2 bg-emerald-600/20 border border-emerald-500/30 text-emerald-300 rounded-lg font-medium hover:bg-emerald-600/40 transition-colors shadow-[0_0_15px_rgba(99,102,241,0.2)]">
+              <Link to="/login" className="ml-4 px-4 py-2 bg-blue-600/20 border border-blue-500/30 text-blue-300 rounded-lg font-medium hover:bg-blue-600/40 transition-colors shadow-[0_0_15px_rgba(99,102,241,0.2)]">
                 Login / Register
               </Link>
             )}

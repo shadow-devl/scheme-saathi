@@ -69,17 +69,17 @@ export default function ApplicantDashboard() {
             </div>
           ) : applications.length === 0 ? (
             <div className="text-center p-12 glass-panel border border-dashed border-white/20 rounded-3xl">
-              <FileText className="h-12 w-12 text-emerald-300/50 mx-auto mb-4" />
+              <FileText className="h-12 w-12 text-blue-300/50 mx-auto mb-4" />
               <h3 className="text-lg font-medium text-white drop-shadow-sm">No applications yet</h3>
               <p className="text-gray-300 mt-2 mb-8">Discover and apply for matching financial schemes.</p>
-              <Link to="/apply" className="inline-flex items-center px-8 py-3 border border-emerald-500/50 rounded-xl shadow-[0_0_20px_rgba(79,70,229,0.3)] hover:shadow-[0_0_30px_rgba(79,70,229,0.5)] transform hover:-translate-y-1 text-white bg-emerald-600/80 hover:bg-emerald-600 font-medium transition-all backdrop-blur-md">
+              <Link to="/apply" className="inline-flex items-center px-8 py-3 border border-blue-500/50 rounded-xl shadow-[0_0_20px_rgba(79,70,229,0.3)] hover:shadow-[0_0_30px_rgba(79,70,229,0.5)] transform hover:-translate-y-1 text-white bg-blue-600/80 hover:bg-blue-600 font-medium transition-all backdrop-blur-md">
                 Find Schemes
               </Link>
             </div>
           ) : (
             <div className="space-y-6">
               {applications.map((app: any) => (
-                <div key={app.application_id} className="glass-panel p-6 rounded-3xl shadow-lg border border-white/10 hover:border-emerald-500/30 transition-colors">
+                <div key={app.application_id} className="glass-panel p-6 rounded-3xl shadow-lg border border-white/10 hover:border-blue-500/30 transition-colors">
                   <div className="flex justify-between items-start mb-6 border-b border-white/10 pb-4">
                     <div>
                       <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">ID: {app.application_id}</span>
@@ -88,7 +88,7 @@ export default function ApplicantDashboard() {
                     </div>
                     <div className="text-right">
                       <span className={`inline-flex items-center px-3 py-1 rounded-lg text-xs font-medium border backdrop-blur-md ${
-                        app.status === 'APPROVED' || app.status === 'DISBURSED' ? 'bg-green-500/20 text-green-300 border-green-500/30' :
+                        app.status === 'APPROVED' || app.status === 'DISBURSED' ? 'bg-blue-500/20 text-blue-300 border-blue-500/30' :
                         app.status === 'REJECTED' ? 'bg-red-500/20 text-red-300 border-red-500/30' : 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30'
                       }`}>
                         {app.status}
@@ -102,13 +102,13 @@ export default function ApplicantDashboard() {
                       <div 
                         style={{ width: `${(getStepProgress(app.status) / TIMELINE_STEPS.length) * 100}%` }} 
                         className={`shadow-[0_0_10px_rgba(255,255,255,0.5)] flex flex-col text-center whitespace-nowrap text-white justify-center transition-all duration-500 ${
-                          app.status === 'REJECTED' ? 'bg-red-500' : 'bg-emerald-500'
+                          app.status === 'REJECTED' ? 'bg-red-500' : 'bg-blue-500'
                         }`}
                       ></div>
                     </div>
                     <div className="flex justify-between text-xs text-gray-400 font-medium px-1">
                       {TIMELINE_STEPS.map((step, idx) => (
-                        <div key={step} className={`text-center ${getStepProgress(app.status) > idx ? 'text-emerald-300 font-bold drop-shadow-sm' : ''}`}>
+                        <div key={step} className={`text-center ${getStepProgress(app.status) > idx ? 'text-blue-300 font-bold drop-shadow-sm' : ''}`}>
                           {step}
                         </div>
                       ))}
@@ -130,13 +130,13 @@ export default function ApplicantDashboard() {
               {documents.map(doc => (
                 <div key={doc.id} className="flex items-center justify-between p-4 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 hover:border-white/20 transition-colors shadow-sm">
                   <div className="flex items-center gap-3">
-                    <File className="w-5 h-5 text-emerald-400" />
+                    <File className="w-5 h-5 text-blue-400" />
                     <span className="text-sm font-medium text-gray-200">{doc.name}</span>
                   </div>
                   {doc.status === 'Verified' ? (
-                    <CheckCircle className="w-5 h-5 text-green-400" />
+                    <CheckCircle className="w-5 h-5 text-blue-400" />
                   ) : doc.status === 'Uploaded' ? (
-                    <Clock className="w-5 h-5 text-emerald-400" />
+                    <Clock className="w-5 h-5 text-blue-400" />
                   ) : (
                     <span className="text-xs font-semibold bg-yellow-500/20 text-yellow-300 px-2.5 py-1 rounded-lg border border-yellow-500/30">{doc.status}</span>
                   )}
@@ -144,9 +144,9 @@ export default function ApplicantDashboard() {
               ))}
             </div>
 
-            <label className="flex flex-col items-center justify-center w-full h-36 px-4 transition-all bg-white/5 backdrop-blur-md border border-white/20 border-dashed rounded-2xl appearance-none cursor-pointer hover:bg-white/10 hover:border-emerald-400 focus:outline-none shadow-inner group">
+            <label className="flex flex-col items-center justify-center w-full h-36 px-4 transition-all bg-white/5 backdrop-blur-md border border-white/20 border-dashed rounded-2xl appearance-none cursor-pointer hover:bg-white/10 hover:border-blue-400 focus:outline-none shadow-inner group">
               <span className="flex flex-col items-center space-y-2">
-                <Upload className="w-8 h-8 text-emerald-300 group-hover:text-emerald-400 transition-colors drop-shadow-sm" />
+                <Upload className="w-8 h-8 text-blue-300 group-hover:text-blue-400 transition-colors drop-shadow-sm" />
                 <span className="font-medium text-gray-300 text-sm">Drop files or click to upload</span>
               </span>
               <input type="file" name="file_upload" className="hidden" onChange={handleFileUpload} />

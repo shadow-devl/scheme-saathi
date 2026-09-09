@@ -4,8 +4,8 @@ export default function AnimatedBackground() {
   return (
     <div className="fixed inset-0 z-[-1] overflow-hidden bg-[#0B0E14]">
       {/* Deep colorful background gradients */}
-      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-emerald-900/20 blur-[120px]"></div>
-      <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] rounded-full bg-emerald-900/20 blur-[150px]"></div>
+      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-blue-900/20 blur-[120px]"></div>
+      <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] rounded-full bg-blue-900/20 blur-[150px]"></div>
       <div className="absolute top-[40%] left-[30%] w-[30%] h-[30%] rounded-full bg-purple-900/20 blur-[100px]"></div>
 
       {/* Floating Logos / Geometric Shapes */}
@@ -23,8 +23,8 @@ export default function AnimatedBackground() {
       </div>
       
       {/* Abstract blurred orbs */}
-      <div className="absolute top-[50%] left-[5%] w-32 h-32 rounded-full bg-emerald-600/10 blur-[40px] animate-float-medium"></div>
-      <div className="absolute top-[20%] right-[10%] w-48 h-48 rounded-full bg-emerald-600/10 blur-[50px] animate-float-slow"></div>
+      <div className="absolute top-[50%] left-[5%] w-32 h-32 rounded-full bg-blue-600/10 blur-[40px] animate-float-medium"></div>
+      <div className="absolute top-[20%] right-[10%] w-48 h-48 rounded-full bg-blue-600/10 blur-[50px] animate-float-slow"></div>
     </div>
   );
 }

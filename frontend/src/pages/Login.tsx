@@ -61,26 +61,26 @@ export default function Login() {
             {!isLogin && (
               <div>
                 <label className="text-sm font-medium text-gray-200">Full Name</label>
-                <input required type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="mt-1 w-full p-3 border border-white/10 rounded-xl outline-none focus:ring-2 focus:ring-emerald-500 bg-white/5 backdrop-blur-md text-white transition-all shadow-inner placeholder-gray-400" />
+                <input required type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="mt-1 w-full p-3 border border-white/10 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 bg-white/5 backdrop-blur-md text-white transition-all shadow-inner placeholder-gray-400" />
               </div>
             )}
             <div>
-              <label className="text-sm font-medium text-gray-200 flex items-center gap-2"><Mail className="w-4 h-4 text-emerald-400"/> Email address</label>
-              <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="mt-1 w-full p-3 border border-white/10 rounded-xl outline-none focus:ring-2 focus:ring-emerald-500 bg-white/5 backdrop-blur-md text-white transition-all shadow-inner placeholder-gray-400" />
+              <label className="text-sm font-medium text-gray-200 flex items-center gap-2"><Mail className="w-4 h-4 text-blue-400"/> Email address</label>
+              <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="mt-1 w-full p-3 border border-white/10 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 bg-white/5 backdrop-blur-md text-white transition-all shadow-inner placeholder-gray-400" />
             </div>
             <div>
-              <label className="text-sm font-medium text-gray-200 flex items-center gap-2"><Lock className="w-4 h-4 text-emerald-400"/> Password</label>
-              <input required type="password" value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} className="mt-1 w-full p-3 border border-white/10 rounded-xl outline-none focus:ring-2 focus:ring-emerald-500 bg-white/5 backdrop-blur-md text-white transition-all shadow-inner placeholder-gray-400" />
+              <label className="text-sm font-medium text-gray-200 flex items-center gap-2"><Lock className="w-4 h-4 text-blue-400"/> Password</label>
+              <input required type="password" value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} className="mt-1 w-full p-3 border border-white/10 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 bg-white/5 backdrop-blur-md text-white transition-all shadow-inner placeholder-gray-400" />
             </div>
           </div>
 
-          <button type="submit" disabled={loading} className="w-full flex justify-center py-4 px-4 border border-emerald-500/50 rounded-xl shadow-[0_0_20px_rgba(79,70,229,0.4)] text-white bg-emerald-600/80 hover:bg-emerald-600 hover:shadow-[0_0_30px_rgba(79,70,229,0.6)] transform hover:-translate-y-1 font-medium transition-all backdrop-blur-md">
+          <button type="submit" disabled={loading} className="w-full flex justify-center py-4 px-4 border border-blue-500/50 rounded-xl shadow-[0_0_20px_rgba(79,70,229,0.4)] text-white bg-blue-600/80 hover:bg-blue-600 hover:shadow-[0_0_30px_rgba(79,70,229,0.6)] transform hover:-translate-y-1 font-medium transition-all backdrop-blur-md">
             {loading ? <Loader2 className="animate-spin w-5 h-5"/> : (isLogin ? 'Sign In' : 'Register')}
           </button>
         </form>
         
         <div className="text-center mt-6">
-          <button type="button" onClick={() => setIsLogin(!isLogin)} className="text-emerald-300 hover:text-emerald-200 font-medium text-sm transition-colors drop-shadow-sm">
+          <button type="button" onClick={() => setIsLogin(!isLogin)} className="text-blue-300 hover:text-blue-200 font-medium text-sm transition-colors drop-shadow-sm">
             {isLogin ? "Don't have an account? Register" : "Already have an account? Sign in"}
           </button>
         </div>

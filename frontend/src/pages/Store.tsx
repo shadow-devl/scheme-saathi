@@ -14,14 +14,14 @@ export default function Store() {
           <h1 className="text-2xl font-bold text-gray-100">Store & Products</h1>
           <p className="text-gray-400 mt-1">Manage your digital and physical product offerings.</p>
         </div>
-        <button className="bg-emerald-500 text-black px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-emerald-400 transition-colors text-sm font-medium w-full sm:w-auto justify-center">
+        <button className="bg-blue-500 text-black px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-blue-400 transition-colors text-sm font-medium w-full sm:w-auto justify-center">
           <Plus className="h-4 w-4" /> Add Product
         </button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="glass-panel p-6 flex items-center gap-4">
-          <div className="p-3 bg-emerald-500/10 rounded-lg text-emerald-400 border border-emerald-500/20">
+          <div className="p-3 bg-blue-500/10 rounded-lg text-blue-400 border border-blue-500/20">
             <ShoppingBag className="h-6 w-6" />
           </div>
           <div>
@@ -57,7 +57,7 @@ export default function Store() {
             <input 
               type="text" 
               placeholder="Search products..." 
-              className="pl-9 pr-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-sm text-gray-200 focus:outline-none focus:border-emerald-500 w-64"
+              className="pl-9 pr-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-sm text-gray-200 focus:outline-none focus:border-blue-500 w-64"
             />
           </div>
         </div>
@@ -78,18 +78,18 @@ export default function Store() {
               {products.map((product) => (
                 <tr key={product.id} className="hover:bg-gray-800/30 transition-colors">
                   <td className="px-6 py-4 font-medium text-gray-200">{product.name}</td>
-                  <td className="px-6 py-4 text-emerald-400 font-medium">{product.price}</td>
+                  <td className="px-6 py-4 text-blue-400 font-medium">{product.price}</td>
                   <td className="px-6 py-4">{product.sales}</td>
                   <td className="px-6 py-4">{product.stock}</td>
                   <td className="px-6 py-4">
                     <span className={`px-2 py-1 rounded text-xs font-medium border ${
-                      product.status === 'Active' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' : 'bg-yellow-500/10 text-yellow-500 border-yellow-500/30'
+                      product.status === 'Active' ? 'bg-blue-500/10 text-blue-400 border-blue-500/30' : 'bg-yellow-500/10 text-yellow-500 border-yellow-500/30'
                     }`}>
                       {product.status}
                     </span>
                   </td>
                   <td className="px-6 py-4 text-right">
-                    <button className="text-emerald-400 hover:text-emerald-300 font-medium mr-4">Edit</button>
+                    <button className="text-blue-400 hover:text-blue-300 font-medium mr-4">Edit</button>
                     <button className="text-red-400 hover:text-red-300 font-medium">Archive</button>
                   </td>
                 </tr>

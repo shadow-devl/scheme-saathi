@@ -16,10 +16,10 @@ export default function About() {
 
           <h3 className="text-2xl font-bold text-white mt-10 mb-4 drop-shadow-sm">How It Works</h3>
           <ul className="list-disc pl-6 space-y-3">
-            <li><strong className="text-emerald-300">Data Ingestion:</strong> We maintain a real-time database of central and state-level financial schemes.</li>
-            <li><strong className="text-emerald-300">Smart Matching:</strong> Applicants provide their demographic and financial details via our multi-step wizard.</li>
-            <li><strong className="text-emerald-300">Instant Eligibility:</strong> Our engine scores the data and matches the applicant with the highest-yield scheme.</li>
-            <li><strong className="text-emerald-300">Geo-Routing:</strong> We locate the nearest partner banks with available funding budgets to disburse the loan.</li>
+            <li><strong className="text-blue-300">Data Ingestion:</strong> We maintain a real-time database of central and state-level financial schemes.</li>
+            <li><strong className="text-blue-300">Smart Matching:</strong> Applicants provide their demographic and financial details via our multi-step wizard.</li>
+            <li><strong className="text-blue-300">Instant Eligibility:</strong> Our engine scores the data and matches the applicant with the highest-yield scheme.</li>
+            <li><strong className="text-blue-300">Geo-Routing:</strong> We locate the nearest partner banks with available funding budgets to disburse the loan.</li>
           </ul>
 
           <h3 className="text-2xl font-bold text-white mt-10 mb-4 drop-shadow-sm">Our Vision</h3>

@@ -38,7 +38,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       <div className="lg:hidden absolute top-4 left-4 z-50">
         <button 
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="p-2 bg-gray-900 border border-gray-700 rounded-md text-emerald-400 hover:bg-gray-800"
+          className="p-2 bg-gray-900 border border-gray-700 rounded-md text-blue-400 hover:bg-gray-800"
         >
           {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -52,17 +52,17 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       >
         <div className="p-6">
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="relative w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center border border-emerald-500/50 group-hover:scale-110 transition-transform">
-              <div className="absolute inset-0 bg-emerald-400/20 blur-sm rounded-lg"></div>
-              <span className="relative font-bold text-emerald-400 text-xl">A</span>
+            <div className="relative w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center border border-blue-500/50 group-hover:scale-110 transition-transform">
+              <div className="absolute inset-0 bg-blue-400/20 blur-sm rounded-lg"></div>
+              <span className="relative font-bold text-blue-400 text-xl">A</span>
             </div>
-            <span className="text-xl font-bold tracking-wider text-gray-100 group-hover:text-emerald-400 transition-colors">
+            <span className="text-xl font-bold tracking-wider text-gray-100 group-hover:text-blue-400 transition-colors">
               AVENIK
             </span>
           </Link>
           <div className="mt-8 mb-4">
             <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Business Platform</p>
-            <p className="text-sm font-medium text-emerald-400 mt-1 truncate">
+            <p className="text-sm font-medium text-blue-400 mt-1 truncate">
               {user?.name || 'Entrepreneur'}
             </p>
           </div>
@@ -77,13 +77,13 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 to={item.href}
                 className={`${
                   isActive 
-                    ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30' 
+                    ? 'bg-blue-500/10 text-blue-400 border border-blue-500/30' 
                     : 'text-gray-400 hover:bg-gray-800/50 hover:text-gray-200 border border-transparent'
                 } group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-all`}
                 onClick={() => setSidebarOpen(false)}
               >
                 <item.icon 
-                  className={`${isActive ? 'text-emerald-400' : 'text-gray-500 group-hover:text-gray-300'} flex-shrink-0 mr-3 h-5 w-5 transition-colors`} 
+                  className={`${isActive ? 'text-blue-400' : 'text-gray-500 group-hover:text-gray-300'} flex-shrink-0 mr-3 h-5 w-5 transition-colors`} 
                 />
                 {item.name}
               </Link>

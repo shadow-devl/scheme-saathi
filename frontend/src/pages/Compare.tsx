@@ -44,13 +44,13 @@ export default function Compare() {
             onClick={() => toggleScheme(scheme.id)}
             className={`cursor-pointer p-4 rounded-xl border-2 transition-all ${
               selectedSchemes.includes(scheme.id) 
-                ? 'border-emerald-600 bg-emerald-900/30' 
-                : 'border-gray-700 hover:border-emerald-300'
+                ? 'border-blue-600 bg-blue-900/30' 
+                : 'border-gray-700 hover:border-blue-300'
             }`}
           >
             <div className="flex justify-between items-start mb-2">
               <h3 className="font-bold text-white">{scheme.name}</h3>
-              {selectedSchemes.includes(scheme.id) && <CheckCircle2 className="w-5 h-5 text-emerald-400" />}
+              {selectedSchemes.includes(scheme.id) && <CheckCircle2 className="w-5 h-5 text-blue-400" />}
             </div>
             <p className="text-sm text-gray-400">{scheme.amount}</p>
           </div>
@@ -88,7 +88,7 @@ export default function Compare() {
             </tbody>
           </table>
           <div className="bg-gray-800/50 px-6 py-4 flex justify-end">
-            <Link to="/apply" className="inline-flex items-center gap-2 bg-emerald-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-emerald-700">
+            <Link to="/apply" className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700">
               Apply Now <ArrowRight className="w-4 h-4" />
             </Link>
           </div>

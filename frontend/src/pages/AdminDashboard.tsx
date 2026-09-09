@@ -37,20 +37,20 @@ export default function AdminDashboard() {
           title="Total Applications" 
           value={stats.totalApplications} 
           icon={<FileText className="h-6 w-6 text-white" />} 
-          color="bg-emerald-500" 
+          color="bg-blue-500" 
         />
         <KPICard 
           title="Funds Disbursed" 
           value={`₹${(stats.totalDisbursed / 10000000).toFixed(2)} Cr`} 
           subtitle={`of ₹${(stats.totalAllocated / 10000000).toFixed(2)} Cr Allocated`}
           icon={<IndianRupee className="h-6 w-6 text-white" />} 
-          color="bg-green-500" 
+          color="bg-blue-500" 
         />
         <KPICard 
           title="Avg NPA Rate" 
           value={`${(stats.partnerNpas.reduce((acc: number, p: any) => acc + p.npa, 0) / Math.max(stats.partnerNpas.length, 1)).toFixed(1)}%`} 
           icon={<Activity className="h-6 w-6 text-white" />} 
-          color={stats.partnerNpas.reduce((acc: number, p: any) => acc + p.npa, 0) / stats.partnerNpas.length > 5 ? "bg-red-500" : "bg-emerald-500"} 
+          color={stats.partnerNpas.reduce((acc: number, p: any) => acc + p.npa, 0) / stats.partnerNpas.length > 5 ? "bg-red-500" : "bg-blue-500"} 
         />
       </div>
 
