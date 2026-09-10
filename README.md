@@ -6,7 +6,7 @@
 ---
 
 ## 🌍 **Access the Live Website Globally**
-👉 **[Click here to open the Scheme Saathi Platform](https://shadow-devl.github.io/avenik-entrepreneur-os)** 👈
+👉 **[Click here to open the Scheme Saathi Platform](https://shadow-devl.github.io/scheme-saathi)** 👈
 
 *(The platform is fully deployed and accessible from anywhere via the link above)*
 

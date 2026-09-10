@@ -8,5 +8,5 @@ export default defineConfig({
     tailwindcss(),
     react(),
   ],
-  base: '/avenik-entrepreneur-os/',
+  base: '/scheme-saathi/',
 })
