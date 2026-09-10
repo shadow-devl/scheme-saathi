@@ -27,7 +27,7 @@ export default function Login() {
 
     const emailDomain = formData.email.split('@')[1]?.toLowerCase();
     if (!allowedEmailDomains.includes(emailDomain)) {
-      setError('Please use a Gmail or Microsoft email address.');
+      setError('Access Denied: Only Gmail and Microsoft IDs are allowed.');
       return;
     }
 
@@ -122,6 +122,7 @@ export default function Login() {
                 </div>
                 <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="block w-full p-3 pl-10 border border-slate-300 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-slate-900 transition-all placeholder-slate-400" placeholder="you@gmail.com" />
               </div>
+              <p className="mt-1 text-xs text-slate-500">Supported: Gmail, Outlook, Hotmail.</p>
             </div>
 
             <div>

@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const { PrismaClient } = require('@prisma/client');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
-const { isValidEmailProvider } = require('../utils/emailValidator');
+const { validateEmail, validatePassword, validateRole } = require('../utils/authValidator');
 const rateLimit = require('express-rate-limit');
 
 // Configure Nodemailer
@@ -62,17 +62,16 @@ router.post('/register', authLimiter, async (req, res) => {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    if (!isValidEmailProvider(email)) {
-      return res.status(400).json({ error: 'Invalid email provider. Please use a Gmail or Microsoft email address.' });
+    if (!validateEmail(email)) {
+      return res.status(400).json({ error: 'Only Gmail and Microsoft accounts are permitted.' });
     }
 
-    if (password.length < 8) {
-      return res.status(400).json({ error: 'Password must be at least 8 characters long' });
+    if (!validatePassword(password)) {
+      return res.status(400).json({ error: 'Password must be at least 8 characters long.' });
     }
 
-    const allowedRoles = ['USER', 'ENTREPRENEUR', 'INVESTOR', 'APPLICANT'];
-    if (!allowedRoles.includes(role)) {
-      return res.status(400).json({ error: 'Invalid or unauthorized role selection' });
+    if (!validateRole(role)) {
+      return res.status(400).json({ error: 'Invalid role selection.' });
     }
 
     const existing = await prisma.user.findUnique({ where: { email } });
@@ -157,8 +156,8 @@ router.post('/login', authLimiter, async (req, res) => {
     const roleName = user.roles[0]?.role?.name || 'USER';
     const isPublicUser = ['USER', 'ENTREPRENEUR', 'INVESTOR', 'APPLICANT'].includes(roleName);
 
-    if (isPublicUser && !isValidEmailProvider(email)) {
-      return res.status(400).json({ error: 'Invalid email provider.' });
+    if (isPublicUser && !validateEmail(email)) {
+      return res.status(400).json({ error: 'Only Gmail and Microsoft accounts are permitted.' });
     }
 
     const isMatch = await bcrypt.compare(password, user.password || '');
