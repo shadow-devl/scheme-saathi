@@ -3,6 +3,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth, type UserRole } from '../context/AuthContext';
 import { API_URL } from '../config';
 import { Lock, Mail, Loader2, KeyRound } from 'lucide-react';
+import { useGoogleLogin } from '@react-oauth/google';
+import { useMsal } from '@azure/msal-react';
 
 const allowedEmailDomains = [
   'gmail.com',
@@ -21,6 +23,53 @@ export default function Login() {
   const [demoLoading, setDemoLoading] = useState<UserRole | null>(null);
   const { login } = useAuth();
   const navigate = useNavigate();
+  const { instance: msalInstance } = useMsal();
+
+  const handleGoogleSuccess = async (tokenResponse: any) => {
+    try {
+      setLoading(true);
+      setError('');
+      const res = await fetch(`${API_URL}/api/auth/google`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ access_token: tokenResponse.access_token })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Google login failed');
+      login(data.token, data.user);
+      navigate('/dashboard');
+    } catch (err: any) {
+      setError(err.message);
+      setLoading(false);
+    }
+  };
+
+  const loginWithGoogle = useGoogleLogin({
+    onSuccess: handleGoogleSuccess,
+    onError: () => setError('Google Login Failed. Please check if your Client ID is valid.')
+  });
+
+  const handleMicrosoftLogin = async () => {
+    try {
+      setLoading(true);
+      setError('');
+      const response = await msalInstance.loginPopup({
+        scopes: ["User.Read", "profile", "email"]
+      });
+      const res = await fetch(`${API_URL}/api/auth/microsoft`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ credential: response.idToken })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Microsoft login failed');
+      login(data.token, data.user);
+      navigate('/dashboard');
+    } catch (err: any) {
+      setError(err.message);
+      setLoading(false);
+    }
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -90,12 +139,18 @@ export default function Login() {
         </div>
 
         {/* OAuth Buttons */}
-        <div className="space-y-3">
-          <button type="button" onClick={() => setError('OAuth login is not yet implemented. Please sign in with email.')} className="w-full flex items-center justify-center gap-2 py-3 px-4 border border-slate-300 rounded-xl shadow-sm bg-white text-slate-700 hover:bg-slate-50 font-medium transition-all">
+        <div className="space-y-3 flex flex-col items-center">
+          {(!import.meta.env.VITE_GOOGLE_CLIENT_ID || import.meta.env.VITE_GOOGLE_CLIENT_ID === 'dummy-client-id') && (
+            <div className="w-full p-3 bg-amber-50 text-amber-700 text-xs rounded-xl border border-amber-200 text-center mb-2">
+              <strong>Notice:</strong> Google/Microsoft Sign-in is currently unavailable because the Client IDs are not configured in the `.env` file. Please use Email or Demo Login.
+            </div>
+          )}
+          
+          <button type="button" onClick={() => loginWithGoogle()} className="w-full flex items-center justify-center gap-2 py-3 px-4 border border-slate-300 rounded-xl shadow-sm bg-white text-slate-700 hover:bg-slate-50 font-medium transition-all">
             <img src="https://www.google.com/favicon.ico" alt="Google" className="w-5 h-5" />
             Continue with Google
           </button>
-          <button type="button" onClick={() => setError('OAuth login is not yet implemented. Please sign in with email.')} className="w-full flex items-center justify-center gap-2 py-3 px-4 border border-slate-300 rounded-xl shadow-sm bg-white text-slate-700 hover:bg-slate-50 font-medium transition-all">
+          <button type="button" onClick={handleMicrosoftLogin} className="w-full flex items-center justify-center gap-2 py-3 px-4 border border-slate-300 rounded-xl shadow-sm bg-white text-slate-700 hover:bg-slate-50 font-medium transition-all">
             <svg viewBox="0 0 21 21" className="w-5 h-5"><path fill="#f25022" d="M1 1h9v9H1z"/><path fill="#7fba00" d="M11 1h9v9h-9z"/><path fill="#00a4ef" d="M1 11h9v9H1z"/><path fill="#ffb900" d="M11 11h9v9h-9z"/></svg>
             Continue with Microsoft
           </button>

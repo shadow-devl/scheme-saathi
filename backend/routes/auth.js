@@ -6,6 +6,21 @@ const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const { validateEmail, validatePassword, validateRole } = require('../utils/authValidator');
 const rateLimit = require('express-rate-limit');
+const { OAuth2Client } = require('google-auth-library');
+const jwksClient = require('jwks-rsa');
+
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+const msJwksClient = jwksClient({
+  jwksUri: 'https://login.microsoftonline.com/common/discovery/v2.0/keys'
+});
+
+function getMsKey(header, callback) {
+  msJwksClient.getSigningKey(header.kid, function(err, key) {
+    if (err) return callback(err);
+    const signingKey = key.publicKey || key.rsaPublicKey;
+    callback(null, signingKey);
+  });
+}
 
 // Configure Nodemailer
 const transporter = nodemailer.createTransport({
@@ -363,6 +378,129 @@ router.post('/reset-password', authLimiter, async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// OAuth: Google
+router.post('/google', async (req, res) => {
+  const { access_token } = req.body;
+  
+  if (!access_token) return res.status(400).json({ error: 'Missing access token' });
+
+  try {
+    const userInfoRes = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+      headers: { Authorization: `Bearer ${access_token}` }
+    });
+    
+    if (!userInfoRes.ok) {
+      throw new Error('Failed to fetch user info from Google');
+    }
+    
+    const payload = await userInfoRes.json();
+    const email = payload.email.toLowerCase();
+    
+    let user = await prisma.user.findUnique({
+      where: { email },
+      include: { roles: { include: { role: true } } }
+    });
+
+    if (!user) {
+      const defaultRole = await prisma.role.findUnique({ where: { name: 'USER' } });
+      if (!defaultRole) return res.status(500).json({ error: 'Default role not found' });
+
+      user = await prisma.user.create({
+        data: {
+          email,
+          name: payload.name || 'Google User',
+          password: '',
+          status: 'ACTIVE',
+          roles: {
+            create: {
+              roleId: defaultRole.id
+            }
+          }
+        },
+        include: { roles: { include: { role: true } } }
+      });
+    }
+
+    if (user.status === 'SUSPENDED') {
+      return res.status(403).json({ error: 'Account is suspended. Please contact support.' });
+    }
+
+    const roleName = user.roles[0]?.role?.name || 'USER';
+
+    const token = jwt.sign({ 
+      id: user.id, 
+      role: roleName, 
+      isDemo: user.isDemo,
+      status: user.status
+    }, process.env.JWT_SECRET, { expiresIn: '7d' });
+
+    res.json({ success: true, token, user: { id: user.id, email: user.email, name: user.name, role: roleName } });
+  } catch (err) {
+    console.error('Google Auth Error:', err);
+    res.status(401).json({ error: 'Invalid Google token' });
+  }
+});
+
+// OAuth: Microsoft
+router.post('/microsoft', async (req, res) => {
+  const { credential } = req.body;
+  if (!credential) return res.status(400).json({ error: 'Missing token' });
+
+  try {
+    jwt.verify(credential, getMsKey, { algorithms: ['RS256'] }, async (err, payload) => {
+      if (err) {
+        console.error('MS Auth Verify Error:', err);
+        return res.status(401).json({ error: 'Invalid Microsoft token' });
+      }
+
+      const email = (payload.email || payload.preferred_username).toLowerCase();
+      
+      let user = await prisma.user.findUnique({
+        where: { email },
+        include: { roles: { include: { role: true } } }
+      });
+
+      if (!user) {
+        const defaultRole = await prisma.role.findUnique({ where: { name: 'USER' } });
+        if (!defaultRole) return res.status(500).json({ error: 'Default role not found' });
+
+        user = await prisma.user.create({
+          data: {
+            email,
+            name: payload.name || 'Microsoft User',
+            password: '',
+            status: 'ACTIVE',
+            roles: {
+              create: {
+                roleId: defaultRole.id
+              }
+            }
+          },
+          include: { roles: { include: { role: true } } }
+        });
+      }
+
+      if (user.status === 'SUSPENDED') {
+        return res.status(403).json({ error: 'Account is suspended. Please contact support.' });
+      }
+
+      const roleName = user.roles[0]?.role?.name || 'USER';
+
+      const token = jwt.sign({ 
+        id: user.id, 
+        role: roleName, 
+        isDemo: user.isDemo,
+        status: user.status
+      }, process.env.JWT_SECRET, { expiresIn: '7d' });
+
+      res.json({ success: true, token, user: { id: user.id, email: user.email, name: user.name, role: roleName } });
+    });
+  } catch (err) {
+    console.error('MS Auth Error:', err);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
