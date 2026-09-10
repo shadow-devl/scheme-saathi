@@ -1,18 +1,23 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 
-type User = {
+export type UserRole = 'USER' | 'ENTREPRENEUR' | 'INVESTOR' | 'ADMIN' | 'MENTOR' | 'APPLICANT' | 'PARTNER';
+
+export type User = {
   id: string;
   name: string;
   email: string;
-  role: 'APPLICANT' | 'PARTNER' | 'ADMIN';
-  partner_id?: string;
+  role: UserRole;
+  status: 'ACTIVE' | 'PENDING' | 'SUSPENDED';
+  isDemo: boolean;
 };
 
 type AuthContextType = {
   user: User | null;
   token: string | null;
+  isLoading: boolean;
   login: (token: string, user: User) => void;
   logout: () => void;
+  updateUser: (user: User) => void;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -20,32 +25,53 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem('token');
-    const storedUser = localStorage.getItem('user');
-    if (storedToken && storedUser) {
-      setToken(storedToken);
-      setUser(JSON.parse(storedUser));
-    }
+    const initializeAuth = async () => {
+      const storedToken = localStorage.getItem('token');
+      if (storedToken) {
+        setToken(storedToken);
+        try {
+          const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/me`, {
+            headers: { Authorization: `Bearer ${storedToken}` }
+          });
+          if (res.ok) {
+            const userData = await res.json();
+            setUser(userData);
+          } else {
+            // Token invalid or expired
+            localStorage.removeItem('token');
+            setToken(null);
+          }
+        } catch (err) {
+          console.error("Failed to fetch user", err);
+        }
+      }
+      setIsLoading(false);
+    };
+
+    initializeAuth();
   }, []);
 
   const login = (newToken: string, newUser: User) => {
     setToken(newToken);
     setUser(newUser);
     localStorage.setItem('token', newToken);
-    localStorage.setItem('user', JSON.stringify(newUser));
   };
 
   const logout = () => {
     setToken(null);
     setUser(null);
     localStorage.removeItem('token');
-    localStorage.removeItem('user');
+  };
+
+  const updateUser = (newUser: User) => {
+    setUser(newUser);
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout }}>
+    <AuthContext.Provider value={{ user, token, isLoading, login, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   );

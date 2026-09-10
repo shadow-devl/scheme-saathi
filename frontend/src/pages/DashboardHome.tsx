@@ -50,10 +50,10 @@ export default function DashboardHome() {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 glass-panel p-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="lg:col-span-2 xl:col-span-3 glass-panel p-6">
           <h2 className="text-lg font-bold text-text-base mb-4">Revenue Overview</h2>
-          <div className="h-64 flex items-center justify-center border border-dashed border-border-subtle rounded-lg bg-white shadow-card rounded-[17px] border border-border-subtle/30">
+          <div className="h-64 flex items-center justify-center border border-dashed border-border-subtle rounded-xl bg-slate-50/50">
             <p className="text-text-muted flex flex-col items-center gap-2">
               <TrendingUp className="h-8 w-8 opacity-50" />
               Chart integration coming soon
@@ -66,12 +66,12 @@ export default function DashboardHome() {
           <div className="space-y-6">
             {recentActivity.map((activity) => (
               <div key={activity.id} className="flex gap-4 relative">
-                <div className="w-px h-full bg-bg-base absolute left-2.5 top-6"></div>
-                <div className="relative z-10 w-5 h-5 rounded-full bg-white shadow-card rounded-[17px] border border-border-subtle border border-blue-200 flex items-center justify-center shrink-0 mt-0.5">
+                <div className="w-px h-full bg-border-subtle absolute left-2.5 top-6"></div>
+                <div className="relative z-10 w-5 h-5 rounded-full bg-white border border-blue-200 flex items-center justify-center shrink-0 mt-0.5">
                   <div className="w-2 h-2 rounded-full bg-blue-400"></div>
                 </div>
                 <div>
-                  <p className="text-sm text-text-base">{activity.text}</p>
+                  <p className="text-sm font-medium text-text-base">{activity.text}</p>
                   <p className="text-xs text-text-muted mt-1">{activity.time}</p>
                 </div>
               </div>

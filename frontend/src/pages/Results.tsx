@@ -48,15 +48,15 @@ export default function Results() {
   const eligibleLoan = data.payload.estimated_cost * (scheme.max_loan_percentage / 100);
 
   return (
-    <div className="max-w-5xl mx-auto py-12 px-4 sm:px-6 relative z-10">
+    <div className="max-w-[1500px] mx-auto py-12 px-4 sm:px-6 relative z-10">
       <div className="mb-8">
         <h1 className="text-3xl font-extrabold text-text-base ">Your Recommendations</h1>
         <p className="text-text-muted mt-2 ">Based on your profile, here is the best scheme and nearest partners for you.</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         {/* Left Column: Scheme & Financials */}
-        <div className="lg:col-span-2 space-y-8">
+        <div className="lg:col-span-3 space-y-8">
           {/* Scheme Card */}
           <div className="glass-panel rounded-3xl shadow-sm border border-blue-200 overflow-hidden relative">
             <div className="absolute top-0 right-0 p-6 opacity-30">

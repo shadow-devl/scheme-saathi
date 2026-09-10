@@ -1,0 +1,32 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "findSchemes": "Trouver des régimes",
+    "compare": "Comparer",
+    "globalGov": "Gouvernement mondial",
+    "investors": "Investisseurs",
+    "dashboard": "Tableau de bord",
+    "logout": "Déconnexion",
+    "login": "Connexion / Inscription",
+    "language": "Langue",
+    "english": "English",
+    "hindi": "हिन्दी",
+    "marathi": "मराठी",
+    "tamil": "தமிழ்",
+    "spanish": "Español",
+    "french": "Français",
+    "german": "Deutsch"
+  },
+  "home": {
+    "heroTitle": "Autonomiser les entrepreneurs marginalisés avec",
+    "heroSubtitle": "Découvrez des régimes financiers, calculez votre EMI et trouvez les partenaires de réseau les plus proches en toute transparence. Votre voyage vers l'indépendance financière commence ici.",
+    "cta": "Trouver des régimes maintenant",
+    "featuresTitle": "Caractéristiques de la plateforme",
+    "feature1Title": "Moteur de recherche intelligent",
+    "feature1Desc": "Faites-nous part de vos besoins et de votre éligibilité, et notre moteur déterministe trouve instantanément le régime financier parfait pour vous.",
+    "feature2Title": "Calculatrice financière",
+    "feature2Desc": "Calcul transparent de l'EMI et du calendrier de remboursement en tenant compte des périodes de moratoire et des subventions.",
+    "feature3Title": "Localisateur de partenaires géospatial",
+    "feature3Desc": "Trouvez les partenaires de réseau actifs les plus proches avec des fonds disponibles pour traiter votre demande plus rapidement."
+  }
+}

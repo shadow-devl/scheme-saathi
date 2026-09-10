@@ -28,7 +28,7 @@ export default function IntakeForm() {
   };
 
   const handleLocation = async () => {
-    const useFallback = () => {
+    const applyFallback = () => {
       setFormData(prev => ({
         ...prev,
         latitude: '28.6139',
@@ -58,16 +58,16 @@ export default function IntakeForm() {
                 longitude: data.longitude.toString()
               }));
             } else {
-              useFallback();
+              applyFallback();
             }
           } catch(e) {
-            useFallback();
+            applyFallback();
           }
         },
         { timeout: 5000 }
       );
     } else {
-      useFallback();
+      applyFallback();
     }
   };
 
@@ -150,8 +150,8 @@ export default function IntakeForm() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto py-12 px-4 sm:px-6 relative z-10">
-      <div className="glass-panel rounded-3xl shadow-sm overflow-hidden border border-border-subtle">
+    <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 relative z-10">
+      <div className="glass-panel rounded-3xl shadow-lg overflow-hidden border border-border-subtle bg-white">
         
         {/* Header & Progress Bar */}
         <div className="bg-blue-50  px-8 py-6 border-b border-border-subtle">

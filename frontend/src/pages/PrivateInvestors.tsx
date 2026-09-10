@@ -189,7 +189,7 @@ export default function PrivateInvestors() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 relative z-10">
+    <div className="max-w-[1500px] mx-auto py-12 px-4 sm:px-6 lg:px-8 relative z-10">
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-text-base mb-4 ">Global Private Investors & VCs</h1>
         <p className="text-xl text-blue-100 max-w-3xl mx-auto ">
@@ -228,7 +228,7 @@ export default function PrivateInvestors() {
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {currentInvestors.map(inv => (
           <div key={inv.id} className="glass-panel rounded-2xl overflow-hidden border border-border-subtle hover:border-blue-200 transition-all hover:-translate-y-1 shadow-lg hover:shadow-blue-500/20 flex flex-col">
             <div className="p-6 flex-1">
@@ -269,7 +269,7 @@ export default function PrivateInvestors() {
                 href={inv.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full flex items-center justify-center gap-2 bg-blue-50 hover:bg-blue-600 text-primary hover:text-primary py-3 rounded-xl transition-all border border-blue-200 hover:border-transparent font-medium"
+                className="w-full flex items-center justify-center gap-2 bg-blue-50 hover:bg-blue-600 text-blue-800 hover:text-white py-3 rounded-xl transition-all border border-blue-200 hover:border-transparent font-medium"
               >
                 Visit Investor Website <ExternalLink className="w-4 h-4" />
               </a>

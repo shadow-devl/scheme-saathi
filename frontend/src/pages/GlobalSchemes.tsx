@@ -104,7 +104,7 @@ export default function GlobalSchemes() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+    <div className="max-w-[1500px] mx-auto py-12 px-4 sm:px-6 lg:px-8">
       <div className="mb-10 text-center">
         <h1 className="text-4xl font-extrabold text-text-base tracking-tight flex items-center justify-center gap-3">
           <Globe className="h-10 w-10 text-primary" />
@@ -116,7 +116,7 @@ export default function GlobalSchemes() {
       </div>
 
       {/* Filters */}
-      <div className="bg-white shadow-card rounded-[17px] border border-border-subtle/60  border-border-subtle p-4 rounded-xl shadow-sm border border-border-subtle mb-8 flex flex-col sm:flex-row gap-4 items-center justify-between">
+      <div className="bg-white rounded-2xl p-4 shadow-sm border border-border-subtle mb-8 flex flex-col sm:flex-row gap-4 items-center justify-between">
         <div className="relative w-full sm:w-96">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-text-muted" />
           <input 
@@ -124,7 +124,7 @@ export default function GlobalSchemes() {
             placeholder="Search schemes..." 
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-border-subtle rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none bg-white shadow-card rounded-[17px] border border-border-subtle/60 text-text-base border-border-subtle"
+            className="w-full pl-10 pr-4 py-3 border border-border-subtle rounded-xl focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none bg-slate-50 text-text-base transition-all"
           />
         </div>
         
@@ -133,7 +133,7 @@ export default function GlobalSchemes() {
           <select 
             value={selectedCountry}
             onChange={(e) => setSelectedCountry(e.target.value)}
-            className="w-full sm:w-48 bg-bg-base border border-border-subtle text-text-base text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+            className="w-full sm:w-48 bg-slate-50 border border-border-subtle text-text-base text-sm rounded-xl focus:ring-2 focus:ring-blue-600 outline-none block p-3 transition-all"
           >
             {countries.map(c => (
               <option key={c} value={c}>{c}</option>
@@ -143,9 +143,9 @@ export default function GlobalSchemes() {
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {currentSchemes.map((scheme) => (
-          <div key={scheme.id} className="bg-white shadow-card rounded-[17px] border border-border-subtle/60  border-border-subtle rounded-2xl p-6 shadow-sm border border-border-subtle hover:shadow-md transition-shadow flex flex-col">
+          <div key={scheme.id} className="bg-white rounded-2xl p-6 shadow-sm border border-border-subtle hover:shadow-lg hover:-translate-y-1 transition-all flex flex-col">
             <div className="flex justify-between items-start mb-4">
               <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full uppercase tracking-wider">
                 {scheme.country}
@@ -173,7 +173,7 @@ export default function GlobalSchemes() {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 bg-white shadow-card rounded-[17px] border border-border-subtle/60  border border-border-subtle p-4 rounded-xl shadow-sm w-fit mx-auto">
+        <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 bg-white border border-border-subtle p-3 rounded-2xl shadow-sm w-fit mx-auto">
           <button 
             onClick={handlePrev}
             disabled={currentPage === 1}

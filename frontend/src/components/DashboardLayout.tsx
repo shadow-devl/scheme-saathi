@@ -1,6 +1,7 @@
 import { ReactNode, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import DemoBanner from './DemoBanner';
 import { 
   Home, 
   Users, 
@@ -33,9 +34,11 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   ];
 
   return (
-    <div className="flex h-screen bg-bg-base text-text-base overflow-hidden relative">
-      {/* Mobile sidebar toggle */}
-      <div className="lg:hidden absolute top-4 left-4 z-50">
+    <div className="flex h-screen bg-bg-base text-text-base overflow-hidden relative flex-col">
+      <DemoBanner />
+      <div className="flex flex-1 overflow-hidden relative">
+        {/* Mobile sidebar toggle */}
+        <div className="lg:hidden absolute top-4 left-4 z-50">
         <button 
           onClick={() => setSidebarOpen(!sidebarOpen)}
           className="p-2 bg-white shadow-card rounded-[17px] border border-border-subtle border border-border-subtle rounded-md text-primary hover:bg-bg-base"
@@ -124,6 +127,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           {children}
         </div>
       </main>
+      </div>
     </div>
   );
 }

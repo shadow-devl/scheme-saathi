@@ -50,7 +50,7 @@ export default function ApplicantDashboard() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 relative z-10">
+    <div className="max-w-[1500px] mx-auto py-12 px-4 sm:px-6 lg:px-8 relative z-10">
       <div className="flex justify-between items-end mb-8">
         <div>
           <h1 className="text-3xl font-bold text-text-base mb-2 ">Applicant Dashboard</h1>
@@ -58,9 +58,9 @@ export default function ApplicantDashboard() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         {/* Applications List */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="lg:col-span-3 space-y-6">
           <h2 className="text-xl font-bold text-text-base ">Your Applications</h2>
           
           {loading ? (
@@ -128,9 +128,9 @@ export default function ApplicantDashboard() {
             
             <div className="space-y-4 mb-8">
               {documents.map(doc => (
-                <div key={doc.id} className="flex items-center justify-between p-4 bg-white  rounded-2xl border border-border-subtle hover:border-border-subtle transition-colors shadow-sm">
+                <div key={doc.id} className="flex items-center justify-between p-4 bg-slate-50 rounded-2xl border border-border-subtle hover:border-blue-200 transition-colors shadow-sm group">
                   <div className="flex items-center gap-3">
-                    <File className="w-5 h-5 text-primary" />
+                    <File className="w-5 h-5 text-primary opacity-80 group-hover:opacity-100 transition-opacity" />
                     <span className="text-sm font-medium text-text-base">{doc.name}</span>
                   </div>
                   {doc.status === 'Verified' ? (

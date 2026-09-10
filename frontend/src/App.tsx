@@ -5,6 +5,10 @@ import Home from './pages/Home';
 import IntakeForm from './pages/IntakeForm';
 import Results from './pages/Results';
 import Login from './pages/Login';
+import Register from './pages/Register';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
+import VerifyEmail from './pages/VerifyEmail';
 import DashboardHome from './pages/DashboardHome';
 import Settings from './pages/Settings';
 import BusinessProfile from './pages/BusinessProfile';
@@ -13,6 +17,7 @@ import Projects from './pages/Projects';
 import Finance from './pages/Finance';
 import Store from './pages/Store';
 import AIWorkflows from './pages/AIWorkflows';
+import CommunicationPreferences from './pages/CommunicationPreferences';
 import DashboardLayout from './components/DashboardLayout';
 import PartnerDashboard from './pages/PartnerDashboard';
 import AdminDashboard from './pages/AdminDashboard';
@@ -22,8 +27,14 @@ import Documentation from './pages/Documentation';
 import About from './pages/About';
 import Terms from './pages/Terms';
 import Compare from './pages/Compare';
-import Chatbot from './components/Chatbot';
-import AnimatedBackground from './components/AnimatedBackground';
+import FloatingGuide from './components/FloatingGuide';
+import AppLayout from './components/layout/AppLayout';
+import LegalCenter from './pages/legal/LegalCenter';
+import TermsOfService from './pages/legal/TermsOfService';
+import PrivacyPolicy from './pages/legal/PrivacyPolicy';
+import CookiePolicy from './pages/legal/CookiePolicy';
+import AcceptableUse from './pages/legal/AcceptableUse';
+import SecurityPolicy from './pages/legal/SecurityPolicy';
 import { type ReactNode } from 'react';
 
 function ProtectedRoute({ children, allowedRoles }: { children: ReactNode, allowedRoles?: string[] }) {
@@ -37,16 +48,28 @@ function AppRoutes() {
   return (
     <div className="min-h-screen flex flex-col font-sans text-text-base selection:bg-blue-50 relative">
       <Routes>
-        <Route path="/" element={<LayoutWithNav><Home /></LayoutWithNav>} />
-        <Route path="/login" element={<LayoutWithNav><Login /></LayoutWithNav>} />
-        <Route path="/apply" element={<LayoutWithNav><IntakeForm /></LayoutWithNav>} />
-        <Route path="/results" element={<LayoutWithNav><Results /></LayoutWithNav>} />
-        <Route path="/global-schemes" element={<LayoutWithNav><GlobalSchemes /></LayoutWithNav>} />
-        <Route path="/investors" element={<LayoutWithNav><PrivateInvestors /></LayoutWithNav>} />
-        <Route path="/compare" element={<LayoutWithNav><Compare /></LayoutWithNav>} />
-        <Route path="/docs" element={<LayoutWithNav><Documentation /></LayoutWithNav>} />
-        <Route path="/about" element={<LayoutWithNav><About /></LayoutWithNav>} />
-        <Route path="/terms" element={<LayoutWithNav><Terms /></LayoutWithNav>} />
+        <Route path="/" element={<AppLayout><Home /></AppLayout>} />
+        <Route path="/login" element={<AppLayout showFooter={false}><Login /></AppLayout>} />
+        <Route path="/register" element={<AppLayout showFooter={false}><Register /></AppLayout>} />
+        <Route path="/forgot-password" element={<AppLayout showFooter={false}><ForgotPassword /></AppLayout>} />
+        <Route path="/reset-password" element={<AppLayout showFooter={false}><ResetPassword /></AppLayout>} />
+        <Route path="/verify-email" element={<AppLayout showFooter={false}><VerifyEmail /></AppLayout>} />
+        <Route path="/apply" element={<AppLayout><IntakeForm /></AppLayout>} />
+        <Route path="/results" element={<AppLayout><Results /></AppLayout>} />
+        <Route path="/global-schemes" element={<AppLayout><GlobalSchemes /></AppLayout>} />
+        <Route path="/investors" element={<AppLayout><PrivateInvestors /></AppLayout>} />
+        <Route path="/compare" element={<AppLayout><Compare /></AppLayout>} />
+        <Route path="/docs" element={<AppLayout><Documentation /></AppLayout>} />
+        <Route path="/about" element={<AppLayout><About /></AppLayout>} />
+        <Route path="/terms" element={<Navigate to="/legal/terms" replace />} />
+        
+        {/* Legal Center Routes */}
+        <Route path="/legal" element={<AppLayout><LegalCenter /></AppLayout>} />
+        <Route path="/legal/terms" element={<AppLayout><TermsOfService /></AppLayout>} />
+        <Route path="/legal/privacy" element={<AppLayout><PrivacyPolicy /></AppLayout>} />
+        <Route path="/legal/cookies" element={<AppLayout><CookiePolicy /></AppLayout>} />
+        <Route path="/legal/acceptable-use" element={<AppLayout><AcceptableUse /></AppLayout>} />
+        <Route path="/legal/security" element={<AppLayout><SecurityPolicy /></AppLayout>} />
         
         {/* Protected Dashboard Routes */}
         <Route path="/dashboard/*" element={
@@ -60,6 +83,7 @@ function AppRoutes() {
                 <Route path="/store" element={<Store />} />
                 <Route path="/ai" element={<AIWorkflows />} />
                 <Route path="/settings" element={<Settings />} />
+                <Route path="/preferences" element={<CommunicationPreferences />} />
                 <Route path="/business-profile" element={<BusinessProfile />} />
               </Routes>
             </DashboardLayout>
@@ -68,46 +92,22 @@ function AppRoutes() {
         
         <Route path="/partner" element={
           <ProtectedRoute allowedRoles={['PARTNER']}>
-            <LayoutWithNav><PartnerDashboard /></LayoutWithNav>
+            <AppLayout><PartnerDashboard /></AppLayout>
           </ProtectedRoute>
         } />
         
         <Route path="/admin" element={
           <ProtectedRoute allowedRoles={['ADMIN']}>
-            <LayoutWithNav><AdminDashboard /></LayoutWithNav>
+            <AppLayout><AdminDashboard /></AppLayout>
           </ProtectedRoute>
         } />
       </Routes>
-      <Chatbot />
+      <FloatingGuide />
     </div>
   );
 }
 
-function LayoutWithNav({ children }: { children: ReactNode }) {
-  return (
-    <>
-      <AnimatedBackground />
-      <Navbar />
-      <main className="flex-grow z-10 relative">
-        {children}
-      </main>
-      <Footer />
-    </>
-  );
-}
-
-function Footer() {
-  return (
-    <footer className="glass-panel mt-auto py-8 text-center text-text-muted text-sm z-10 border-b-0 border-l-0 border-r-0">
-      <div className="mb-4 space-x-4">
-        <Link to="/about" className="hover:text-primary transition-colors">About</Link>
-        <Link to="/docs" className="hover:text-primary transition-colors">Documentation</Link>
-        <Link to="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
-      </div>
-      <p>© 2026 Scheme Saathi. All rights reserved.</p>
-    </footer>
-  );
-}
+// LayoutWithNav and Footer removed since we now use AppLayout and components/Footer.tsx
 
 export default function App() {
   return (

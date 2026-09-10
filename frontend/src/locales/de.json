@@ -1,0 +1,32 @@
+{
+  "nav": {
+    "home": "Startseite",
+    "findSchemes": "Programme finden",
+    "compare": "Vergleichen",
+    "globalGov": "Globale Regierung",
+    "investors": "Investoren",
+    "dashboard": "Dashboard",
+    "logout": "Abmelden",
+    "login": "Anmelden / Registrieren",
+    "language": "Sprache",
+    "english": "English",
+    "hindi": "हिन्दी",
+    "marathi": "मराठी",
+    "tamil": "தமிழ்",
+    "spanish": "Español",
+    "french": "Français",
+    "german": "Deutsch"
+  },
+  "home": {
+    "heroTitle": "Stärkung marginalisierter Unternehmer mit",
+    "heroSubtitle": "Entdecken Sie Finanzprogramme, berechnen Sie Ihre EMI und finden Sie nahtlos die nächstgelegenen Vertriebspartner. Ihre Reise in die finanzielle Unabhängigkeit beginnt hier.",
+    "cta": "Programme jetzt finden",
+    "featuresTitle": "Plattformfunktionen",
+    "feature1Title": "Intelligenter Programm-Matcher",
+    "feature1Desc": "Teilen Sie uns Ihre Bedürfnisse und Ihre Berechtigung mit, und unsere deterministische Engine findet sofort das perfekte Finanzprogramm für Sie.",
+    "feature2Title": "Finanzrechner",
+    "feature2Desc": "Transparente Berechnung von EMI und Rückzahlungsplan unter Berücksichtigung von Moratorien und Subventionen.",
+    "feature3Title": "Georäumliche Partnersuche",
+    "feature3Desc": "Finden Sie die nächstgelegenen aktiven Vertriebspartner mit verfügbaren Mitteln, um Ihren Antrag schneller zu bearbeiten."
+  }
+}

@@ -40,7 +40,7 @@ export default function PartnerDashboard() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 relative z-10">
+    <div className="max-w-[1500px] mx-auto py-12 px-4 sm:px-6 lg:px-8 relative z-10">
       <div className="flex justify-between items-end mb-8 border-b border-border-subtle pb-6 glass-panel p-6 rounded-2xl">
         <div>
           <h1 className="text-3xl font-bold text-text-base ">Partner Portal</h1>
@@ -69,7 +69,7 @@ export default function PartnerDashboard() {
                 <th className="px-6 py-4 text-right text-xs font-semibold text-text-muted uppercase tracking-wider">Action</th>
               </tr>
             </thead>
-            <tbody className="bg-transparent divide-y divide-white/10">
+            <tbody className="bg-transparent divide-y divide-border-subtle">
               {applications.map((app: any) => (
                 <tr key={app.application_id} className="hover:bg-white transition-colors">
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-text-base">{app.application_id}</td>

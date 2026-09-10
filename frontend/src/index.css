@@ -19,11 +19,24 @@
     background-color: var(--color-bg-base);
     color: var(--color-text-base);
     overflow-x: hidden;
+    @apply text-base md:text-lg leading-relaxed;
   }
 
   code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
       monospace;
+  }
+
+  /* Global typography scale */
+  h1, .h1 { @apply text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-tight mb-4; }
+  h2, .h2 { @apply text-3xl md:text-4xl font-bold tracking-tight text-slate-900 leading-snug mb-4; }
+  h3, .h3 { @apply text-2xl md:text-3xl font-semibold text-slate-900 leading-snug mb-3; }
+  h4, .h4 { @apply text-xl md:text-2xl font-semibold text-slate-800 leading-snug mb-3; }
+  p { @apply mb-4 text-slate-600; }
+  
+  /* Make sure high-contrast mode adjusts text properly */
+  html.high-contrast h1, html.high-contrast h2, html.high-contrast h3, html.high-contrast h4 {
+    color: #111827 !important;
   }
 }
 
@@ -81,6 +94,37 @@
 .animate-float-medium {
   animation: float-medium 15s ease-in-out infinite;
 }
+
 .animate-float-fast {
   animation: float-fast 10s ease-in-out infinite;
 }
+html.high-contrast {
+  filter: invert(0.88) hue-rotate(180deg) contrast(95%) brightness(1.2);
+  background-color: #f8fafc;
+}
+
+html.high-contrast img,
+html.high-contrast video {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* Ensure true high contrast for text in this mode */
+html.high-contrast * {
+  text-shadow: none !important;
+}
+
+html.high-contrast .dark-mode-bg {
+  /* This div inverts to a dark background. We ensure it's not pitch black. */
+  background-color: #e2e8f0 !important; /* inverts to a nice dark blue/grey slate */
+}
+
+html.high-contrast .watermark-logo {
+  mix-blend-mode: luminosity;
+  opacity: 0.25;
+}
+
+html.high-contrast .grid-mesh {
+  /* Make the grid slightly more visible on the dark background */
+  opacity: 0.15;
+}
+

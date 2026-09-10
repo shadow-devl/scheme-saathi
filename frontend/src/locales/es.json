@@ -1,0 +1,32 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "findSchemes": "Buscar Esquemas",
+    "compare": "Comparar",
+    "globalGov": "Gobierno Global",
+    "investors": "Inversores",
+    "dashboard": "Panel",
+    "logout": "Cerrar sesión",
+    "login": "Iniciar sesión / Registro",
+    "language": "Idioma",
+    "english": "English",
+    "hindi": "हिन्दी",
+    "marathi": "मराठी",
+    "tamil": "தமிழ்",
+    "spanish": "Español",
+    "french": "Français",
+    "german": "Deutsch"
+  },
+  "home": {
+    "heroTitle": "Empoderando a Emprendedores Marginados con",
+    "heroSubtitle": "Descubra esquemas financieros, calcule su EMI y encuentre los socios de canal más cercanos sin problemas. Su viaje hacia la independencia financiera comienza aquí.",
+    "cta": "Buscar Esquemas Ahora",
+    "featuresTitle": "Características de la Plataforma",
+    "feature1Title": "Buscador de Esquemas Inteligente",
+    "feature1Desc": "Díganos sus necesidades y elegibilidad, y nuestro motor determinista encontrará el esquema financiero perfecto para usted al instante.",
+    "feature2Title": "Calculadora Financiera",
+    "feature2Desc": "Cálculo transparente de EMI y calendario de pagos considerando períodos de moratoria y subsidios.",
+    "feature3Title": "Localizador Geoespacial de Socios",
+    "feature3Desc": "Encuentre los socios de canal activos más cercanos con fondos disponibles para procesar su solicitud más rápido."
+  }
+}

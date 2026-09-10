@@ -1,15 +1,40 @@
-import { Code, Layers, Zap, Globe, FileText } from 'lucide-react';
+import { Code, Layers, Zap, Globe, FileText, ChevronRight } from 'lucide-react';
 
 export default function Documentation() {
   return (
-    <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 relative z-10">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-text-base mb-4 ">Scheme Saathi Documentation</h1>
-        <p className="text-xl text-text-muted ">Technical implementation details and platform architecture.</p>
+    <div className="max-w-[1500px] mx-auto py-12 px-4 sm:px-6 relative z-10 flex flex-col md:flex-row gap-12">
+      {/* Sidebar Navigation */}
+      <div className="w-full md:w-64 flex-shrink-0">
+        <div className="sticky top-24 glass-panel p-6 rounded-2xl border border-border-subtle hidden md:block">
+           <h3 className="text-lg font-bold text-text-base mb-4">Contents</h3>
+           <nav className="space-y-3">
+              <a href="#matching-engine" className="flex items-center justify-between text-sm text-text-muted hover:text-primary transition-colors group">
+                 Matching Engine <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+              </a>
+              <a href="#data-collection" className="flex items-center justify-between text-sm text-text-muted hover:text-primary transition-colors group">
+                 Data Collection <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+              </a>
+              <a href="#global-directory" className="flex items-center justify-between text-sm text-text-muted hover:text-primary transition-colors group">
+                 Global Directory <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+              </a>
+              <a href="#documents" className="flex items-center justify-between text-sm text-text-muted hover:text-primary transition-colors group">
+                 Required Documents <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+              </a>
+              <a href="#emi-routing" className="flex items-center justify-between text-sm text-text-muted hover:text-primary transition-colors group">
+                 EMI & Routing <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+              </a>
+           </nav>
+        </div>
       </div>
 
-      <div className="space-y-12">
-        <section className="glass-panel rounded-2xl shadow-xl border border-border-subtle p-8">
+      <div className="flex-1 max-w-4xl">
+        <div className="mb-12">
+          <h1 className="text-4xl font-bold text-text-base mb-4 ">Scheme Saathi Documentation</h1>
+          <p className="text-xl text-text-muted ">Technical implementation details and platform architecture.</p>
+        </div>
+
+        <div className="space-y-12">
+          <section id="matching-engine" className="glass-panel rounded-2xl shadow-xl border border-border-subtle p-8 scroll-mt-24">
           <div className="flex items-center gap-3 mb-6">
             <Zap className="h-8 w-8 text-primary" />
             <h2 className="text-2xl font-bold text-text-base ">1. Scheme Matching Engine</h2>
@@ -22,7 +47,7 @@ export default function Documentation() {
           </div>
         </section>
 
-        <section className="glass-panel rounded-2xl shadow-xl border border-border-subtle p-8">
+        <section id="data-collection" className="glass-panel rounded-2xl shadow-xl border border-border-subtle p-8 scroll-mt-24">
           <div className="flex items-center gap-3 mb-6">
             <Layers className="h-8 w-8 text-primary" />
             <h2 className="text-2xl font-bold text-text-base ">2. Multi-Layer Data Collection</h2>
@@ -38,7 +63,7 @@ export default function Documentation() {
           </ul>
         </section>
 
-        <section className="glass-panel rounded-2xl shadow-xl border border-border-subtle p-8">
+        <section id="global-directory" className="glass-panel rounded-2xl shadow-xl border border-border-subtle p-8 scroll-mt-24">
           <div className="flex items-center gap-3 mb-6">
             <Globe className="h-8 w-8 text-primary" />
             <h2 className="text-2xl font-bold text-text-base ">3. Global Government Schemes Directory</h2>
@@ -51,7 +76,7 @@ export default function Documentation() {
           </div>
         </section>
 
-        <section className="glass-panel rounded-2xl shadow-xl border border-border-subtle p-8">
+        <section id="documents" className="glass-panel rounded-2xl shadow-xl border border-border-subtle p-8 scroll-mt-24">
           <div className="flex items-center gap-3 mb-6">
             <FileText className="h-8 w-8 text-primary" />
             <h2 className="text-2xl font-bold text-text-base ">4. Required Application Documents</h2>
@@ -79,7 +104,7 @@ export default function Documentation() {
           </div>
         </section>
 
-        <section className="glass-panel rounded-2xl shadow-xl border border-border-subtle p-8">
+        <section id="emi-routing" className="glass-panel rounded-2xl shadow-xl border border-border-subtle p-8 scroll-mt-24">
           <div className="flex items-center gap-3 mb-6">
             <Code className="h-8 w-8 text-primary" />
             <h2 className="text-2xl font-bold text-text-base ">5. EMI Calculator & Geo-Routing</h2>
@@ -87,7 +112,6 @@ export default function Documentation() {
           <p className="text-text-muted leading-relaxed">
             Equated Monthly Installments (EMI) are calculated dynamically on a reducing balance basis. The engine deducts any specified Moratorium periods. Post-matching, the system leverages the Haversine formula to compute great-circle distances and route the application to the nearest eligible partner institution based on active budgets and non-performing asset (NPA) thresholds.
           </p>
-        </section>
       </div>
     </div>
   );

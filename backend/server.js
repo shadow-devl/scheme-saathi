@@ -20,20 +20,10 @@ app.get('/', (req, res) => {
   });
 });
 
-// Middleware for JWT Authentication
-const authenticate = async (req, res, next) => {
-  const authHeader = req.headers.authorization;
-  if (!authHeader) return res.status(401).json({ error: 'Missing authorization header' });
-  
-  const token = authHeader.split(' ')[1];
-  try {
-    const decoded = jwt.verify(token, JWT_SECRET);
-    req.user = decoded; // { id, role, partner_id }
-    next();
-  } catch (err) {
-    res.status(401).json({ error: 'Invalid or expired token' });
-  }
-};
+// Import new Auth routes and middleware
+const authModule = require('./routes/auth');
+const authenticate = authModule.authenticate;
+const restrictDemoMode = authModule.restrictDemoMode;
 
 const requireRole = (role) => (req, res, next) => {
   if (req.user.role !== role) {
@@ -42,81 +32,15 @@ const requireRole = (role) => (req, res, next) => {
   next();
 };
 
-// ----------------------------------------
-// AUTH API
-// ----------------------------------------
-app.post('/api/auth/register', async (req, res) => {
-  try {
-    const { name, email, password } = req.body;
-    
-    const existing = await prisma.user.findUnique({ where: { email } });
-    if (existing) {
-      return res.status(400).json({ error: 'Email already exists' });
-    }
+app.use('/api/auth', authModule.router);
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-    
-    // Find APPLICANT role
-    let applicantRole = await prisma.role.findUnique({ where: { name: 'APPLICANT' } });
-    if (!applicantRole) {
-      applicantRole = await prisma.role.create({ data: { name: 'APPLICANT' } });
-    }
-    
-    const newUser = await prisma.user.create({
-      data: {
-        email,
-        name,
-        password: hashedPassword,
-        roles: {
-          create: {
-            roleId: applicantRole.id
-          }
-        }
-      },
-      include: { roles: { include: { role: true } } }
-    });
-    
-    const roleName = newUser.roles[0]?.role?.name || 'APPLICANT';
-    const token = jwt.sign({ id: newUser.id, role: roleName }, JWT_SECRET, { expiresIn: '1d' });
-    
-    res.json({ token, user: { id: newUser.id, name: newUser.name, role: roleName, email: newUser.email } });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Server error' });
-  }
-});
+const webhooksRouter = require('./routes/webhooks');
+app.use('/api/webhooks', webhooksRouter);
 
-app.post('/api/auth/login', async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const user = await prisma.user.findUnique({ 
-      where: { email },
-      include: { roles: { include: { role: true } } }
-    });
-    
-    if (!user) return res.status(400).json({ error: 'Invalid credentials' });
+const contactRouter = require('./routes/contact');
+app.use('/api/contact', contactRouter);
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ error: 'Invalid credentials' });
 
-    // Handle legacy partner_id from seed if necessary (in future we will use BusinessMember or OrgMember)
-    // For now we map role name
-    const roleName = user.roles[0]?.role?.name || 'APPLICANT';
-    let partnerId = null;
-    if (user.id === 'user_p1') {
-      partnerId = 'SCA_01'; // Mock for the seed partner
-    }
-
-    const token = jwt.sign({ id: user.id, role: roleName, partner_id: partnerId }, JWT_SECRET, { expiresIn: '1d' });
-    res.json({ token, user: { id: user.id, name: user.name, role: roleName, email: user.email, partner_id: partnerId } });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Server error' });
-  }
-});
-
-// ----------------------------------------
 // PUBLIC API (Calculators & Matching)
 // ----------------------------------------
 
