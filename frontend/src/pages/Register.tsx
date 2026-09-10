@@ -34,7 +34,7 @@ export default function Register() {
     
     const emailDomain = formData.email.split('@')[1]?.toLowerCase();
     if (!allowedEmailDomains.includes(emailDomain)) {
-      setError('Please use a Gmail or Microsoft email address.');
+      setError('Invalid email ID');
       return;
     }
 
