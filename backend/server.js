@@ -9,7 +9,12 @@ app.use(cors());
 app.use(express.json());
 
 const prisma = new PrismaClient();
-const JWT_SECRET = 'super_secret_suraj_key_2026';
+
+// Ensure critical environment variables are set before starting
+if (!process.env.JWT_SECRET) {
+  console.error('FATAL ERROR: JWT_SECRET is not defined in the environment.');
+  process.exit(1);
+}
 
 // Health check endpoint for the root URL
 app.get('/', (req, res) => {

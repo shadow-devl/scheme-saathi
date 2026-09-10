@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken');
 const { PrismaClient } = require('@prisma/client');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
+const { isValidEmailProvider } = require('../utils/emailValidator');
+const rateLimit = require('express-rate-limit');
 
 // Configure Nodemailer
 const transporter = nodemailer.createTransport({
@@ -18,7 +20,13 @@ const transporter = nodemailer.createTransport({
 
 const router = express.Router();
 const prisma = new PrismaClient();
-const JWT_SECRET = process.env.JWT_SECRET || 'super_secret_suraj_key_2026';
+const JWT_SECRET = process.env.JWT_SECRET;
+
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  message: { error: 'Too many requests from this IP, please try again later.' }
+});
 
 // Middleware for JWT Authentication
 const authenticate = async (req, res, next) => {
@@ -46,12 +54,25 @@ const restrictDemoMode = (req, res, next) => {
 // ----------------------------------------
 // Registration
 // ----------------------------------------
-router.post('/register', async (req, res) => {
+router.post('/register', authLimiter, async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
     
     if (!name || !email || !password || !role) {
       return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    if (!isValidEmailProvider(email)) {
+      return res.status(400).json({ error: 'Invalid email provider. Please use a Gmail or Microsoft email address.' });
+    }
+
+    if (password.length < 8) {
+      return res.status(400).json({ error: 'Password must be at least 8 characters long' });
+    }
+
+    const allowedRoles = ['USER', 'ENTREPRENEUR', 'INVESTOR', 'APPLICANT'];
+    if (!allowedRoles.includes(role)) {
+      return res.status(400).json({ error: 'Invalid or unauthorized role selection' });
     }
 
     const existing = await prisma.user.findUnique({ where: { email } });
@@ -112,10 +133,7 @@ router.post('/register', async (req, res) => {
       console.error('Failed to send verification email:', emailErr);
     }
     
-    const roleName = newUser.roles[0]?.role?.name || 'USER';
-    const token = jwt.sign({ id: newUser.id, role: roleName, isDemo: false, status: 'PENDING' }, JWT_SECRET, { expiresIn: '1d' });
-    
-    res.json({ token, user: { id: newUser.id, name: newUser.name, role: roleName, email: newUser.email, status: newUser.status, isDemo: false } });
+    res.json({ success: true, message: 'Registration successful. Please check your email to verify your account.' });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error' });
@@ -125,15 +143,23 @@ router.post('/register', async (req, res) => {
 // ----------------------------------------
 // Login
 // ----------------------------------------
-router.post('/login', async (req, res) => {
+router.post('/login', authLimiter, async (req, res) => {
   try {
     const { email, password } = req.body;
+
     const user = await prisma.user.findUnique({ 
       where: { email },
       include: { roles: { include: { role: true } } }
     });
     
     if (!user) return res.status(400).json({ error: 'Invalid credentials' });
+
+    const roleName = user.roles[0]?.role?.name || 'USER';
+    const isPublicUser = ['USER', 'ENTREPRENEUR', 'INVESTOR', 'APPLICANT'].includes(roleName);
+
+    if (isPublicUser && !isValidEmailProvider(email)) {
+      return res.status(400).json({ error: 'Invalid email provider.' });
+    }
 
     const isMatch = await bcrypt.compare(password, user.password || '');
     if (!isMatch) return res.status(400).json({ error: 'Invalid credentials' });
@@ -142,7 +168,9 @@ router.post('/login', async (req, res) => {
       return res.status(403).json({ error: 'Account is suspended. Please contact support.' });
     }
 
-    const roleName = user.roles[0]?.role?.name || 'USER';
+    if (user.status === 'PENDING') {
+      return res.status(403).json({ error: 'Please verify your email address to log in.' });
+    }
 
     const token = jwt.sign({ 
       id: user.id, 
@@ -193,7 +221,7 @@ router.post('/demo', async (req, res) => {
 // ----------------------------------------
 // Verify Email
 // ----------------------------------------
-router.post('/verify-email', async (req, res) => {
+router.post('/verify-email', authLimiter, async (req, res) => {
   try {
     const { token } = req.body;
     if (!token) return res.status(400).json({ error: 'Token is required' });
@@ -253,7 +281,7 @@ router.get('/me', authenticate, async (req, res) => {
 // ----------------------------------------
 // Forgot Password
 // ----------------------------------------
-router.post('/forgot-password', async (req, res) => {
+router.post('/forgot-password', authLimiter, async (req, res) => {
   try {
     const { email } = req.body;
     if (!email) return res.status(400).json({ error: 'Email is required' });
@@ -300,10 +328,14 @@ router.post('/forgot-password', async (req, res) => {
 // ----------------------------------------
 // Reset Password
 // ----------------------------------------
-router.post('/reset-password', async (req, res) => {
+router.post('/reset-password', authLimiter, async (req, res) => {
   try {
     const { token, password } = req.body;
     if (!token || !password) return res.status(400).json({ error: 'Token and password are required' });
+
+    if (password.length < 8) {
+      return res.status(400).json({ error: 'Password must be at least 8 characters long' });
+    }
 
     const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
     

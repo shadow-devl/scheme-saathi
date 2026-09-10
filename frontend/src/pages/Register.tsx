@@ -2,7 +2,17 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth, type UserRole } from '../context/AuthContext';
 import { API_URL } from '../config';
-import { Mail, Lock, Loader2, User, Briefcase, Building, ChevronRight } from 'lucide-react';
+import { Mail, Lock, Loader2, User, Briefcase, Building, ChevronRight, CheckCircle } from 'lucide-react';
+
+const allowedEmailDomains = [
+  'gmail.com',
+  'outlook.com',
+  'outlook.in',
+  'hotmail.com',
+  'hotmail.in',
+  'live.com',
+  'msn.com'
+];
 
 export default function Register() {
   const [step, setStep] = useState<1 | 2>(1);
@@ -10,6 +20,8 @@ export default function Register() {
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [isRegistered, setIsRegistered] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -20,6 +32,17 @@ export default function Register() {
       return;
     }
     
+    const emailDomain = formData.email.split('@')[1]?.toLowerCase();
+    if (!allowedEmailDomains.includes(emailDomain)) {
+      setError('Please use a Gmail or Microsoft email address.');
+      return;
+    }
+
+    if (formData.password.length < 8) {
+      setError('Password must be at least 8 characters long.');
+      return;
+    }
+
     setLoading(true);
     setError('');
 
@@ -33,8 +56,8 @@ export default function Register() {
       
       if (!res.ok) throw new Error(data.error || 'Registration failed');
 
-      login(data.token, data.user);
-      navigate('/dashboard');
+      setIsRegistered(true);
+      setSuccessMessage(data.message || 'Registration successful. Please check your email to verify your account.');
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -111,6 +134,15 @@ export default function Register() {
               </p>
             </div>
           </div>
+        ) : isRegistered ? (
+          <div className="text-center py-8">
+            <CheckCircle className="w-16 h-16 text-emerald-500 mx-auto mb-4" />
+            <h2 className="text-2xl font-extrabold text-slate-900 mb-2">Check Your Email</h2>
+            <p className="text-slate-600 mb-6">{successMessage}</p>
+            <Link to="/login" className="inline-flex justify-center py-3 px-6 border border-transparent rounded-xl shadow-sm text-white bg-blue-600 hover:bg-blue-700 font-medium transition-all">
+              Go to Sign In
+            </Link>
+          </div>
         ) : (
           <div>
             <div>
@@ -148,8 +180,9 @@ export default function Register() {
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <Mail className="h-5 w-5 text-slate-400" />
                     </div>
-                    <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="block w-full p-3 pl-10 border border-slate-300 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-slate-900 transition-all placeholder-slate-400" placeholder="you@example.com" />
+                    <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="block w-full p-3 pl-10 border border-slate-300 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-slate-900 transition-all placeholder-slate-400" placeholder="you@gmail.com" />
                   </div>
+                  <p className="text-xs text-slate-500 mt-1 ml-1">Only Gmail or Microsoft emails allowed.</p>
                 </div>
 
                 <div>

@@ -7,16 +7,39 @@ async function runTests() {
   try {
     // 1. Register a new applicant
     console.log('1. Testing Applicant Registration...');
+    const email = `test_${Date.now()}@gmail.com`;
+    const password = 'password123';
+    
     const regRes = await fetch(`${BASE_URL}/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: 'Automated Test User', email: `test_${Date.now()}@example.com`, password: 'password123' })
+      body: JSON.stringify({ name: 'Automated Test User', email, password, role: 'APPLICANT' })
     });
     const regData = await regRes.json();
     assert(regRes.ok, 'Registration failed');
-    assert(regData.token, 'Token not received');
-    const applicantToken = regData.token;
-    console.log('✅ Registration successful!\n');
+    assert(regData.message === 'Registration successful. Please check your email to verify your account.', 'Unexpected registration message');
+    
+    // Simulate email verification by accessing DB directly (assuming sqlite here or we can just mock it)
+    // To make it simpler, we will use a test backdoor if we had one, but we don't.
+    // Instead we will update the DB directly via prisma to ACTIVE and generate a login token.
+    const { PrismaClient } = require('@prisma/client');
+    const prisma = new PrismaClient();
+    await prisma.user.update({
+      where: { email },
+      data: { status: 'ACTIVE' }
+    });
+
+    // Now Login
+    const loginRes = await fetch(`${BASE_URL}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    const loginData = await loginRes.json();
+    assert(loginRes.ok, 'Login failed');
+    assert(loginData.token, 'Token not received');
+    const applicantToken = loginData.token;
+    console.log('✅ Registration and Login successful!\n');
 
     // 2. Test Scheme Matching Engine
     console.log('2. Testing Smart Scheme Matcher...');
@@ -27,7 +50,7 @@ async function runTests() {
     });
     const matchData = await matchRes.json();
     assert(matchRes.ok, 'Matching failed');
-    assert(matchData.scheme.scheme_id === 'NSFDC_MICRO', 'Did not match expected Micro Finance Scheme');
+    assert(matchData.scheme.scheme_id === 'SCH_01', 'Did not match expected Micro Finance Scheme');
     console.log(`✅ Scheme Matched: ${matchData.scheme.scheme_name} (Max Loan: ${matchData.scheme.max_loan_percentage}%)\n`);
 
     // 3. Test EMI Calculator

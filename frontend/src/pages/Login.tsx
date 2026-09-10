@@ -4,6 +4,16 @@ import { useAuth, type UserRole } from '../context/AuthContext';
 import { API_URL } from '../config';
 import { Lock, Mail, Loader2, KeyRound } from 'lucide-react';
 
+const allowedEmailDomains = [
+  'gmail.com',
+  'outlook.com',
+  'outlook.in',
+  'hotmail.com',
+  'hotmail.in',
+  'live.com',
+  'msn.com'
+];
+
 export default function Login() {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
@@ -14,6 +24,13 @@ export default function Login() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const emailDomain = formData.email.split('@')[1]?.toLowerCase();
+    if (!allowedEmailDomains.includes(emailDomain)) {
+      setError('Please use a Gmail or Microsoft email address.');
+      return;
+    }
+
     setLoading(true);
     setError('');
 
@@ -103,7 +120,7 @@ export default function Login() {
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <Mail className="h-5 w-5 text-slate-400" />
                 </div>
-                <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="block w-full p-3 pl-10 border border-slate-300 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-slate-900 transition-all placeholder-slate-400" placeholder="you@example.com" />
+                <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="block w-full p-3 pl-10 border border-slate-300 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-slate-900 transition-all placeholder-slate-400" placeholder="you@gmail.com" />
               </div>
             </div>
 
