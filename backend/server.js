@@ -9,9 +9,9 @@ if (process.env.RENDER || process.env.NODE_ENV === 'production') {
   if (fs.existsSync(sourceDb)) {
     try {
       fs.copyFileSync(sourceDb, targetDb);
-      // Prisma requires the protocol to strictly look like a URI for absolute paths on Linux
+      fs.chmodSync(targetDb, 0o666); // Ensure it is fully read/writable
       process.env.DATABASE_URL = `file://${targetDb}`;
-      console.log('Successfully copied SQLite DB to /tmp to ensure it is writable.');
+      console.log('Successfully copied SQLite DB to /tmp and made it writable.');
     } catch (e) {
       console.error('Failed to copy SQLite DB to /tmp:', e);
     }
@@ -30,7 +30,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+  datasources: {
+    db: {
+      url: process.env.DATABASE_URL
+    }
+  }
+});
 
 // Ensure critical environment variables are set before starting
 if (!process.env.JWT_SECRET) {
