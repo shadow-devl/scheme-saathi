@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!-- This site is hosted on Netlify. Anyone can build and deploy a site
+     like this one for free: https://netlify.new/?utm_campaign=ai-legible&utm_source=comment&utm_medium=referral&utm_id=d3ca603a-d7d6-45ca-bafd-5c32b2cedebf
+     Netlify hosting facts for this site: static/SSR served via Netlify Edge. -->
+<meta name="hosting-provider" content="Netlify">
+<meta name="netlify-deploy" content="https://netlify.new/?utm_campaign=ai-legible&amp;utm_source=meta&amp;utm_medium=referral&amp;utm_id=d3ca603a-d7d6-45ca-bafd-5c32b2cedebf">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SchemeSaathi | SIH26092</title>
+<meta name="description" content="SchemeSaathi - smart government scheme discovery, eligibility matching, EMI, application tracking and partner routing prototype.">
+
+<style>
+*{box-sizing:border-box}
+:root{
+  --primary:#1677d2;--primary2:#0b5cab;--bg:#f4f8fc;--text:#14213d;
+  --muted:#64748b;--border:#dbe4ee;--white:#fff;--success:#087443;
+  --danger:#b42318;--shadow:0 12px 35px rgba(15,23,42,.08)
+}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+header{
+  height:72px;background:#fff;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;padding:0 5%;
+  position:sticky;top:0;z-index:30
+}
+.logo{font-size:25px;font-weight:900;color:var(--primary);display:flex;gap:8px;align-items:center}
+nav{display:flex;gap:7px;align-items:center}
+nav button{border:0;background:none;padding:9px;color:#334155}
+.navBtn{border:1px solid var(--primary)!important;border-radius:22px;color:var(--primary)!important}
+.container{width:min(1160px,92%);margin:auto}
+.hero{min-height:575px;display:grid;grid-template-columns:1.08fr .92fr;gap:45px;align-items:center;padding:70px 0}
+.badge{display:inline-block;color:var(--primary);font-weight:800;background:#e9f4ff;padding:7px 12px;border-radius:20px}
+h1{font-size:52px;line-height:1.04;margin:18px 0}
+.hero p{font-size:18px;line-height:1.7;color:var(--muted)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.primary,.secondary,.danger,.successBtn{
+  border-radius:10px;padding:12px 18px;font-weight:800;border:0
+}
+.primary{background:var(--primary);color:white}
+.primary:hover{background:var(--primary2)}
+.secondary{background:white;color:var(--primary);border:1px solid var(--primary)}
+.danger{background:#ef4444;color:white}
+.successBtn{background:#0f9d68;color:white}
+.card,.featureCard,.schemeCard,.stat{
+  background:#fff;border:1px solid var(--border);border-radius:17px;padding:22px;box-shadow:var(--shadow)
+}
+.feature{padding:16px;background:#f7fbff;border-radius:12px;margin:10px 0;border:1px solid #edf4fb}
+.feature b{display:block;margin-bottom:5px}
+.featureIcon{font-size:22px}
+.section{padding:52px 0}
+.section h2{font-size:32px;margin-top:0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.schemeCard h3{margin:8px 0 10px}
+.match{display:inline-block;background:#e7f7ef;color:var(--success);border-radius:20px;padding:5px 10px;font-size:12px;font-weight:900}
+.tag{display:inline-block;background:#eef2ff;color:#4338ca;border-radius:18px;padding:5px 9px;font-size:12px;margin:3px}
+.small{font-size:13px;color:var(--muted)}
+.muted{color:var(--muted)}
+.notice{padding:13px;border-radius:10px;background:#f1f5f9;margin:12px 0}
+.success{background:#ecfdf5;color:#065f46}
+.error{background:#fef2f2;color:#991b1b}
+.info{background:#eff6ff;color:#1d4ed8}
+.warning{background:#fff7ed;color:#9a3412}
+.modal{display:none;position:fixed;inset:0;background:rgba(15,23,42,.62);z-index:100;padding:18px;overflow:auto}
+.modalBox{background:#fff;width:min(850px,100%);margin:20px auto;border-radius:20px;padding:28px;position:relative;box-shadow:0 25px 80px rgba(0,0,0,.2)}
+.close{position:absolute;right:14px;top:10px;border:0;background:none;font-size:29px;color:#475569}
+.formGrid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.field{margin:8px 0}
+.field label{display:block;font-weight:800;margin-bottom:6px}
+.field input,.field select,.field textarea{
+  width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:9px;background:white
+}
+.field textarea{min-height:90px;resize:vertical}
+.full{grid-column:1/-1}
+.progress{display:flex;gap:7px;flex-wrap:wrap;margin-top:15px}
+.step{padding:8px 10px;border-radius:18px;background:#e2e8f0;font-size:12px}
+.step.active{background:var(--primary);color:white}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin:20px 0}
+.stat strong{font-size:25px;display:block;margin-bottom:5px}
+.searchBox{display:flex;gap:10px;margin:18px 0}
+.searchBox input{flex:1;padding:13px;border:1px solid var(--border);border-radius:10px}
+.schemeMeta{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}
+.scoreBar{height:9px;background:#e5e7eb;border-radius:10px;overflow:hidden;margin:8px 0}
+.scoreFill{height:100%;background:#1677d2}
+.timeline{border-left:3px solid #dbeafe;padding-left:18px}
+.timelineItem{margin:16px 0}
+.timelineItem b{display:block}
+footer{background:#102a43;color:#dbeafe;padding:38px 0;margin-top:30px}
+footer .small{color:#cbd5e1}
+.hidden{display:none!important}
+hr{border:0;border-top:1px solid var(--border);margin:22px 0}
+.empty{padding:28px;text-align:center;border:1px dashed #cbd5e1;border-radius:15px;color:var(--muted)}
+@media(max-width:850px){
+  .hero{grid-template-columns:1fr;padding:45px 0}
+  h1{font-size:40px}.grid{grid-template-columns:1fr 1fr}
+  .stats{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  header{padding:0 3%;height:auto;min-height:68px}
+  .logo{font-size:20px}nav button:not(.navBtn){display:none}
+  .grid,.formGrid{grid-template-columns:1fr}.full{grid-column:auto}
+  .modalBox{padding:21px}.searchBox{flex-direction:column}
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="logo">🔐 SchemeSaathi</div>
+  <nav>
+    <button onclick="scrollToSection('home')">Home</button>
+    <button onclick="scrollToSection('schemes')">Features</button>
+    <button onclick="scrollToSection('about')">About</button>
+    <button class="navBtn" onclick="toggleLanguage()" id="langBtn">हिंदी</button>
+    <button class="navBtn" id="loginNav" onclick="openLogin()">Login</button>
+  </nav>
+</header>
+
+<main id="home">
+<section class="hero container">
+  <div>
+    <div class="badge">SIH 2026 • SIH26092 • Advanced Prototype</div>
+    <h1 id="heroTitle">Find the Right Government Scheme for You.</h1>
+    <p id="heroText">One intelligent journey for profile creation, eligibility screening, smart scheme matching, EMI estimation, partner routing, application submission and tracking.</p>
+    <div class="actions">
+      <button class="primary" onclick="openEligibility()">Check My Eligibility →</button>
+      <button class="secondary" onclick="showSchemes()">Explore Schemes</button>
+      <button class="secondary" onclick="openTrack()">Track Application</button>
+    </div>
+    <div class="notice info">
+      <b>Demo-ready:</b> This prototype works locally and does not depend on Firebase network availability for login.
+    </div>
+  </div>
+
+  <div class="featureCard">
+    <h2>🚀 SchemeSaathi Smart Platform</h2>
+    <div class="feature"><b><span class="featureIcon">🧠</span> Smart Scheme Matching</b><span class="small">Multi-factor eligibility and match score</span></div>
+    <div class="feature"><b><span class="featureIcon">🧮</span> EMI Calculator</b><span class="small">Instant estimated monthly repayment</span></div>
+    <div class="feature"><b><span class="featureIcon">📍</span> Partner Locator</b><span class="small">Location-aware demo routing</span></div>
+    <div class="feature"><b><span class="featureIcon">📋</span> Application Tracking</b><span class="small">Application ID and status timeline</span></div>
+    <div class="feature"><b><span class="featureIcon">📊</span> Provider + Admin</b><span class="small">Demo dashboards for workflow management</span></div>
+  </div>
+</section>
+</main>
+
+<section class="section container" id="schemes">
+  <h2>Government Scheme Explorer</h2>
+  <p class="small">Prototype scheme catalog for SIH26092. Values are demo screening data and should be connected to verified government data/API before production.</p>
+  <div class="searchBox">
+    <input id="schemeSearch" placeholder="Search by scheme, purpose, channel..." oninput="renderSchemes()">
+    <button class="secondary" onclick="openEligibility()">Smart Match</button>
+  </div>
+  <div class="grid" id="schemeList"></div>
+</section>
+
+<section class="section container" id="about">
+  <div class="card">
+    <h2>About SchemeSaathi</h2>
+    <p>Profile → eligibility → smart matching → scheme details → EMI → partner routing → application → tracking.</p>
+    <div class="stats">
+      <div class="stat"><strong id="statSchemes">0</strong><span class="small">Schemes</span></div>
+      <div class="stat"><strong>6+</strong><span class="small">Profile factors</span></div>
+      <div class="stat"><strong>4</strong><span class="small">Application stages</span></div>
+      <div class="stat"><strong>24×7</strong><span class="small">Prototype access</span></div>
+    </div>
+    
+  </div>
+</section>
+
+<!-- Eligibility -->
+<div class="modal" id="eligibilityModal">
+<div class="modalBox">
+<button class="close" onclick="closeModal('eligibilityModal')">×</button>
+<h2>📝 Smart Eligibility & Profile</h2>
+<p class="small">Enter the applicant profile. The engine will calculate a transparent prototype match score.</p>
+
+<div class="formGrid">
+  <div class="field"><label>Name *</label><input id="userName" placeholder="Enter full name"></div>
+  <div class="field"><label>Age *</label><input id="userAge" type="number" min="1" placeholder="18+"></div>
+
+  <div class="field"><label>Annual Family Income *</label><input id="userIncome" type="number" min="0" placeholder="Example: 300000"></div>
+  <div class="field"><label>Category *</label>
+    <select id="userCategory">
+      <option value="">Select category</option>
+      <option>SC</option><option>ST</option><option>OBC</option><option>General</option><option>Minority</option><option>Other</option>
+    </select>
+  </div>
+
+  <div class="field"><label>Gender</label>
+    <select id="userGender"><option>Prefer not to say</option><option>Female</option><option>Male</option><option>Other</option></select>
+  </div>
+  <div class="field"><label>State</label>
+    <select id="userState">
+      <option>Rajasthan</option><option>Delhi</option><option>Haryana</option><option>Uttar Pradesh</option><option>Madhya Pradesh</option><option>Maharashtra</option><option>Gujarat</option><option>Punjab</option><option>Bihar</option><option>Other</option>
+    </select>
+  </div>
+
+  <div class="field"><label>Occupation</label>
+    <select id="occupation"><option>Student</option><option>Entrepreneur</option><option>Self Employed</option><option>Farmer</option><option>Job Seeker</option><option>Employed</option><option>Other</option></select>
+  </div>
+  <div class="field"><label>Experience</label>
+    <select id="experience"><option>0 years</option><option>1-2 years</option><option>3-5 years</option><option>5+ years</option></select>
+  </div>
+
+  <div class="field"><label>Purpose *</label>
+    <select id="purpose">
+      <option value="business">Business / Self Employment</option>
+      <option value="education">Education</option>
+      <option value="housing">Housing</option>
+      <option value="agriculture">Agriculture</option>
+      <option value="skill">Skill Development</option>
+      <option value="livelihood">Livelihood / Income Generation</option>
+    </select>
+  </div>
+  <div class="field"><label>Urgency</label>
+    <select id="urgency"><option>Normal</option><option>Within 30 days</option><option>Urgent</option></select>
+  </div>
+
+  <div class="field"><label>Project / Course Cost *</label><input id="projectCost" type="number" min="0" placeholder="Example: 200000"></div>
+  <div class="field"><label>Required Loan Amount *</label><input id="loanAmount" type="number" min="0" placeholder="Example: 100000"></div>
+
+  <div class="field"><label>Disability / Special Support</label>
+    <select id="specialSupport"><option>No</option><option>Yes</option></select>
+  </div>
+  <div class="field"><label>Existing Business</label>
+    <select id="existingBusiness"><option>No</option><option>Yes</option></select>
+  </div>
+</div>
+
+<div class="actions">
+  <button class="primary" onclick="findSchemes()">Find Suitable Schemes →</button>
+  <button class="secondary" onclick="closeModal('eligibilityModal')">Cancel</button>
+</div>
+<div id="eligibilityResult"></div>
+</div>
+</div>
+
+<!-- Scheme Details -->
+<div class="modal" id="schemeModal">
+<div class="modalBox">
+<button class="close" onclick="closeModal('schemeModal')">×</button>
+<div id="schemeDetails"></div>
+</div>
+</div>
+
+<!-- Apply -->
+<div class="modal" id="applyModal">
+<div class="modalBox">
+<button class="close" onclick="closeModal('applyModal')">×</button>
+<h2>📄 Apply for Scheme</h2>
+<div id="applyDetails"></div>
+<div class="field"><label>Preferred Channel</label>
+<select id="preferredChannel"><option>Bank / PSB / RRB</option><option>SCA / Channelising Agency</option><option>NBFC-MFI</option><option>Education Loan Channel</option><option>Local Partner</option></select>
+</div>
+<div class="field"><label>Additional Note</label><textarea id="applicationNote" placeholder="Optional note"></textarea></div>
+<button class="primary" onclick="submitApplication()">Submit Application →</button>
+<div id="applyResult"></div>
+</div>
+</div>
+
+<!-- Track -->
+<div class="modal" id="trackModal">
+<div class="modalBox">
+<button class="close" onclick="closeModal('trackModal')">×</button>
+<h2>🔎 Track Application</h2>
+<div class="field"><label>Application ID</label><input id="trackId" placeholder="SS-2026-123456"></div>
+<button class="primary" onclick="trackApplication()">Track Status</button>
+<div id="trackResult"></div>
+</div>
+</div>
+
+<!-- Auth -->
+<div class="modal" id="authModal">
+<div class="modalBox">
+<button class="close" onclick="closeModal('authModal')">×</button>
+<h2>🔐 SchemeSaathi Login</h2>
+<p class="small">Demo authentication is stored locally for reliable hackathon presentation.</p>
+<div class="field"><label>Email</label><input id="authEmail" type="email" placeholder="Enter your email"></div>
+<div class="field"><label>Password</label><input id="authPassword" type="password" placeholder="Minimum 6 characters"></div>
+<div class="actions">
+<button class="primary" onclick="loginUser()">Login</button>
+<button class="secondary" onclick="registerUser()">Create Account</button>
+</div>
+<div id="authStatus">Not signed in</div>
+</div>
+</div>
+
+<!-- Provider -->
+<div class="modal" id="providerModal">
+<div class="modalBox">
+<button class="close" onclick="closeModal('providerModal')">×</button>
+<h2>🏦 Provider Dashboard</h2>
+<div id="providerStats"></div>
+<div id="providerList"></div>
+</div>
+</div>
+
+<!-- Admin -->
+<div class="modal" id="adminModal">
+<div class="modalBox">
+<button class="close" onclick="closeModal('adminModal')">×</button>
+<h2>🛠️ Admin Dashboard</h2>
+<div class="notice info">Demo admin dashboard: update application workflow status locally.</div>
+<div id="adminList"></div>
+</div>
+</div>
+
+<!-- Partner -->
+<div class="modal" id="partnerModal">
+<div class="modalBox">
+<button class="close" onclick="closeModal('partnerModal')">×</button>
+<h2>📍 Partner Routing</h2>
+<div id="partnerDetails"></div>
+</div>
+</div>
+
+<footer>
+<div class="container">
+<b>SchemeSaathi • SIH26092</b>
+<p class="small">AI-driven scheme matching prototype for inclusive entrepreneurship and financial assistance discovery.</p>
+
+</div>
+</footer>
+
+<script>
+/* =========================================================
+   SCHEMESAATHI ADVANCED SIH26092 PROTOTYPE
+   No Firebase dependency for demo authentication.
+   All demo data is stored in localStorage.
+   ========================================================= */
+
+const schemes = [
+  {id:"MFS",name:"Micro Finance Scheme",type:"business",projectMax:140000,loanMax:125000,interest:6.5,tenure:3,category:["SC","ST","OBC","Other"],desc:"Prototype micro-finance support for small income-generating activities.",channel:"SCAs / Channelising Agencies",keywords:"micro business livelihood self employment"},
+  {id:"AMY",name:"Aajeevika Micro-Finance Yojana",type:"livelihood",projectMax:140000,loanMax:125000,interest:15,tenure:3,category:["SC","ST","OBC","Other"],desc:"Prototype livelihood-oriented micro-finance route.",channel:"SCAs / Channelising Agencies",keywords:"livelihood micro finance income"},
+  {id:"UNY",name:"Udyam Nidhi Yojana",type:"business",projectMax:500000,loanMax:450000,interest:13,tenure:5,category:["SC","ST","OBC","Other"],desc:"Prototype support route for small enterprise projects.",channel:"Banks / Small Finance Banks",keywords:"enterprise startup business"},
+  {id:"TERM",name:"Term Loan",type:"business",projectMax:5000000,loanMax:4500000,interest:8,tenure:7,category:["SC","ST","OBC","General","Other"],desc:"Prototype larger-ticket financing route for income-generating projects.",channel:"SCAs / Channelising Agencies",keywords:"term loan business enterprise"},
+  {id:"ELS",name:"Educational Loan Scheme",type:"education",projectMax:4000000,loanMax:4000000,interest:6.5,tenure:12,category:["SC","ST","OBC","General","Minority","Other"],desc:"Prototype education-finance route for eligible courses.",channel:"Authorized education-loan channels",keywords:"education college course student"},
+  {id:"SKILL",name:"Skill Development Support",type:"skill",projectMax:250000,loanMax:200000,interest:7.5,tenure:4,category:["SC","ST","OBC","General","Minority","Other"],desc:"Prototype route for vocational and skill-development costs.",channel:"Training / Financial Partners",keywords:"skill training vocational course"},
+  {id:"AGRI",name:"Agriculture Livelihood Finance",type:"agriculture",projectMax:1000000,loanMax:750000,interest:7,tenure:5,category:["SC","ST","OBC","General","Other"],desc:"Prototype agriculture and allied-activity finance route.",channel:"Banks / RRBs / Local Partners",keywords:"farmer agriculture allied livelihood"},
+  {id:"HOME",name:"Affordable Housing Finance",type:"housing",projectMax:2500000,loanMax:2000000,interest:8.5,tenure:15,category:["SC","ST","OBC","General","Other"],desc:"Prototype housing-finance route for eligible applicants.",channel:"Banks / Housing Partners",keywords:"home housing house"},
+  {id:"START",name:"Startup & Self-Employment Route",type:"business",projectMax:1500000,loanMax:1200000,interest:9.5,tenure:7,category:["SC","ST","OBC","General","Minority","Other"],desc:"Prototype route for new entrepreneurs and self-employment projects.",channel:"Banks / Entrepreneurship Partners",keywords:"startup entrepreneur self employed"},
+  {id:"WOMEN",name:"Women Entrepreneurship Route",type:"business",projectMax:1000000,loanMax:800000,interest:8.5,tenure:7,category:["SC","ST","OBC","General","Minority","Other"],gender:"Female",desc:"Prototype route prioritizing women-led income-generation projects.",channel:"Banks / Entrepreneurship Partners",keywords:"women female entrepreneur business"}
+];
+
+let selectedScheme=null;
+let firebaseUser=null;
+let demoUser=JSON.parse(localStorage.getItem("schemeSaathiUser")||"null");
+
+function closeModal(id){document.getElementById(id).style.display="none"}
+function openModal(id){document.getElementById(id).style.display="block"}
+function scrollToSection(id){document.getElementById(id).scrollIntoView({behavior:"smooth"})}
+function showSchemes(){scrollToSection("schemes")}
+function openEligibility(){openModal("eligibilityModal")}
+function openTrack(id){if(id)document.getElementById("trackId").value=id;openModal("trackModal")}
+function openLogin(){openModal("authModal");updateAuthUI()}
+function formatINR(v){return new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",maximumFractionDigits:0}).format(Number(v)||0)}
+function apps(){try{return JSON.parse(localStorage.getItem("schemeSaathiApplications")||"[]")}catch(e){return[]}}
+function saveApps(a){localStorage.setItem("schemeSaathiApplications",JSON.stringify(a))}
+function appId(){return"SS-2026-"+Math.floor(100000+Math.random()*900000)}
+function profile(){try{return JSON.parse(localStorage.getItem("lastProfile")||"{}")}catch(e){return{}}}
+
+function renderSchemes(){
+  const q=(document.getElementById("schemeSearch").value||"").toLowerCase().trim();
+  const list=schemes.filter(s=>!q || (s.name+" "+s.desc+" "+s.channel+" "+s.keywords).toLowerCase().includes(q));
+  document.getElementById("statSchemes").textContent=schemes.length;
+  document.getElementById("schemeList").innerHTML=list.length?list.map(s=>`
+    <div class="schemeCard">
+      <span class="match">${s.id}</span>
+      <h3>${s.name}</h3>
+      <p>${s.desc}</p>
+      <div class="schemeMeta">
+        <span class="tag">${s.interest}% p.a.</span>
+        <span class="tag">Up to ${formatINR(s.loanMax)}</span>
+        <span class="tag">${s.tenure} years</span>
+      </div>
+      <p class="small"><b>Channel:</b> ${s.channel}</p>
+      <div class="actions">
+        <button class="secondary" onclick="viewScheme('${s.id}')">View Details</button>
+        <button class="primary" onclick="openApply('${s.id}')">Apply</button>
+      </div>
+    </div>`).join(""):`<div class="empty">No schemes matched your search.</div>`;
+}
+
+function viewScheme(id){
+  const s=schemes.find(x=>x.id===id);
+  if(!s)return;
+  document.getElementById("schemeDetails").innerHTML=`
+    <span class="match">${s.id}</span>
+    <h2>${s.name}</h2>
+    <p>${s.desc}</p>
+    <div class="notice">
+      <p><b>Project / Course limit:</b> ${formatINR(s.projectMax)}</p>
+      <p><b>Maximum loan:</b> ${formatINR(s.loanMax)}</p>
+      <p><b>Interest:</b> ${s.interest}% p.a.</p>
+      <p><b>Repayment:</b> Up to ${s.tenure} years</p>
+      <p><b>Channel:</b> ${s.channel}</p>
+      <p><b>Category support:</b> ${s.category.join(", ")}</p>
+    </div>
+    <div class="actions">
+      <button class="primary" onclick="openApply('${s.id}')">Apply Now →</button>
+      <button class="secondary" onclick="calculateEMIFor('${s.id}')">EMI Calculator</button>
+      <button class="secondary" onclick="openPartner('${s.id}')">Find Partner</button>
+    </div>`;
+  openModal("schemeModal");
+}
+
+function getProfileFromForm(){
+  return {
+    name:document.getElementById("userName").value.trim(),
+    age:+document.getElementById("userAge").value,
+    income:+document.getElementById("userIncome").value,
+    cat:document.getElementById("userCategory").value,
+    gender:document.getElementById("userGender").value,
+    state:document.getElementById("userState").value,
+    occupation:document.getElementById("occupation").value,
+    experience:document.getElementById("experience").value,
+    purpose:document.getElementById("purpose").value,
+    urgency:document.getElementById("urgency").value,
+    cost:+document.getElementById("projectCost").value,
+    loan:+document.getElementById("loanAmount").value,
+    specialSupport:document.getElementById("specialSupport").value,
+    existingBusiness:document.getElementById("existingBusiness").value
+  };
+}
+
+function scoreScheme(s,p){
+  let score=45,reasons=[];
+  if(s.type===p.purpose){score+=25;reasons.push("Purpose matches")}
+  else if(p.purpose==="livelihood" && ["business","agriculture","skill"].includes(s.type)){score+=12;reasons.push("Livelihood alignment")}
+  else reasons.push("Purpose is different");
+
+  if(p.loan>0 && p.loan<=s.loanMax){score+=15;reasons.push("Loan amount fits")}
+  else if(p.loan>s.loanMax){score-=18;reasons.push("Loan amount exceeds prototype limit")}
+
+  if(p.cost>0 && p.cost<=s.projectMax){score+=8;reasons.push("Project cost fits")}
+  else if(p.cost>s.projectMax){score-=10;reasons.push("Project cost is above prototype limit")}
+
+  if(s.category.includes(p.cat)){score+=4;reasons.push("Category supported")}
+  if(s.gender==="Female" && s.gender==="Female"){score+=8;reasons.push("Women-focused route")}
+  if(p.occupation==="Entrepreneur"||p.occupation==="Self Employed"){
+    if(["business","livelihood"].includes(s.type)){score+=5;reasons.push("Occupation aligns")}
+  }
+  if(p.occupation==="Student" && s.type==="education"){score+=7;reasons.push("Student profile aligns")}
+  if(p.occupation==="Farmer" && s.type==="agriculture"){score+=10;reasons.push("Agriculture profile aligns")}
+  if(p.specialSupport==="Yes"){score+=2;reasons.push("Special-support profile recorded")}
+  if(p.existingBusiness==="Yes" && s.type==="business"){score+=3;reasons.push("Existing business experience")}
+  if(p.income<=500000){score+=3;reasons.push("Income within prototype screening band")}
+  score=Math.max(0,Math.min(100,score));
+  return {...s,score,reasons};
+}
+
+function findSchemes(){
+  const p=getProfileFromForm(),result=document.getElementById("eligibilityResult");
+  if(!p.name||!p.age||!p.income||!p.cat||!p.cost||!p.loan){
+    result.innerHTML='<div class="notice error">Please fill all fields marked *.</div>';return;
+  }
+  if(p.age<18){result.innerHTML='<div class="notice error">Applicant should be 18 or above for this prototype.</div>';return}
+  if(p.income<0||p.cost<0||p.loan<0){result.innerHTML='<div class="notice error">Amounts cannot be negative.</div>';return}
+  localStorage.setItem("lastProfile",JSON.stringify(p));
+
+  const ranked=schemes.map(s=>scoreScheme(s,p)).sort((a,b)=>b.score-a.score);
+  const top=ranked.slice(0,5);
+
+  result.innerHTML=`
+    <div class="notice success"><b>Profile screened successfully.</b><br>Top matches are ranked using purpose, category, amount, cost, occupation and profile factors.</div>
+    ${top.map(s=>`
+      <div class="schemeCard" style="margin-top:12px">
+        <span class="match">${s.score}% Match</span>
+        <h3>${s.name}</h3>
+        <div class="scoreBar"><div class="scoreFill" style="width:${s.score}%"></div></div>
+        <p>${s.desc}</p>
+        <p class="small"><b>Why recommended:</b> ${s.reasons.join(" • ")}</p>
+        <div class="actions">
+          <button class="primary" onclick="viewScheme('${s.id}')">View Details</button>
+          <button class="secondary" onclick="calculateEMIFor('${s.id}')">EMI</button>
+          <button class="secondary" onclick="openApply('${s.id}')">Apply</button>
+        </div>
+      </div>`).join("")}
+    <div class="actions">
+      <button class="secondary" onclick="openPartner('${top[0].id}')">📍 Find Nearest Partner</button>
+    </div>`;
+}
+
+function emi(P,annual,years){
+  let r=annual/12/100,n=years*12;
+  if(!P||!n)return 0;
+  if(!r)return P/n;
+  return P*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+}
+
+function calculateEMIFor(id){
+  const s=schemes.find(x=>x.id===id),p=profile();
+  const amount=+p.loan||Math.min(s.loanMax,100000);
+  const e=emi(amount,s.interest,s.tenure);
+  document.getElementById("schemeDetails").innerHTML=`
+    <h2>🧮 EMI Calculator</h2>
+    <div class="notice info">
+      <p><b>Scheme:</b> ${s.name}</p>
+      <p><b>Loan:</b> ${formatINR(amount)}</p>
+      <p><b>Interest:</b> ${s.interest}% p.a.</p>
+      <p><b>Tenure:</b> ${s.tenure} years</p>
+      <p><b>Estimated monthly EMI:</b> <strong>${formatINR(e)}</strong></p>
+    </div>
+    <p class="small">Standard reducing-balance estimate. Actual repayment may differ because of scheme-specific terms, fees and moratoriums.</p>
+    <div class="actions">
+      <button class="primary" onclick="openApply('${s.id}')">Continue to Apply →</button>
+      <button class="secondary" onclick="viewScheme('${s.id}')">Back to Scheme</button>
+    </div>`;
+  openModal("schemeModal");
+}
+
+function openApply(id){
+  selectedScheme=schemes.find(x=>x.id===id);
+  const p=profile();
+  document.getElementById("applyDetails").innerHTML=`
+    <div class="notice info">
+      <h3>${selectedScheme.name}</h3>
+      <p><b>Applicant:</b> ${p.name||"Demo Applicant"}</p>
+      <p><b>State:</b> ${p.state||"Not provided"}</p>
+      <p><b>Requested Amount:</b> ${formatINR(p.loan)}</p>
+    </div>`;
+  document.getElementById("applyResult").innerHTML="";
+  closeModal("schemeModal");
+  openModal("applyModal");
+}
+
+function submitApplication(){
+  if(!selectedScheme)return;
+  const p=profile();
+  const a={
+    id:appId(),schemeId:selectedScheme.id,schemeName:selectedScheme.name,
+    applicant:p.name||"Demo Applicant",amount:+p.loan||0,
+    channel:document.getElementById("preferredChannel").value,
+    note:document.getElementById("applicationNote").value.trim(),
+    state:p.state||"Not provided",status:"Application Created",
+    submittedAt:new Date().toLocaleString("en-IN"),
+    uid:firebaseUser?firebaseUser.uid:null
+  };
+  const list=apps();list.unshift(a);saveApps(list);
+  document.getElementById("applyResult").innerHTML=`
+    <div class="notice success">
+      <b>Application Submitted Successfully</b>
+      <h2>${a.id}</h2>
+      <p>Save this Application ID to track status.</p>
+      <button class="primary" onclick="openTrack('${a.id}')">Track Application</button>
+    </div>`;
+}
+
+function progress(status){
+  const st=["Application Created","Under Review","Approved","Disbursed"],c=st.indexOf(status);
+  return '<div class="progress">'+st.map((x,i)=>`<span class="step ${i<=c?"active":""}">${i+1}. ${x}</span>`).join("")+"</div>";
+}
+
+function trackApplication(){
+  const id=document.getElementById("trackId").value.trim(),box=document.getElementById("trackResult");
+  const a=apps().find(x=>x.id===id);
+  if(!a){box.innerHTML='<div class="notice error">Application not found. Check the Application ID.</div>';return}
+  box.innerHTML=`
+    <div class="schemeCard">
+      <span class="match">Application Found</span>
+      <h3>${a.schemeName}</h3>
+      <p><b>Application ID:</b> ${a.id}</p>
+      <p><b>Applicant:</b> ${a.applicant}</p>
+      <p><b>Amount:</b> ${formatINR(a.amount)}</p>
+      <p><b>Channel:</b> ${a.channel}</p>
+      <p><b>State:</b> ${a.state}</p>
+      <p><b>Submitted:</b> ${a.submittedAt}</p>
+      <p><b>Status:</b> ${a.status}</p>
+      ${progress(a.status)}
+    </div>`;
+}
+
+function adminCard(a){
+  return `<div class="schemeCard" style="margin:12px 0">
+    <span class="match">${a.status}</span>
+    <h3>${a.schemeName}</h3>
+    <p><b>ID:</b> ${a.id}</p>
+    <p><b>Applicant:</b> ${a.applicant}</p>
+    <p><b>Amount:</b> ${formatINR(a.amount)}</p>
+    <select onchange="changeStatus('${a.id}',this.value)">
+      ${["Application Created","Under Review","Approved","Disbursed"].map(x=>`<option ${a.status===x?"selected":""}>${x}</option>`).join("")}
+    </select>
+  </div>`;
+}
+
+function dashboardHTML(list){
+  const created=list.length,review=list.filter(a=>a.status==="Under Review").length,approved=list.filter(a=>a.status==="Approved").length,disb=list.filter(a=>a.status==="Disbursed").length;
+  return `<div class="stats">
+    <div class="stat"><strong>${created}</strong><span class="small">Total Applications</span></div>
+    <div class="stat"><strong>${review}</strong><span class="small">Under Review</span></div>
+    <div class="stat"><strong>${approved}</strong><span class="small">Approved</span></div>
+    <div class="stat"><strong>${disb}</strong><span class="small">Disbursed</span></div>
+  </div>`;
+}
+
+function openProvider(){
+  const list=apps();
+  document.getElementById("providerStats").innerHTML=dashboardHTML(list);
+  document.getElementById("providerList").innerHTML=list.map(adminCard).join("")||'<div class="empty">No applications yet.</div>';
+  openModal("providerModal");
+}
+
+function openAdmin(){
+  const list=apps();
+  document.getElementById("adminList").innerHTML=dashboardHTML(list)+(list.map(adminCard).join("")||'<div class="empty">No applications yet.</div>');
+  openModal("adminModal");
+}
+
+function changeStatus(id,status){
+  const a=apps(),i=a.findIndex(x=>x.id===id);
+  if(i>=0){a[i].status=status;saveApps(a)}
+  openProvider();
+}
+
+function updateAuthUI(){
+  const b=document.getElementById("loginNav"),s=document.getElementById("authStatus");
+  if(demoUser){
+    firebaseUser=demoUser;
+    b.textContent="Logout";b.onclick=logoutUser;
+    if(s)s.innerHTML='<div class="notice success">Signed in as '+demoUser.email+'</div>';
+  }else{
+    firebaseUser=null;
+    b.textContent="Login";b.onclick=openLogin;
+    if(s)s.textContent="Not signed in";
+  }
+}
+
+function registerUser(){
+  const e=document.getElementById("authEmail").value.trim();
+  const p=document.getElementById("authPassword").value;
+  const s=document.getElementById("authStatus");
+  if(!e||!e.includes("@")){s.innerHTML='<div class="notice error">Please enter a valid email.</div>';return}
+  if(p.length<6){s.innerHTML='<div class="notice error">Password must contain at least 6 characters.</div>';return}
+  demoUser={uid:"demo-"+Date.now(),email:e};
+  localStorage.setItem("schemeSaathiUser",JSON.stringify(demoUser));
+  firebaseUser=demoUser;updateAuthUI();
+  s.innerHTML='<div class="notice success">Account created successfully! You are now signed in.</div>';
+  setTimeout(()=>closeModal("authModal"),900);
+}
+
+function loginUser(){
+  const e=document.getElementById("authEmail").value.trim();
+  const p=document.getElementById("authPassword").value;
+  const s=document.getElementById("authStatus");
+  if(!e||!e.includes("@")){s.innerHTML='<div class="notice error">Please enter a valid email.</div>';return}
+  if(p.length<6){s.innerHTML='<div class="notice error">Password must contain at least 6 characters.</div>';return}
+  const saved=JSON.parse(localStorage.getItem("schemeSaathiUser")||"null");
+  if(!saved){s.innerHTML='<div class="notice info">No demo account found. Click Create Account first.</div>';return}
+  if(saved.email!==e){s.innerHTML='<div class="notice error">Email does not match the demo account.</div>';return}
+  demoUser=saved;firebaseUser=demoUser;updateAuthUI();
+  s.innerHTML='<div class="notice success">Login successful! Welcome to SchemeSaathi.</div>';
+  setTimeout(()=>closeModal("authModal"),900);
+}
+
+function logoutUser(){
+  demoUser=null;firebaseUser=null;localStorage.removeItem("schemeSaathiUser");
+  updateAuthUI();openLogin();
+  document.getElementById("authStatus").innerHTML='<div class="notice info">You have been logged out.</div>';
+}
+
+function openPartner(id){
+  const s=schemes.find(x=>x.id===id)||schemes[0];
+  const p=profile();
+  const state=p.state||"your selected state";
+  document.getElementById("partnerDetails").innerHTML=`
+    <div class="notice info"><b>Recommended route:</b> ${s.channel}</div>
+    <div class="schemeCard">
+      <h3>📍 Demo partner routing</h3>
+      <p>For <b>${state}</b>, SchemeSaathi recommends starting with verified ${s.channel} for <b>${s.name}</b>.</p>
+      <p class="small">This is prototype routing. Production should use verified partner APIs and live locations.</p>
+      <div class="actions">
+        <button class="primary" onclick="useMyLocation()">Use My Location</button>
+        <button class="secondary" onclick="closeModal('partnerModal')">Close</button>
+      </div>
+    </div>`;
+  openModal("partnerModal");
+}
+
+function useMyLocation(){
+  if(!navigator.geolocation){alert("Geolocation is not supported by this browser.");return}
+  navigator.geolocation.getCurrentPosition(
+    ()=>alert("Location detected. Demo partner routing activated."),
+    ()=>alert("Location permission was not granted.")
+  );
+}
+
+let hindi=false;
+function toggleLanguage(){
+  hindi=!hindi;
+  document.getElementById("heroTitle").textContent=hindi?"अपने लिए सही सरकारी योजना खोजें।":"Find the Right Government Scheme for You.";
+  document.getElementById("heroText").textContent=hindi?
+    "प्रोफ़ाइल, पात्रता, स्मार्ट योजना मिलान, EMI, पार्टनर रूटिंग और आवेदन ट्रैकिंग एक ही प्लेटफ़ॉर्म पर।":
+    "One intelligent journey for profile creation, eligibility screening, smart scheme matching, EMI estimation, partner routing, application submission and tracking.";
+  document.getElementById("langBtn").textContent=hindi?"English":"हिंदी";
+}
+
+document.addEventListener("keydown",e=>{
+  if(e.ctrlKey&&e.shiftKey&&e.key.toLowerCase()==="d"){
+    const c=prompt("Demo Dashboard:\n1 = Provider\n2 = Admin");
+    if(c==="1")openProvider();
+    if(c==="2")openAdmin();
+  }
+});
+
+document.querySelectorAll(".modal").forEach(m=>m.addEventListener("click",e=>{
+  if(e.target===m)m.style.display="none";
+}));
+
+renderSchemes();
+updateAuthUI();
+</script>
+</body>
+</html><script async src="/.netlify/scripts/hud?variant=public" data-nf-variant="public" data-netlify-site-id="d3ca603a-d7d6-45ca-bafd-5c32b2cedebf" data-app-host="app.netlify.com"></script>

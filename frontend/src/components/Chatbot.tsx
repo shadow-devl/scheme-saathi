@@ -4,7 +4,7 @@ import { MessageSquare, X, Send } from 'lucide-react';
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<{role: 'user' | 'bot', text: string}[]>([
-    { role: 'bot', text: 'Hello! I am the Avenik Core AI Assistant. How can I help you find the right financial scheme today?' }
+    { role: 'bot', text: 'Hello! I am the Scheme Saathi AI Assistant. How can I help you find the right financial scheme today?' }
   ]);
   const [input, setInput] = useState('');
 
@@ -46,28 +46,28 @@ export default function Chatbot() {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 w-80 sm:w-96 bg-gray-900/60 backdrop-blur-md border-gray-800 rounded-2xl shadow-2xl border border-gray-700 z-50 overflow-hidden flex flex-col h-[500px] max-h-[80vh]">
+        <div className="fixed bottom-6 right-6 w-80 sm:w-96 bg-white shadow-card rounded-[17px] border border-border-subtle/60  border-border-subtle rounded-2xl shadow-2xl border border-border-subtle z-50 overflow-hidden flex flex-col h-[500px] max-h-[80vh]">
           {/* Header */}
-          <div className="bg-blue-600/90 backdrop-blur-md text-white p-4 flex justify-between items-center shadow-lg border-b border-blue-500/50">
+          <div className="bg-blue-50  text-text-base p-4 flex justify-between items-center shadow-lg border-b border-blue-200">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg overflow-hidden shadow-inner border border-blue-400/30">
-                <img src="./logo.jpg" alt="Avenik Core AI" className="w-full h-full object-cover" />
+              <div className="w-8 h-8 rounded-lg overflow-hidden shadow-inner border border-blue-200">
+                <img src="./logo.jpg" alt="Scheme Saathi AI" className="w-full h-full object-cover" />
               </div>
               <div>
-                <h3 className="font-bold text-sm leading-none">Avenik Core AI</h3>
+                <h3 className="font-bold text-sm leading-none">Scheme Saathi AI</h3>
                 <span className="text-xs text-blue-200">Online</span>
               </div>
             </div>
-            <button onClick={() => setIsOpen(false)} className="text-white hover:text-blue-200 bg-white/10 p-1 rounded-md transition-colors">
+            <button onClick={() => setIsOpen(false)} className="text-text-muted hover:text-text-base bg-slate-50 p-1 rounded-md transition-colors">
               <X className="w-5 h-5" />
             </button>
           </div>
 
           {/* Messages Area */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-800/50">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-bg-base">
             {messages.map((msg, idx) => (
               <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[80%] p-3 rounded-2xl ${msg.role === 'user' ? 'bg-blue-600 text-white rounded-br-none' : 'bg-gray-900/60 backdrop-blur-md border-gray-800 border text-gray-100 rounded-bl-none shadow-sm'}`}>
+                <div className={`max-w-[80%] p-3 rounded-2xl ${msg.role === 'user' ? 'bg-blue-600 text-text-base rounded-br-none' : 'bg-white shadow-card rounded-[17px] border border-border-subtle/60  border-border-subtle border text-text-base rounded-bl-none shadow-sm'}`}>
                   <p className="text-sm">{msg.text}</p>
                 </div>
               </div>
@@ -75,7 +75,7 @@ export default function Chatbot() {
           </div>
 
           {/* Input Area */}
-          <div className="p-4 bg-gray-900/60 backdrop-blur-md border-gray-800 border-t">
+          <div className="p-4 bg-white shadow-card rounded-[17px] border border-border-subtle/60  border-border-subtle border-t">
             <div className="flex gap-2">
               <input 
                 type="text" 

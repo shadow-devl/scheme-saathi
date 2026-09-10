@@ -22,10 +22,10 @@ export default function DashboardHome() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-100">Welcome back, {user?.name || 'Entrepreneur'}</h1>
-          <p className="text-gray-400 mt-1">Here is what's happening with your business today.</p>
+          <h1 className="text-2xl font-bold text-text-base">Welcome back, {user?.name || 'Entrepreneur'}</h1>
+          <p className="text-text-muted mt-1">Here is what's happening with your business today.</p>
         </div>
-        <button className="glass-panel px-4 py-2 flex items-center gap-2 hover:bg-blue-500/10 hover:border-blue-500/50 transition-colors text-blue-400 font-medium">
+        <button className="glass-panel px-4 py-2 flex items-center gap-2 hover:bg-blue-50 hover:border-blue-200 transition-colors text-primary font-medium">
           New Quick Action
         </button>
       </div>
@@ -34,17 +34,17 @@ export default function DashboardHome() {
         {stats.map((stat) => (
           <div key={stat.name} className="glass-panel p-6 flex flex-col">
             <div className="flex items-center justify-between">
-              <div className="p-2 bg-blue-500/10 rounded-lg border border-blue-500/20">
-                <stat.icon className="h-5 w-5 text-blue-400" />
+              <div className="p-2 bg-blue-50 rounded-lg border border-blue-200">
+                <stat.icon className="h-5 w-5 text-primary" />
               </div>
-              <span className="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20">
+              <span className="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium bg-blue-50 text-primary border border-blue-200">
                 {stat.change}
                 <ArrowUpRight className="ml-1 h-3 w-3" />
               </span>
             </div>
             <div className="mt-4">
-              <h3 className="text-3xl font-bold text-gray-100">{stat.value}</h3>
-              <p className="text-sm text-gray-400 mt-1">{stat.name}</p>
+              <h3 className="text-3xl font-bold text-text-base">{stat.value}</h3>
+              <p className="text-sm text-text-muted mt-1">{stat.name}</p>
             </div>
           </div>
         ))}
@@ -52,9 +52,9 @@ export default function DashboardHome() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 glass-panel p-6">
-          <h2 className="text-lg font-bold text-gray-100 mb-4">Revenue Overview</h2>
-          <div className="h-64 flex items-center justify-center border border-dashed border-gray-700 rounded-lg bg-gray-900/30">
-            <p className="text-gray-500 flex flex-col items-center gap-2">
+          <h2 className="text-lg font-bold text-text-base mb-4">Revenue Overview</h2>
+          <div className="h-64 flex items-center justify-center border border-dashed border-border-subtle rounded-lg bg-white shadow-card rounded-[17px] border border-border-subtle/30">
+            <p className="text-text-muted flex flex-col items-center gap-2">
               <TrendingUp className="h-8 w-8 opacity-50" />
               Chart integration coming soon
             </p>
@@ -62,17 +62,17 @@ export default function DashboardHome() {
         </div>
 
         <div className="glass-panel p-6">
-          <h2 className="text-lg font-bold text-gray-100 mb-4">Recent Activity</h2>
+          <h2 className="text-lg font-bold text-text-base mb-4">Recent Activity</h2>
           <div className="space-y-6">
             {recentActivity.map((activity) => (
               <div key={activity.id} className="flex gap-4 relative">
-                <div className="w-px h-full bg-gray-800 absolute left-2.5 top-6"></div>
-                <div className="relative z-10 w-5 h-5 rounded-full bg-gray-900 border border-blue-500/50 flex items-center justify-center shrink-0 mt-0.5">
+                <div className="w-px h-full bg-bg-base absolute left-2.5 top-6"></div>
+                <div className="relative z-10 w-5 h-5 rounded-full bg-white shadow-card rounded-[17px] border border-border-subtle border border-blue-200 flex items-center justify-center shrink-0 mt-0.5">
                   <div className="w-2 h-2 rounded-full bg-blue-400"></div>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-200">{activity.text}</p>
-                  <p className="text-xs text-gray-500 mt-1">{activity.time}</p>
+                  <p className="text-sm text-text-base">{activity.text}</p>
+                  <p className="text-xs text-text-muted mt-1">{activity.time}</p>
                 </div>
               </div>
             ))}

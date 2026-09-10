@@ -31,8 +31,8 @@ export default function Compare() {
   return (
     <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
       <div className="text-center mb-12">
-        <h1 className="text-3xl font-bold text-white sm:text-4xl">Compare Financial Schemes</h1>
-        <p className="mt-4 text-lg text-gray-400 max-w-2xl mx-auto">
+        <h1 className="text-3xl font-bold text-text-base sm:text-4xl">Compare Financial Schemes</h1>
+        <p className="mt-4 text-lg text-text-muted max-w-2xl mx-auto">
           Select up to 3 schemes below to see a side-by-side comparison of interest rates, loan amounts, and eligibility.
         </p>
       </div>
@@ -44,58 +44,58 @@ export default function Compare() {
             onClick={() => toggleScheme(scheme.id)}
             className={`cursor-pointer p-4 rounded-xl border-2 transition-all ${
               selectedSchemes.includes(scheme.id) 
-                ? 'border-blue-600 bg-blue-900/30' 
-                : 'border-gray-700 hover:border-blue-300'
+                ? 'border-blue-600 bg-blue-50' 
+                : 'border-border-subtle hover:border-blue-300'
             }`}
           >
             <div className="flex justify-between items-start mb-2">
-              <h3 className="font-bold text-white">{scheme.name}</h3>
-              {selectedSchemes.includes(scheme.id) && <CheckCircle2 className="w-5 h-5 text-blue-400" />}
+              <h3 className="font-bold text-text-base">{scheme.name}</h3>
+              {selectedSchemes.includes(scheme.id) && <CheckCircle2 className="w-5 h-5 text-primary" />}
             </div>
-            <p className="text-sm text-gray-400">{scheme.amount}</p>
+            <p className="text-sm text-text-muted">{scheme.amount}</p>
           </div>
         ))}
       </div>
 
       {selectedSchemes.length > 0 ? (
-        <div className="bg-gray-900/60 backdrop-blur-md border-gray-800 rounded-2xl shadow-sm border border-gray-700 overflow-hidden">
+        <div className="bg-white shadow-card rounded-[17px] border border-border-subtle/60  border-border-subtle rounded-2xl shadow-sm border border-border-subtle overflow-hidden">
           <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-800/50">
+            <thead className="bg-bg-base">
               <tr>
-                <th scope="col" className="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Feature</th>
+                <th scope="col" className="px-6 py-4 text-left text-xs font-medium text-text-muted uppercase tracking-wider">Feature</th>
                 {selectedData.map((s, idx) => (
-                  <th key={idx} scope="col" className="px-6 py-4 text-left text-sm font-bold text-white">{s?.name}</th>
+                  <th key={idx} scope="col" className="px-6 py-4 text-left text-sm font-bold text-text-base">{s?.name}</th>
                 ))}
               </tr>
             </thead>
-            <tbody className="bg-gray-900/60 backdrop-blur-md border-gray-800 divide-y divide-gray-200">
+            <tbody className="bg-white shadow-card rounded-[17px] border border-border-subtle/60  border-border-subtle divide-y divide-gray-200">
               <tr>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">Max Amount</td>
-                {selectedData.map((s, idx) => <td key={idx} className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">{s?.amount}</td>)}
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-text-base">Max Amount</td>
+                {selectedData.map((s, idx) => <td key={idx} className="px-6 py-4 whitespace-nowrap text-sm text-text-muted">{s?.amount}</td>)}
               </tr>
               <tr>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">Interest Rate</td>
-                {selectedData.map((s, idx) => <td key={idx} className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">{s?.interest}</td>)}
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-text-base">Interest Rate</td>
+                {selectedData.map((s, idx) => <td key={idx} className="px-6 py-4 whitespace-nowrap text-sm text-text-muted">{s?.interest}</td>)}
               </tr>
               <tr>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">Moratorium Period</td>
-                {selectedData.map((s, idx) => <td key={idx} className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">{s?.moratorium}</td>)}
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-text-base">Moratorium Period</td>
+                {selectedData.map((s, idx) => <td key={idx} className="px-6 py-4 whitespace-nowrap text-sm text-text-muted">{s?.moratorium}</td>)}
               </tr>
               <tr>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">Target Demographic</td>
-                {selectedData.map((s, idx) => <td key={idx} className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">{s?.targeted_at}</td>)}
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-text-base">Target Demographic</td>
+                {selectedData.map((s, idx) => <td key={idx} className="px-6 py-4 whitespace-nowrap text-sm text-text-muted">{s?.targeted_at}</td>)}
               </tr>
             </tbody>
           </table>
-          <div className="bg-gray-800/50 px-6 py-4 flex justify-end">
+          <div className="bg-bg-base px-6 py-4 flex justify-end">
             <Link to="/apply" className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700">
               Apply Now <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
       ) : (
-        <div className="text-center p-12 bg-gray-800/50 rounded-2xl border border-dashed border-gray-700">
-          <p className="text-gray-400">Select at least one scheme to view comparison.</p>
+        <div className="text-center p-12 bg-bg-base rounded-2xl border border-dashed border-border-subtle">
+          <p className="text-text-muted">Select at least one scheme to view comparison.</p>
         </div>
       )}
     </div>

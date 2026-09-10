@@ -191,34 +191,34 @@ export default function PrivateInvestors() {
   return (
     <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 relative z-10">
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-white mb-4 drop-shadow-md">Global Private Investors & VCs</h1>
-        <p className="text-xl text-blue-100 max-w-3xl mx-auto drop-shadow-sm">
+        <h1 className="text-4xl font-bold text-text-base mb-4 ">Global Private Investors & VCs</h1>
+        <p className="text-xl text-blue-100 max-w-3xl mx-auto ">
           Connect with top-tier venture capital firms, angel networks, and private equity available to invest in startups and businesses worldwide.
         </p>
       </div>
 
       {/* Filters */}
-      <div className="glass-panel p-6 rounded-2xl border border-white/10 mb-8 flex flex-col md:flex-row gap-4 justify-between items-center shadow-xl">
+      <div className="glass-panel p-6 rounded-2xl border border-border-subtle mb-8 flex flex-col md:flex-row gap-4 justify-between items-center shadow-xl">
         <div className="relative w-full md:w-1/2">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" />
           <input
             type="text"
             placeholder="Search by investor name or sector (e.g., AI, Fintech)..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-3 bg-black/40 border border-white/10 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-gray-400 transition-all"
+            className="w-full pl-10 pr-4 py-3 bg-white border border-border-subtle rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-text-base placeholder-slate-400 transition-all"
           />
         </div>
         <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-2 md:pb-0 hide-scrollbar">
-          <Filter className="w-5 h-5 text-blue-400 flex-shrink-0" />
+          <Filter className="w-5 h-5 text-primary flex-shrink-0" />
           {REGIONS.map(region => (
             <button
               key={region}
               onClick={() => setSelectedRegion(region)}
               className={`px-4 py-2 rounded-xl whitespace-nowrap text-sm font-medium transition-all ${
                 selectedRegion === region 
-                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30' 
-                  : 'bg-black/40 text-gray-300 hover:bg-white/10 border border-white/5'
+                  ? 'bg-blue-600 text-white shadow-lg shadow-card' 
+                  : 'bg-white text-text-muted hover:bg-slate-50 border border-border-subtle'
               }`}
             >
               {region}
@@ -230,46 +230,46 @@ export default function PrivateInvestors() {
       {/* Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {currentInvestors.map(inv => (
-          <div key={inv.id} className="glass-panel rounded-2xl overflow-hidden border border-white/10 hover:border-blue-500/50 transition-all hover:-translate-y-1 shadow-lg hover:shadow-blue-500/20 flex flex-col">
+          <div key={inv.id} className="glass-panel rounded-2xl overflow-hidden border border-border-subtle hover:border-blue-200 transition-all hover:-translate-y-1 shadow-lg hover:shadow-blue-500/20 flex flex-col">
             <div className="p-6 flex-1">
               <div className="flex justify-between items-start mb-4">
-                <h3 className="text-xl font-bold text-white leading-tight">{inv.name}</h3>
-                <Building className="w-6 h-6 text-blue-400 opacity-80 flex-shrink-0" />
+                <h3 className="text-xl font-bold text-text-base leading-tight">{inv.name}</h3>
+                <Building className="w-6 h-6 text-primary opacity-80 flex-shrink-0" />
               </div>
               
               <div className="space-y-3 mb-6">
-                <div className="flex items-center gap-2 text-sm text-gray-300">
+                <div className="flex items-center gap-2 text-sm text-text-muted">
                   <Globe className="w-4 h-4 text-blue-500" />
-                  <span><strong className="text-gray-400">Region:</strong> {inv.region}</span>
+                  <span><strong className="text-text-muted">Region:</strong> {inv.region}</span>
                 </div>
-                <div className="flex items-center gap-2 text-sm text-gray-300">
+                <div className="flex items-center gap-2 text-sm text-text-muted">
                   <TrendingUp className="w-4 h-4 text-blue-500" />
-                  <span><strong className="text-gray-400">Stage:</strong> {inv.focus}</span>
+                  <span><strong className="text-text-muted">Stage:</strong> {inv.focus}</span>
                 </div>
               </div>
 
               <div className="mb-4">
-                <p className="text-xs font-semibold uppercase tracking-wider text-blue-400/80 mb-2">Focus Sectors</p>
+                <p className="text-xs font-semibold uppercase tracking-wider text-primary/80 mb-2">Focus Sectors</p>
                 <div className="flex flex-wrap gap-2">
                   {inv.sectors.split(',').map(sector => (
-                    <span key={sector} className="px-2 py-1 bg-white/5 border border-white/10 rounded-md text-xs text-gray-300">
+                    <span key={sector} className="px-2 py-1 bg-white border border-border-subtle rounded-md text-xs text-text-muted">
                       {sector.trim()}
                     </span>
                   ))}
                 </div>
               </div>
 
-              <p className="text-sm text-gray-400 leading-relaxed">
+              <p className="text-sm text-text-muted leading-relaxed">
                 {inv.description}
               </p>
             </div>
             
-            <div className="p-4 border-t border-white/10 bg-black/20">
+            <div className="p-4 border-t border-border-subtle bg-slate-50">
               <a 
                 href={inv.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full flex items-center justify-center gap-2 bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white py-3 rounded-xl transition-all border border-blue-500/30 hover:border-transparent font-medium"
+                className="w-full flex items-center justify-center gap-2 bg-blue-50 hover:bg-blue-600 text-primary hover:text-primary py-3 rounded-xl transition-all border border-blue-200 hover:border-transparent font-medium"
               >
                 Visit Investor Website <ExternalLink className="w-4 h-4" />
               </a>
@@ -279,25 +279,25 @@ export default function PrivateInvestors() {
       </div>
 
       {filteredInvestors.length === 0 && (
-        <div className="text-center py-20 glass-panel rounded-2xl border border-white/10">
-          <Globe className="w-12 h-12 text-gray-500 mx-auto mb-4 opacity-50" />
-          <h3 className="text-xl font-bold text-gray-300 mb-2">No investors found</h3>
-          <p className="text-gray-400">Try adjusting your search or region filters.</p>
+        <div className="text-center py-20 glass-panel rounded-2xl border border-border-subtle">
+          <Globe className="w-12 h-12 text-text-muted mx-auto mb-4 opacity-50" />
+          <h3 className="text-xl font-bold text-text-muted mb-2">No investors found</h3>
+          <p className="text-text-muted">Try adjusting your search or region filters.</p>
         </div>
       )}
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 glass-panel border border-white/10 p-4 rounded-xl shadow-xl w-fit mx-auto">
+        <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 glass-panel border border-border-subtle p-4 rounded-xl shadow-xl w-fit mx-auto">
           <button 
             onClick={handlePrev}
             disabled={currentPage === 1}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600/20 text-blue-400 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-600/40 transition-colors border border-blue-500/30"
+            className="flex items-center gap-2 px-4 py-2 bg-blue-50 text-primary rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-100 transition-colors border border-blue-200"
           >
             <ChevronLeft className="w-4 h-4" /> Previous
           </button>
           
-          <div className="flex items-center gap-3 text-gray-300">
+          <div className="flex items-center gap-3 text-text-muted">
             <span>Page</span>
             <form onSubmit={handlePageSubmit} className="flex items-center">
               <input 
@@ -307,7 +307,7 @@ export default function PrivateInvestors() {
                 value={pageInput}
                 onChange={(e) => setPageInput(e.target.value)}
                 onBlur={handlePageSubmit}
-                className="w-16 px-2 py-1 text-center bg-black/40 border border-white/10 rounded-md focus:ring-2 focus:ring-blue-500 outline-none text-white"
+                className="w-16 px-2 py-1 text-center bg-white border border-border-subtle rounded-md focus:ring-2 focus:ring-blue-500 outline-none text-text-base"
               />
             </form>
             <span>of {totalPages}</span>
@@ -316,7 +316,7 @@ export default function PrivateInvestors() {
           <button 
             onClick={handleNext}
             disabled={currentPage === totalPages}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600/20 text-blue-400 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-600/40 transition-colors border border-blue-500/30"
+            className="flex items-center gap-2 px-4 py-2 bg-blue-50 text-primary rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-100 transition-colors border border-blue-200"
           >
             Next <ChevronRight className="w-4 h-4" />
           </button>

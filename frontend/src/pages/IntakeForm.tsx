@@ -151,23 +151,23 @@ export default function IntakeForm() {
 
   return (
     <div className="max-w-3xl mx-auto py-12 px-4 sm:px-6 relative z-10">
-      <div className="glass-panel rounded-3xl shadow-[0_0_40px_rgba(0,0,0,0.5)] overflow-hidden border border-white/10">
+      <div className="glass-panel rounded-3xl shadow-sm overflow-hidden border border-border-subtle">
         
         {/* Header & Progress Bar */}
-        <div className="bg-blue-600/60 backdrop-blur-lg px-8 py-6 border-b border-white/10">
-          <h2 className="text-2xl font-bold text-white drop-shadow-md">Find Your Eligible Scheme</h2>
+        <div className="bg-blue-50  px-8 py-6 border-b border-border-subtle">
+          <h2 className="text-2xl font-bold text-text-base ">Find Your Eligible Scheme</h2>
           <p className="text-blue-100 mt-2 font-medium">Step {step} of 3: {step === 1 ? 'Personal Demographics' : step === 2 ? 'Financial & Business Details' : 'Location & Finalize'}</p>
           
           <div className="mt-6 flex gap-2">
             {[1, 2, 3].map((num) => (
-              <div key={num} className={`h-2 flex-1 rounded-full ${num <= step ? 'bg-white shadow-[0_0_10px_rgba(255,255,255,0.8)]' : 'bg-white/20'}`}></div>
+              <div key={num} className={`h-2 flex-1 rounded-full ${num <= step ? 'bg-white shadow-sm' : 'bg-slate-100'}`}></div>
             ))}
           </div>
         </div>
         
         <form onSubmit={handleSubmit} className="p-8 space-y-6">
           {error && (
-            <div className="p-4 bg-red-500/20 text-red-200 rounded-xl text-sm font-medium border border-red-500/30 backdrop-blur-md">
+            <div className="p-4 bg-red-50 text-red-200 rounded-xl text-sm font-medium border border-red-200 ">
               {error}
             </div>
           )}
@@ -177,27 +177,27 @@ export default function IntakeForm() {
             <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-200">Full Name</label>
-                  <input required type="text" name="name" value={formData.name} onChange={handleChange} className="w-full rounded-xl border-white/10 border p-3 focus:ring-2 focus:ring-blue-500 outline-none bg-white/5 backdrop-blur-md text-white placeholder-gray-400" placeholder="John Doe" />
+                  <label className="text-sm font-semibold text-text-base">Full Name</label>
+                  <input required type="text" name="name" value={formData.name} onChange={handleChange} className="w-full rounded-xl border-border-subtle border p-3 focus:ring-2 focus:ring-blue-500 outline-none bg-white  text-text-base placeholder-slate-400" placeholder="John Doe" />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-200">Age</label>
-                  <input required type="number" name="age" value={formData.age} onChange={handleChange} className="w-full rounded-xl border-white/10 border p-3 focus:ring-2 focus:ring-blue-500 outline-none bg-white/5 backdrop-blur-md text-white placeholder-gray-400" placeholder="e.g. 28" />
+                  <label className="text-sm font-semibold text-text-base">Age</label>
+                  <input required type="number" name="age" value={formData.age} onChange={handleChange} className="w-full rounded-xl border-border-subtle border p-3 focus:ring-2 focus:ring-blue-500 outline-none bg-white  text-text-base placeholder-slate-400" placeholder="e.g. 28" />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-200">Gender</label>
-                  <select name="gender" value={formData.gender} onChange={handleChange} className="w-full rounded-xl border-white/10 border p-3 focus:ring-2 focus:ring-blue-500 outline-none bg-black/40 backdrop-blur-md text-white">
+                  <label className="text-sm font-semibold text-text-base">Gender</label>
+                  <select name="gender" value={formData.gender} onChange={handleChange} className="w-full rounded-xl border-border-subtle border p-3 focus:ring-2 focus:ring-blue-500 outline-none bg-white  text-text-base">
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                     <option value="Other">Other</option>
                   </select>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-200">Social Category</label>
-                  <select name="category" value={formData.category} onChange={handleChange} className="w-full rounded-xl border-white/10 border p-3 focus:ring-2 focus:ring-blue-500 outline-none bg-black/40 backdrop-blur-md text-white">
+                  <label className="text-sm font-semibold text-text-base">Social Category</label>
+                  <select name="category" value={formData.category} onChange={handleChange} className="w-full rounded-xl border-border-subtle border p-3 focus:ring-2 focus:ring-blue-500 outline-none bg-white  text-text-base">
                     <option value="SC">Scheduled Caste (SC)</option>
                     <option value="ST">Scheduled Tribe (ST)</option>
                     <option value="OBC">Other Backward Class (OBC)</option>
@@ -207,8 +207,8 @@ export default function IntakeForm() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-200">Highest Education</label>
-                <select name="education" value={formData.education} onChange={handleChange} className="w-full rounded-xl border-white/10 border p-3 focus:ring-2 focus:ring-blue-500 outline-none bg-black/40 backdrop-blur-md text-white">
+                <label className="text-sm font-semibold text-text-base">Highest Education</label>
+                <select name="education" value={formData.education} onChange={handleChange} className="w-full rounded-xl border-border-subtle border p-3 focus:ring-2 focus:ring-blue-500 outline-none bg-white  text-text-base">
                   <option value="Below 10th">Below 10th</option>
                   <option value="High School">High School (10th/12th)</option>
                   <option value="Graduate">Graduate</option>
@@ -223,19 +223,19 @@ export default function IntakeForm() {
             <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-200">Annual Family Income (₹)</label>
-                  <input required type="number" name="annual_family_income" value={formData.annual_family_income} onChange={handleChange} className="w-full rounded-xl border-white/10 border p-3 focus:ring-2 focus:ring-blue-500 outline-none bg-white/5 backdrop-blur-md text-white placeholder-gray-400" placeholder="e.g. 250000" />
+                  <label className="text-sm font-semibold text-text-base">Annual Family Income (₹)</label>
+                  <input required type="number" name="annual_family_income" value={formData.annual_family_income} onChange={handleChange} className="w-full rounded-xl border-border-subtle border p-3 focus:ring-2 focus:ring-blue-500 outline-none bg-white  text-text-base placeholder-slate-400" placeholder="e.g. 250000" />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-200">Estimated Project Cost (₹)</label>
-                  <input required type="number" name="estimated_cost" value={formData.estimated_cost} onChange={handleChange} className="w-full rounded-xl border-white/10 border p-3 focus:ring-2 focus:ring-blue-500 outline-none bg-white/5 backdrop-blur-md text-white placeholder-gray-400" placeholder="e.g. 100000" />
+                  <label className="text-sm font-semibold text-text-base">Estimated Project Cost (₹)</label>
+                  <input required type="number" name="estimated_cost" value={formData.estimated_cost} onChange={handleChange} className="w-full rounded-xl border-border-subtle border p-3 focus:ring-2 focus:ring-blue-500 outline-none bg-white  text-text-base placeholder-slate-400" placeholder="e.g. 100000" />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-200">Project Type</label>
-                  <select name="project_type" value={formData.project_type} onChange={handleChange} className="w-full rounded-xl border-white/10 border p-3 focus:ring-2 focus:ring-blue-500 outline-none bg-black/40 backdrop-blur-md text-white">
+                  <label className="text-sm font-semibold text-text-base">Project Type</label>
+                  <select name="project_type" value={formData.project_type} onChange={handleChange} className="w-full rounded-xl border-border-subtle border p-3 focus:ring-2 focus:ring-blue-500 outline-none bg-white  text-text-base">
                     <option value="business">Business / Entrepreneurship</option>
                     <option value="education">Education / Skill Development</option>
                     <option value="agriculture">Agriculture / Farming</option>
@@ -244,8 +244,8 @@ export default function IntakeForm() {
                 
                 {formData.project_type === 'business' && (
                   <div className="space-y-2">
-                    <label className="text-sm font-semibold text-gray-200">Business Sector</label>
-                    <select name="business_sector" value={formData.business_sector} onChange={handleChange} className="w-full rounded-xl border-white/10 border p-3 focus:ring-2 focus:ring-blue-500 outline-none bg-black/40 backdrop-blur-md text-white">
+                    <label className="text-sm font-semibold text-text-base">Business Sector</label>
+                    <select name="business_sector" value={formData.business_sector} onChange={handleChange} className="w-full rounded-xl border-border-subtle border p-3 focus:ring-2 focus:ring-blue-500 outline-none bg-white  text-text-base">
                       <option value="Retail">Retail & Trade</option>
                       <option value="Manufacturing">Manufacturing</option>
                       <option value="Services">Services (IT, Consulting, Beauty)</option>
@@ -260,35 +260,35 @@ export default function IntakeForm() {
           {/* STEP 3: Location & Submit */}
           {step === 3 && (
             <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
-              <div className="p-6 bg-blue-900/30 rounded-xl border border-blue-500/30 text-center space-y-4 backdrop-blur-md">
-                <MapPin className="h-12 w-12 text-blue-400 mx-auto drop-shadow-md" />
-                <h3 className="font-semibold text-white drop-shadow-sm">Locate Nearest Partners</h3>
-                <p className="text-sm text-gray-300">We need your coordinates to find the closest banks and channel partners near you.</p>
-                <button type="button" onClick={handleLocation} className="px-6 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white font-medium rounded-lg border border-white/10 transition-all shadow-sm">
+              <div className="p-6 bg-blue-50 rounded-xl border border-blue-200 text-center space-y-4 ">
+                <MapPin className="h-12 w-12 text-primary mx-auto " />
+                <h3 className="font-semibold text-text-base ">Locate Nearest Partners</h3>
+                <p className="text-sm text-text-muted">We need your coordinates to find the closest banks and channel partners near you.</p>
+                <button type="button" onClick={handleLocation} className="px-6 py-2 bg-slate-50 hover:bg-slate-100 text-text-base font-medium rounded-lg border border-border-subtle transition-all shadow-sm">
                   Auto-detect My Location
                 </button>
               </div>
               
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="text-xs text-gray-400 font-medium uppercase tracking-wider">Latitude</label>
-                  <input required type="text" name="latitude" value={formData.latitude} onChange={handleChange} className="w-full rounded-xl border-white/10 border p-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none bg-white/5 backdrop-blur-md text-white placeholder-gray-500" placeholder="e.g. 28.6139" />
+                  <label className="text-xs text-text-muted font-medium uppercase tracking-wider">Latitude</label>
+                  <input required type="text" name="latitude" value={formData.latitude} onChange={handleChange} className="w-full rounded-xl border-border-subtle border p-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none bg-white  text-text-base placeholder-gray-500" placeholder="e.g. 28.6139" />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-xs text-gray-400 font-medium uppercase tracking-wider">Longitude</label>
-                  <input required type="text" name="longitude" value={formData.longitude} onChange={handleChange} className="w-full rounded-xl border-white/10 border p-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none bg-white/5 backdrop-blur-md text-white placeholder-gray-500" placeholder="e.g. 77.2090" />
+                  <label className="text-xs text-text-muted font-medium uppercase tracking-wider">Longitude</label>
+                  <input required type="text" name="longitude" value={formData.longitude} onChange={handleChange} className="w-full rounded-xl border-border-subtle border p-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none bg-white  text-text-base placeholder-gray-500" placeholder="e.g. 77.2090" />
                 </div>
               </div>
             </div>
           )}
 
           {/* Navigation Buttons */}
-          <div className="pt-6 flex gap-4 mt-8 border-t border-white/10">
+          <div className="pt-6 flex gap-4 mt-8 border-t border-border-subtle">
             {step > 1 && (
               <button 
                 type="button" 
                 onClick={() => { setStep(step - 1); setError(''); }}
-                className="flex-1 flex justify-center items-center py-4 px-4 rounded-xl shadow-sm text-lg font-medium text-white bg-white/5 hover:bg-white/10 border border-white/10 backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                className="flex-1 flex justify-center items-center py-4 px-4 rounded-xl shadow-sm text-lg font-medium text-text-base bg-white hover:bg-slate-50 border border-border-subtle  focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
               >
                 <ArrowLeft className="mr-2 h-5 w-5" /> Back
               </button>
@@ -296,7 +296,7 @@ export default function IntakeForm() {
             <button 
               type="submit" 
               disabled={loading}
-              className={`${step === 1 ? 'w-full' : 'flex-[2]'} flex justify-center items-center py-4 px-4 rounded-xl shadow-[0_0_20px_rgba(79,70,229,0.4)] hover:shadow-[0_0_30px_rgba(79,70,229,0.6)] transform hover:-translate-y-1 text-lg font-medium text-white bg-blue-600/80 hover:bg-blue-600 border border-blue-500/50 backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all disabled:opacity-70 disabled:transform-none disabled:shadow-none`}
+              className={`${step === 1 ? 'w-full' : 'flex-[2]'} flex justify-center items-center py-4 px-4 rounded-xl shadow-sm hover:shadow-sm transform hover:-translate-y-1 text-lg font-medium text-blue-600 hover:text-white bg-blue-50 hover:bg-blue-600 border border-blue-200  focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all disabled:opacity-70 disabled:transform-none disabled:shadow-none`}
             >
               {step < 3 ? (
                 <>Next <ArrowRight className="ml-2 h-5 w-5" /></>

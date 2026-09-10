@@ -106,34 +106,34 @@ export default function GlobalSchemes() {
   return (
     <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
       <div className="mb-10 text-center">
-        <h1 className="text-4xl font-extrabold text-white tracking-tight flex items-center justify-center gap-3">
-          <Globe className="h-10 w-10 text-blue-400" />
+        <h1 className="text-4xl font-extrabold text-text-base tracking-tight flex items-center justify-center gap-3">
+          <Globe className="h-10 w-10 text-primary" />
           Global Government Schemes
         </h1>
-        <p className="mt-4 text-xl text-gray-300 max-w-3xl mx-auto">
+        <p className="mt-4 text-xl text-text-muted max-w-3xl mx-auto">
           Explore official government financial assistance and micro-loan programs across the globe for entrepreneurs and small businesses.
         </p>
       </div>
 
       {/* Filters */}
-      <div className="bg-gray-900/60 backdrop-blur-md border-gray-800 p-4 rounded-xl shadow-sm border border-gray-700 mb-8 flex flex-col sm:flex-row gap-4 items-center justify-between">
+      <div className="bg-white shadow-card rounded-[17px] border border-border-subtle/60  border-border-subtle p-4 rounded-xl shadow-sm border border-border-subtle mb-8 flex flex-col sm:flex-row gap-4 items-center justify-between">
         <div className="relative w-full sm:w-96">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-text-muted" />
           <input 
             type="text" 
             placeholder="Search schemes..." 
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none bg-gray-900/60 backdrop-blur-md text-white border-gray-700"
+            className="w-full pl-10 pr-4 py-2 border border-border-subtle rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none bg-white shadow-card rounded-[17px] border border-border-subtle/60 text-text-base border-border-subtle"
           />
         </div>
         
         <div className="w-full sm:w-auto flex items-center gap-2">
-          <label className="text-sm font-medium text-gray-200 whitespace-nowrap">Filter by Country:</label>
+          <label className="text-sm font-medium text-text-base whitespace-nowrap">Filter by Country:</label>
           <select 
             value={selectedCountry}
             onChange={(e) => setSelectedCountry(e.target.value)}
-            className="w-full sm:w-48 bg-gray-800/50 border border-gray-700 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+            className="w-full sm:w-48 bg-bg-base border border-border-subtle text-text-base text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
           >
             {countries.map(c => (
               <option key={c} value={c}>{c}</option>
@@ -145,27 +145,27 @@ export default function GlobalSchemes() {
       {/* Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {currentSchemes.map((scheme) => (
-          <div key={scheme.id} className="bg-gray-900/60 backdrop-blur-md border-gray-800 rounded-2xl p-6 shadow-sm border border-gray-700 hover:shadow-md transition-shadow flex flex-col">
+          <div key={scheme.id} className="bg-white shadow-card rounded-[17px] border border-border-subtle/60  border-border-subtle rounded-2xl p-6 shadow-sm border border-border-subtle hover:shadow-md transition-shadow flex flex-col">
             <div className="flex justify-between items-start mb-4">
               <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full uppercase tracking-wider">
                 {scheme.country}
               </span>
             </div>
-            <h3 className="text-xl font-bold text-white mb-2">{scheme.name}</h3>
-            <p className="text-gray-300 text-sm flex-grow mb-6">{scheme.description}</p>
+            <h3 className="text-xl font-bold text-text-base mb-2">{scheme.name}</h3>
+            <p className="text-text-muted text-sm flex-grow mb-6">{scheme.description}</p>
             
             <a 
               href={scheme.url} 
               target="_blank" 
               rel="noopener noreferrer"
-              className="mt-auto inline-flex items-center text-blue-400 hover:text-blue-800 font-medium"
+              className="mt-auto inline-flex items-center text-primary hover:text-blue-800 font-medium"
             >
               Visit Official Website <ExternalLink className="ml-1.5 h-4 w-4" />
             </a>
           </div>
         ))}
         {filteredSchemes.length === 0 && (
-          <div className="col-span-full py-12 text-center text-gray-400">
+          <div className="col-span-full py-12 text-center text-text-muted">
             No schemes found matching your criteria.
           </div>
         )}
@@ -173,16 +173,16 @@ export default function GlobalSchemes() {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 bg-gray-900/60 backdrop-blur-md border border-gray-700 p-4 rounded-xl shadow-sm w-fit mx-auto">
+        <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 bg-white shadow-card rounded-[17px] border border-border-subtle/60  border border-border-subtle p-4 rounded-xl shadow-sm w-fit mx-auto">
           <button 
             onClick={handlePrev}
             disabled={currentPage === 1}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600/20 text-blue-400 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-600/40 transition-colors border border-blue-500/30"
+            className="flex items-center gap-2 px-4 py-2 bg-blue-50 text-primary rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-100 transition-colors border border-blue-200"
           >
             <ChevronLeft className="w-4 h-4" /> Previous
           </button>
           
-          <div className="flex items-center gap-3 text-gray-300">
+          <div className="flex items-center gap-3 text-text-muted">
             <span>Page</span>
             <form onSubmit={handlePageSubmit} className="flex items-center">
               <input 
@@ -192,7 +192,7 @@ export default function GlobalSchemes() {
                 value={pageInput}
                 onChange={(e) => setPageInput(e.target.value)}
                 onBlur={handlePageSubmit}
-                className="w-16 px-2 py-1 text-center bg-black/40 border border-gray-700 rounded-md focus:ring-2 focus:ring-blue-500 outline-none text-white"
+                className="w-16 px-2 py-1 text-center bg-white border border-border-subtle rounded-md focus:ring-2 focus:ring-blue-500 outline-none text-text-base"
               />
             </form>
             <span>of {totalPages}</span>
@@ -201,7 +201,7 @@ export default function GlobalSchemes() {
           <button 
             onClick={handleNext}
             disabled={currentPage === totalPages}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600/20 text-blue-400 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-600/40 transition-colors border border-blue-500/30"
+            className="flex items-center gap-2 px-4 py-2 bg-blue-50 text-primary rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-100 transition-colors border border-blue-200"
           >
             Next <ChevronRight className="w-4 h-4" />
           </button>

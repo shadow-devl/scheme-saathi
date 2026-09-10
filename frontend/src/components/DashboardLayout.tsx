@@ -33,12 +33,12 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   ];
 
   return (
-    <div className="flex h-screen bg-[#050505] text-gray-100 overflow-hidden relative">
+    <div className="flex h-screen bg-bg-base text-text-base overflow-hidden relative">
       {/* Mobile sidebar toggle */}
       <div className="lg:hidden absolute top-4 left-4 z-50">
         <button 
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="p-2 bg-gray-900 border border-gray-700 rounded-md text-blue-400 hover:bg-gray-800"
+          className="p-2 bg-white shadow-card rounded-[17px] border border-border-subtle border border-border-subtle rounded-md text-primary hover:bg-bg-base"
         >
           {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -52,17 +52,17 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       >
         <div className="p-6">
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="relative w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center border border-blue-500/50 group-hover:scale-110 transition-transform">
-              <div className="absolute inset-0 bg-blue-400/20 blur-sm rounded-lg"></div>
-              <span className="relative font-bold text-blue-400 text-xl">A</span>
+            <div className="relative w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center border border-blue-200 group-hover:scale-110 transition-transform">
+              <div className="absolute inset-0 bg-blue-50 blur-sm rounded-lg"></div>
+              <span className="relative font-bold text-primary text-xl">A</span>
             </div>
-            <span className="text-xl font-bold tracking-wider text-gray-100 group-hover:text-blue-400 transition-colors">
-              AVENIK
+            <span className="text-xl font-bold tracking-wider text-text-base group-hover:text-primary transition-colors">
+              SCHEME SAATHI
             </span>
           </Link>
           <div className="mt-8 mb-4">
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Business Platform</p>
-            <p className="text-sm font-medium text-blue-400 mt-1 truncate">
+            <p className="text-xs font-semibold text-text-muted uppercase tracking-wider">Business Platform</p>
+            <p className="text-sm font-medium text-primary mt-1 truncate">
               {user?.name || 'Entrepreneur'}
             </p>
           </div>
@@ -77,13 +77,13 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 to={item.href}
                 className={`${
                   isActive 
-                    ? 'bg-blue-500/10 text-blue-400 border border-blue-500/30' 
-                    : 'text-gray-400 hover:bg-gray-800/50 hover:text-gray-200 border border-transparent'
+                    ? 'bg-blue-50 text-primary border border-blue-200' 
+                    : 'text-text-muted hover:bg-bg-base hover:text-text-base border border-transparent'
                 } group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-all`}
                 onClick={() => setSidebarOpen(false)}
               >
                 <item.icon 
-                  className={`${isActive ? 'text-blue-400' : 'text-gray-500 group-hover:text-gray-300'} flex-shrink-0 mr-3 h-5 w-5 transition-colors`} 
+                  className={`${isActive ? 'text-primary' : 'text-text-muted group-hover:text-text-muted'} flex-shrink-0 mr-3 h-5 w-5 transition-colors`} 
                 />
                 {item.name}
               </Link>
@@ -91,28 +91,28 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           })}
         </nav>
 
-        <div className="p-4 border-t border-gray-800">
+        <div className="p-4 border-t border-border-subtle">
           <Link
             to="/dashboard/business-profile"
-            className="group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg text-gray-400 hover:bg-gray-800/50 hover:text-gray-200 transition-all mb-1"
+            className="group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg text-text-muted hover:bg-bg-base hover:text-text-base transition-all mb-1"
           >
-            <Briefcase className="text-gray-500 group-hover:text-gray-300 flex-shrink-0 mr-3 h-5 w-5 transition-colors" />
+            <Briefcase className="text-text-muted group-hover:text-text-muted flex-shrink-0 mr-3 h-5 w-5 transition-colors" />
             Business Profile
           </Link>
           <Link
             to="/dashboard/settings"
-            className="group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg text-gray-400 hover:bg-gray-800/50 hover:text-gray-200 transition-all mb-2"
+            className="group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg text-text-muted hover:bg-bg-base hover:text-text-base transition-all mb-2"
           >
-            <Settings className="text-gray-500 group-hover:text-gray-300 flex-shrink-0 mr-3 h-5 w-5 transition-colors" />
+            <Settings className="text-text-muted group-hover:text-text-muted flex-shrink-0 mr-3 h-5 w-5 transition-colors" />
             Personal Settings
           </Link>
           <button
             onClick={() => {
               logout();
             }}
-            className="w-full group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg text-red-400/70 hover:bg-red-500/10 hover:text-red-400 transition-all border border-transparent hover:border-red-500/30"
+            className="w-full group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg text-red-600/70 hover:bg-red-50 hover:text-red-600 transition-all border border-transparent hover:border-red-200"
           >
-            <LogOut className="text-red-400/50 group-hover:text-red-400 flex-shrink-0 mr-3 h-5 w-5 transition-colors" />
+            <LogOut className="text-red-600/50 group-hover:text-red-600 flex-shrink-0 mr-3 h-5 w-5 transition-colors" />
             Sign Out
           </button>
         </div>

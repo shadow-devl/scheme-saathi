@@ -27,8 +27,8 @@ export default function AdminDashboard() {
   return (
     <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white">Ministry Analytics Dashboard</h1>
-        <p className="text-gray-300 mt-2">Global view of Avenik Core platform performance</p>
+        <h1 className="text-3xl font-bold text-text-base">Ministry Analytics Dashboard</h1>
+        <p className="text-text-muted mt-2">Global view of Scheme Saathi platform performance</p>
       </div>
 
       {/* KPI Cards */}
@@ -56,8 +56,8 @@ export default function AdminDashboard() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Application Status Chart */}
-        <div className="bg-gray-900/60 backdrop-blur-md border-gray-800 p-6 rounded-2xl shadow-sm border border-gray-700">
-          <h3 className="text-lg font-bold text-white mb-6">Application Status Distribution</h3>
+        <div className="bg-white shadow-card rounded-[17px] border border-border-subtle/60  border-border-subtle p-6 rounded-2xl shadow-sm border border-border-subtle">
+          <h3 className="text-lg font-bold text-text-base mb-6">Application Status Distribution</h3>
           <div className="h-80">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -72,7 +72,7 @@ export default function AdminDashboard() {
           </div>
           <div className="flex justify-center gap-6 mt-4">
             {appStatusData.map(entry => (
-              <div key={entry.name} className="flex items-center gap-2 text-sm text-gray-300">
+              <div key={entry.name} className="flex items-center gap-2 text-sm text-text-muted">
                 <div className="w-3 h-3 rounded-full" style={{ backgroundColor: entry.color }}></div>
                 {entry.name}
               </div>
@@ -81,8 +81,8 @@ export default function AdminDashboard() {
         </div>
 
         {/* Partner NPA Chart */}
-        <div className="bg-gray-900/60 backdrop-blur-md border-gray-800 p-6 rounded-2xl shadow-sm border border-gray-700">
-          <h3 className="text-lg font-bold text-white mb-6">Partner NPA Tracking</h3>
+        <div className="bg-white shadow-card rounded-[17px] border border-border-subtle/60  border-border-subtle p-6 rounded-2xl shadow-sm border border-border-subtle">
+          <h3 className="text-lg font-bold text-text-base mb-6">Partner NPA Tracking</h3>
           <div className="h-80">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={stats.partnerNpas} layout="vertical" margin={{ left: 50 }}>
@@ -106,14 +106,14 @@ export default function AdminDashboard() {
 
 function KPICard({ title, value, subtitle, icon, color }: any) {
   return (
-    <div className="bg-gray-900/60 backdrop-blur-md border-gray-800 p-6 rounded-2xl shadow-sm border border-gray-700 flex items-center gap-6">
+    <div className="bg-white shadow-card rounded-[17px] border border-border-subtle/60  border-border-subtle p-6 rounded-2xl shadow-sm border border-border-subtle flex items-center gap-6">
       <div className={`p-4 rounded-xl ${color} shadow-lg`}>
         {icon}
       </div>
       <div>
-        <p className="text-sm font-medium text-gray-400">{title}</p>
-        <p className="text-3xl font-bold text-white mt-1">{value}</p>
-        {subtitle && <p className="text-xs text-gray-400 mt-1">{subtitle}</p>}
+        <p className="text-sm font-medium text-text-muted">{title}</p>
+        <p className="text-3xl font-bold text-text-base mt-1">{value}</p>
+        {subtitle && <p className="text-xs text-text-muted mt-1">{subtitle}</p>}
       </div>
     </div>
   );

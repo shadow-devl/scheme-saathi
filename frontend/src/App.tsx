@@ -35,7 +35,7 @@ function ProtectedRoute({ children, allowedRoles }: { children: ReactNode, allow
 
 function AppRoutes() {
   return (
-    <div className="min-h-screen flex flex-col font-sans text-gray-100 selection:bg-blue-500/30 relative">
+    <div className="min-h-screen flex flex-col font-sans text-text-base selection:bg-blue-50 relative">
       <Routes>
         <Route path="/" element={<LayoutWithNav><Home /></LayoutWithNav>} />
         <Route path="/login" element={<LayoutWithNav><Login /></LayoutWithNav>} />
@@ -98,13 +98,13 @@ function LayoutWithNav({ children }: { children: ReactNode }) {
 
 function Footer() {
   return (
-    <footer className="glass-panel mt-auto py-8 text-center text-gray-400 text-sm z-10 border-b-0 border-l-0 border-r-0">
+    <footer className="glass-panel mt-auto py-8 text-center text-text-muted text-sm z-10 border-b-0 border-l-0 border-r-0">
       <div className="mb-4 space-x-4">
-        <Link to="/about" className="hover:text-blue-400 transition-colors">About</Link>
-        <Link to="/docs" className="hover:text-blue-400 transition-colors">Documentation</Link>
-        <Link to="/terms" className="hover:text-blue-400 transition-colors">Terms of Service</Link>
+        <Link to="/about" className="hover:text-primary transition-colors">About</Link>
+        <Link to="/docs" className="hover:text-primary transition-colors">Documentation</Link>
+        <Link to="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
       </div>
-      <p>© 2026 Avenik Core. All rights reserved.</p>
+      <p>© 2026 Scheme Saathi. All rights reserved.</p>
     </footer>
   );
 }
