@@ -91,11 +91,11 @@ export default function Login() {
 
         {/* OAuth Buttons */}
         <div className="space-y-3">
-          <button type="button" className="w-full flex items-center justify-center gap-2 py-3 px-4 border border-slate-300 rounded-xl shadow-sm bg-white text-slate-700 hover:bg-slate-50 font-medium transition-all">
+          <button type="button" onClick={() => setError('OAuth login is not yet implemented. Please sign in with email.')} className="w-full flex items-center justify-center gap-2 py-3 px-4 border border-slate-300 rounded-xl shadow-sm bg-white text-slate-700 hover:bg-slate-50 font-medium transition-all">
             <img src="https://www.google.com/favicon.ico" alt="Google" className="w-5 h-5" />
             Continue with Google
           </button>
-          <button type="button" className="w-full flex items-center justify-center gap-2 py-3 px-4 border border-slate-300 rounded-xl shadow-sm bg-white text-slate-700 hover:bg-slate-50 font-medium transition-all">
+          <button type="button" onClick={() => setError('OAuth login is not yet implemented. Please sign in with email.')} className="w-full flex items-center justify-center gap-2 py-3 px-4 border border-slate-300 rounded-xl shadow-sm bg-white text-slate-700 hover:bg-slate-50 font-medium transition-all">
             <svg viewBox="0 0 21 21" className="w-5 h-5"><path fill="#f25022" d="M1 1h9v9H1z"/><path fill="#7fba00" d="M11 1h9v9h-9z"/><path fill="#00a4ef" d="M1 11h9v9H1z"/><path fill="#ffb900" d="M11 11h9v9h-9z"/></svg>
             Continue with Microsoft
           </button>
