@@ -112,6 +112,8 @@ export default function Documentation() {
           <p className="text-text-muted leading-relaxed">
             Equated Monthly Installments (EMI) are calculated dynamically on a reducing balance basis. The engine deducts any specified Moratorium periods. Post-matching, the system leverages the Haversine formula to compute great-circle distances and route the application to the nearest eligible partner institution based on active budgets and non-performing asset (NPA) thresholds.
           </p>
+        </section>
+        </div>
       </div>
     </div>
   );

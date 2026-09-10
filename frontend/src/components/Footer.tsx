@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Globe, Heart, Shield, Mail, Twitter, Linkedin, Facebook } from 'lucide-react';
+import { Globe, Heart, Shield, Mail } from 'lucide-react';
 
 export default function Footer() {
   const { t } = useTranslation();
@@ -24,15 +24,8 @@ export default function Footer() {
               A professional technology platform designed to help entrepreneurs, businesses, and organizations discover financial support, navigate compliance, and scale effectively.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-blue-600 hover:text-white transition-all">
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-blue-600 hover:text-white transition-all">
-                <Linkedin className="w-5 h-5" />
-              </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-blue-600 hover:text-white transition-all">
-                <Facebook className="w-5 h-5" />
-              </a>
+
+
             </div>
           </div>
 
