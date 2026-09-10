@@ -36,7 +36,7 @@ export default function Navbar() {
         <div className="flex justify-between h-16 items-center">
           <Link to="/" className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-blue-500/30 border border-blue-500/20">
-              <img src="./logo.jpg" alt="Scheme Saathi Logo" className="w-full h-full object-cover" />
+              <img src={`${import.meta.env.BASE_URL}logo.jpg`} alt="Scheme Saathi Logo" className="w-full h-full object-cover" />
             </div>
             <span className="text-xl font-bold text-text-base tracking-tight">Scheme Saathi</span>
           </Link>

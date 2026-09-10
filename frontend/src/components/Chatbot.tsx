@@ -51,7 +51,7 @@ export default function Chatbot() {
           <div className="bg-blue-50  text-text-base p-4 flex justify-between items-center shadow-lg border-b border-blue-200">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg overflow-hidden shadow-inner border border-blue-200">
-                <img src="./logo.jpg" alt="Scheme Saathi AI" className="w-full h-full object-cover" />
+                <img src={`${import.meta.env.BASE_URL}logo.jpg`} alt="Scheme Saathi AI" className="w-full h-full object-cover" />
               </div>
               <div>
                 <h3 className="font-bold text-sm leading-none">Scheme Saathi AI</h3>

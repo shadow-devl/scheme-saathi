@@ -21,7 +21,7 @@ export default function AnimatedBackground() {
       
       {/* Subtle Floating Logo Watermark */}
       <div className="absolute bottom-[-10%] right-[-5%] opacity-[0.04] pointer-events-none select-none mix-blend-multiply">
-         <img src="./logo.jpg" className="w-[800px] h-[800px] grayscale" alt="Watermark Logo" />
+         <img src={`${import.meta.env.BASE_URL}logo.jpg`} className="w-[800px] h-[800px] grayscale" alt="Watermark Logo" />
       </div>
     </div>
   );
