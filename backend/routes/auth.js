@@ -150,7 +150,7 @@ router.post('/register', authLimiter, async (req, res) => {
     res.json({ success: true, message: 'Registration successful. Please check your email to verify your account.' });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: err.message, stack: err.stack });
+    res.status(500).json({ error: 'An unexpected server error occurred. Please try again later.' });
   }
 });
 
@@ -196,7 +196,7 @@ router.post('/login', authLimiter, async (req, res) => {
     res.json({ token, user: { id: user.id, name: user.name, role: roleName, email: user.email, status: user.status, isDemo: user.isDemo } });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: err.message, stack: err.stack });
+    res.status(500).json({ error: 'An unexpected server error occurred. Please try again later.' });
   }
 });
 
@@ -228,7 +228,7 @@ router.post('/demo', async (req, res) => {
     res.json({ token, user: { id: sessionId, name: `Demo ${role}`, role: role, email: `demo.${role.toLowerCase()}@schemesaathi.com`, status: 'ACTIVE', isDemo: true } });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: err.message, stack: err.stack });
+    res.status(500).json({ error: 'An unexpected server error occurred. Please try again later.' });
   }
 });
 
@@ -264,7 +264,7 @@ router.post('/verify-email', authLimiter, async (req, res) => {
     res.json({ success: true, message: 'Email verified successfully.' });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: err.message, stack: err.stack });
+    res.status(500).json({ error: 'An unexpected server error occurred. Please try again later.' });
   }
 });
 
@@ -288,7 +288,7 @@ router.get('/me', authenticate, async (req, res) => {
     res.json({ id: user.id, name: user.name, role: roleName, email: user.email, status: user.status, isDemo: user.isDemo });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: err.message, stack: err.stack });
+    res.status(500).json({ error: 'An unexpected server error occurred. Please try again later.' });
   }
 });
 
@@ -335,7 +335,7 @@ router.post('/forgot-password', authLimiter, async (req, res) => {
     res.json({ success: true, message: 'If an account exists, a reset link has been sent.' });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: err.message, stack: err.stack });
+    res.status(500).json({ error: 'An unexpected server error occurred. Please try again later.' });
   }
 });
 
@@ -377,7 +377,7 @@ router.post('/reset-password', authLimiter, async (req, res) => {
     res.json({ success: true, message: 'Password reset successfully.' });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: err.message, stack: err.stack });
+    res.status(500).json({ error: 'An unexpected server error occurred. Please try again later.' });
   }
 });
 
