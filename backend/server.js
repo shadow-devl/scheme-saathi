@@ -30,9 +30,9 @@ const authModule = require('./routes/auth');
 const authenticate = authModule.authenticate;
 const restrictDemoMode = authModule.restrictDemoMode;
 
-const requireRole = (role) => (req, res, next) => {
-  if (req.user.role !== role) {
-    return res.status(403).json({ error: `Requires ${role} role` });
+const requireRole = (...roles) => (req, res, next) => {
+  if (!roles.includes(req.user.role)) {
+    return res.status(403).json({ error: `Requires one of roles: ${roles.join(', ')}` });
   }
   next();
 };
@@ -138,7 +138,7 @@ app.post('/api/nearest-partners', async (req, res) => {
 // PROTECTED API
 // ----------------------------------------
 
-app.post('/api/applications', authenticate, requireRole('APPLICANT'), async (req, res) => {
+app.post('/api/applications', authenticate, requireRole('APPLICANT', 'USER'), async (req, res) => {
   try {
     const { partner_id, scheme_id, amount, estimated_cost } = req.body;
     const loanAmount = parseFloat(amount) || parseFloat(estimated_cost) || 0;
@@ -162,7 +162,7 @@ app.post('/api/applications', authenticate, requireRole('APPLICANT'), async (req
   }
 });
 
-app.get('/api/applications/me', authenticate, requireRole('APPLICANT'), async (req, res) => {
+app.get('/api/applications/me', authenticate, requireRole('APPLICANT', 'USER'), async (req, res) => {
   try {
     const apps = await prisma.application.findMany({
       where: { user_id: req.user.id },

@@ -23,7 +23,11 @@ export default function ApplicantDashboard() {
     })
       .then(res => res.json())
       .then(data => {
-        setApplications(data);
+        if (Array.isArray(data)) {
+          setApplications(data);
+        } else {
+          setApplications([]);
+        }
         setLoading(false);
       })
       .catch(() => setLoading(false));
