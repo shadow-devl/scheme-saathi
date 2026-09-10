@@ -34,7 +34,7 @@ export default function Register() {
     
     const emailDomain = formData.email.split('@')[1]?.toLowerCase();
     if (!allowedEmailDomains.includes(emailDomain)) {
-      setError('Access Denied: Only Gmail and Microsoft IDs are allowed.');
+      setError('Please use a Gmail or Microsoft email address.');
       return;
     }
 

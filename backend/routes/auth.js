@@ -85,7 +85,7 @@ router.post('/register', authLimiter, async (req, res) => {
     // Find requested role
     let dbRole = await prisma.role.findUnique({ where: { name: role } });
     if (!dbRole) {
-      dbRole = await prisma.role.create({ data: { name: role, description: `${role} Role` } });
+      return res.status(400).json({ error: 'Role does not exist in the system.' });
     }
     
     const newUser = await prisma.user.create({

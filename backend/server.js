@@ -11,10 +11,9 @@ app.use(express.json());
 const prisma = new PrismaClient();
 
 // Ensure critical environment variables are set before starting
-const crypto = require('crypto');
 if (!process.env.JWT_SECRET) {
-  console.warn('WARNING: JWT_SECRET is not defined in the environment. Using a dynamically generated secret. Sessions will not persist across restarts.');
-  process.env.JWT_SECRET = crypto.randomBytes(64).toString('hex');
+  console.error('FATAL: JWT_SECRET is missing from the environment variables. The server cannot start securely.');
+  process.exit(1);
 }
 
 // Health check endpoint for the root URL
