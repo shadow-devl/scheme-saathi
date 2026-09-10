@@ -139,7 +139,7 @@ export default function Login() {
         </div>
 
         {/* OAuth Buttons */}
-        <div className="space-y-3 flex flex-col items-center">
+        <div className="space-y-3">
           
           <button type="button" onClick={() => loginWithGoogle()} className="w-full flex items-center justify-center gap-2 py-3 px-4 border border-slate-300 rounded-xl shadow-sm bg-white text-slate-700 hover:bg-slate-50 font-medium transition-all">
             <img src="https://www.google.com/favicon.ico" alt="Google" className="w-5 h-5" />
