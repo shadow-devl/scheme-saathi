@@ -2,7 +2,7 @@ const assert = require('assert');
 
 async function runTests() {
   const BASE_URL = 'http://localhost:3001/api';
-  console.log('--- STARTING AVENIK CORE INTEGRATION TESTS ---\n');
+  console.log('--- STARTING SCHEME SAATHI INTEGRATION TESTS ---\n');
 
   try {
     // 1. Register a new applicant
@@ -95,7 +95,7 @@ async function runTests() {
     const aLoginRes = await fetch(`${BASE_URL}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: 'admin@avenik.com', password: 'admin123' })
+      body: JSON.stringify({ email: 'admin@schemesaathi.com', password: 'admin123' })
     });
     const aLoginData = await aLoginRes.json();
     const adminToken = aLoginData.token;

@@ -46,7 +46,7 @@ async function main() {
     data: {
       id: 'admin1',
       name: 'System Admin',
-      email: 'admin@avenik.com',
+      email: 'admin@schemesaathi.com',
       password: hashedAdminPass,
       roles: {
         create: {

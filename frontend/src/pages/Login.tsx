@@ -100,7 +100,7 @@ export default function Login() {
         {isLogin && (
           <div className="mt-6 pt-6 border-t border-border-subtle text-xs text-text-muted text-center">
             <p className="mb-1 text-text-muted font-medium">Demo Accounts:</p>
-            <p>Admin: admin@avenik.com / admin123</p>
+            <p>Admin: admin@schemesaathi.com / admin123</p>
             <p>Partner: branchA@sca.gov / partner123</p>
           </div>
         )}

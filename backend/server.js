@@ -15,7 +15,7 @@ const JWT_SECRET = 'super_secret_suraj_key_2026';
 app.get('/', (req, res) => {
   res.json({
     status: 'success',
-    message: 'Avenik Entrepreneur OS Backend API is running successfully!',
+    message: 'Scheme Saathi Backend API is running successfully!',
     version: '1.0.0'
   });
 });

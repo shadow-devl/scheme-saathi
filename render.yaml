@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: avenik-backend
+    name: scheme-saathi-backend
     plan: free
     env: node
     rootDir: backend

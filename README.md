@@ -1,20 +1,20 @@
-# Avenik - The Complete Entrepreneur Platform
+# Scheme Saathi - The Complete Entrepreneur Platform
 
-![Avenik Platform](https://img.shields.io/badge/Status-In%20Development-emerald.svg)
+![Scheme Saathi Platform](https://img.shields.io/badge/Status-In%20Development-emerald.svg)
 ![Tech Stack](https://img.shields.io/badge/Stack-React%20%7C%20Node.js%20%7C%20Prisma-blue.svg)
 
 ---
 
 ## 🌍 **Access the Live Website Globally**
-👉 **[Click here to open the Avenik Entrepreneur OS](https://shadow-devl.github.io/avenik-entrepreneur-os)** 👈
+👉 **[Click here to open the Scheme Saathi Platform](https://shadow-devl.github.io/avenik-entrepreneur-os)** 👈
 
 *(The platform is fully deployed and accessible from anywhere via the link above)*
 
 ---
 
-**Avenik** is a comprehensive, all-in-one entrepreneurial ecosystem designed to guide founders through every stage of their business journey: from ideation and validation to business creation, funding, operations, and growth.
+**Scheme Saathi** is a comprehensive, all-in-one entrepreneurial ecosystem designed to guide founders through every stage of their business journey: from ideation and validation to business creation, funding, operations, and growth.
 
-Rather than a loose collection of tools, Avenik acts as a cohesive "Business Graph," providing a unified experience with shared identity, authorization, and trust across all its modules.
+Rather than a loose collection of tools, Scheme Saathi acts as a cohesive "Business Graph," providing a unified experience with shared identity, authorization, and trust across all its modules.
 
 ## 🚀 Key Features
 
@@ -61,6 +61,6 @@ npm run dev
 
 ## 🌐 Platform Architecture
 
-Avenik's architecture is split into a robust Node.js backend (handling AI requests, data persistence, and core business logic) and a highly interactive, responsive React frontend.
+Scheme Saathi's architecture is split into a robust Node.js backend (handling AI requests, data persistence, and core business logic) and a highly interactive, responsive React frontend.
 
 The database is structured via **Prisma**, connecting the various modules (Users, Organizations, CRM Deals, Invoices, AI Workflows) so that data flows seamlessly throughout the business lifecycle.
