@@ -24,6 +24,12 @@ jobs:
       run: npm ci
     - name: Build frontend
       run: npm run build
+    - name: Deploy to GitHub Pages
+      if: github.ref == 'refs/heads/main'
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./frontend/dist
 
   build-backend:
     runs-on: ubuntu-latest
