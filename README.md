@@ -6,7 +6,7 @@
 ---
 
 ## 🌍 **Access the Live Website Globally**
-👉 **[Click here to open the Scheme Saathi Platform](https://shadow-devl.github.io/Scheme-Saathi/)** 👈
+👉 **[Click here to open the Scheme Saathi Platform](https://scheme-saathi.github.io)** 👈
 
 *(The platform is fully deployed and accessible from anywhere via the link above)*
 
