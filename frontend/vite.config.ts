@@ -8,5 +8,5 @@ export default defineConfig({
     tailwindcss(),
     react(),
   ],
-  base: '/scheme-saathi/',
+  base: '/Scheme-Saathi/',
 })
