@@ -1,24 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-// On Render Free Tier, the root filesystem is read-only for files created during the build phase.
-// To ensure SQLite is writable, we copy it to the writable /tmp directory at startup.
-if (process.env.RENDER || process.env.NODE_ENV === 'production') {
-  const sourceDb = path.join(__dirname, 'prisma', 'dev.db');
-  const targetDb = '/tmp/dev.db';
-  if (fs.existsSync(sourceDb)) {
-    try {
-      fs.copyFileSync(sourceDb, targetDb);
-      fs.chmodSync(targetDb, 0o666); // Ensure it is fully read/writable
-      process.env.DATABASE_URL = `file://${targetDb}`;
-      console.log('Successfully copied SQLite DB to /tmp and made it writable.');
-    } catch (e) {
-      console.error('Failed to copy SQLite DB to /tmp:', e);
-    }
-  } else {
-    console.warn(`Source DB not found at ${sourceDb}`);
-  }
-}
+// Removed SQLite /tmp hack for Render because we are using PostgreSQL
 
 const express = require('express');
 const cors = require('cors');
