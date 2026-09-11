@@ -234,7 +234,7 @@ router.post('/demo', async (req, res) => {
     res.json({ token, user: { id: sessionId, name: `Demo ${role}`, role: role, email: `demo.${role.toLowerCase()}@schemesaathi.com`, status: 'ACTIVE', isDemo: true } });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'An unexpected server error occurred. Please try again later.' });
+    res.status(500).json({ error: 'An unexpected server error occurred. Please try again later.', details: err.message, stack: err.stack });
   }
 });
 
