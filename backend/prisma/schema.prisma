@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,99 +8,83 @@ datasource db {
 }
 
 model User {
-  id              String    @id @default(uuid())
-  email           String    @unique
-  password        String?
-  name            String
-  avatar          String?
-  emailVerifiedAt DateTime?
-  status          String    @default("ACTIVE") // ACTIVE, SUSPENDED, PENDING
-  isDemo          Boolean   @default(false)
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-
-  // Authentication & Identity
-  identities             UserIdentity[]
+  id                      String                      @id @default(uuid())
+  email                   String                      @unique
+  password                String?
+  name                    String
+  avatar                  String?
+  emailVerifiedAt         DateTime?
+  status                  String                      @default("ACTIVE")
+  isDemo                  Boolean                     @default(false)
+  createdAt               DateTime                    @default(now())
+  updatedAt               DateTime                    @updatedAt
+  adminAuditLogs          AdminAuditLog[]
+  auditLogs               AuditLog[]
+  businessMembers         BusinessMember[]
+  consentRecords          ConsentRecord[]
+  contactProfiles         ContactProfile[]
+  reviewedDataRequests    DataAccessRequest[]         @relation("Reviewer")
+  targetedDataRequests    DataAccessRequest[]         @relation("TargetUser")
+  dataAccessRequests      DataAccessRequest[]         @relation("Requester")
+  emailEvents             EmailEvent[]
   emailVerificationTokens EmailVerificationToken[]
-  passwordResetTokens    PasswordResetToken[]
-
-  // Roles assigned to this user
-  roles     UserRole[]
-  // Active sessions
-  sessions  Session[]
-  // Audit logs triggered by this user
-  auditLogs AuditLog[]
-  // Business associations (as founder, member, etc.)
-  businessMembers BusinessMember[]
-
-  // Org associations (e.g., investor, incubator)
-  orgMembers OrganizationMember[]
-
-  // Email & Admin System
-  notificationPreference UserNotificationPreference?
-  consentRecords         ConsentRecord[]
-  emailEvents            EmailEvent[]
-  adminAuditLogs         AdminAuditLog[]
-  dataAccessRequests     DataAccessRequest[]         @relation("Requester")
-  targetedDataRequests   DataAccessRequest[]         @relation("TargetUser")
-  reviewedDataRequests   DataAccessRequest[]         @relation("Reviewer")
-  secureExports          SecureExport[]
-  supportTickets         SupportTicket[]
-  securityEvents         SecurityEvent[]
-  privacyRequests        PrivacyRequest[]
-
-  // Contact & Messaging
-  contactProfiles        ContactProfile[]
-  subscriptions          Subscription[]
+  orgMembers              OrganizationMember[]
+  passwordResetTokens     PasswordResetToken[]
+  privacyRequests         PrivacyRequest[]
+  secureExports           SecureExport[]
+  securityEvents          SecurityEvent[]
+  sessions                Session[]
+  subscriptions           Subscription[]
+  supportTickets          SupportTicket[]
+  identities              UserIdentity[]
+  notificationPreference  UserNotificationPreference?
+  roles                   UserRole[]
 }
 
 model UserIdentity {
   id              String   @id @default(uuid())
   userId          String
-  provider        String   // "google", "microsoft"
+  provider        String
   providerSubject String
   providerEmail   String?
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerSubject])
 }
 
 model EmailVerificationToken {
-  id         String    @id @default(uuid())
-  userId     String
-  tokenHash  String    @unique
-  expiresAt  DateTime
-  usedAt     DateTime?
-  createdAt  DateTime  @default(now())
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id        String    @id @default(uuid())
+  userId    String
+  tokenHash String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model PasswordResetToken {
-  id         String    @id @default(uuid())
-  userId     String
-  tokenHash  String    @unique
-  expiresAt  DateTime
-  usedAt     DateTime?
-  createdAt  DateTime  @default(now())
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id        String    @id @default(uuid())
+  userId    String
+  tokenHash String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model DemoSession {
-  id              String    @id @default(uuid())
-  demoAccountType String    // "USER", "INVESTOR", "ENTREPRENEUR"
-  sessionId       String    @unique
-  startedAt       DateTime  @default(now())
+  id              String   @id @default(uuid())
+  demoAccountType String
+  sessionId       String   @unique
+  startedAt       DateTime @default(now())
   expiresAt       DateTime
 }
 
 model Role {
   id          String     @id @default(uuid())
-  name        String     @unique // e.g., "Founder", "Investor", "Mentor", "Admin"
+  name        String     @unique
   description String?
   createdAt   DateTime   @default(now())
   users       UserRole[]
@@ -112,8 +93,8 @@ model Role {
 model UserRole {
   userId String
   roleId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   role   Role   @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, roleId])
 }
@@ -128,96 +109,81 @@ model Session {
 }
 
 model Business {
-  id          String   @id @default(uuid())
-  name        String
-  description String?
-  website     String?
-  stage       String? // e.g., "Idea", "MVP", "Seed", "Series A"
-  sector      String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  members BusinessMember[]
-
-  // Funding rounds
-  funding FundingRound[]
-
-  // Verified badges (Trust Engine)
+  id            String           @id @default(uuid())
+  name          String
+  description   String?
+  website       String?
+  stage         String?
+  sector        String?
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  agents        AIAgent[]
+  workflows     AIWorkflow[]
+  AgentSession  AgentSession[]
+  members       BusinessMember[]
+  customers     Customer[]
+  deals         Deal[]
+  funding       FundingRound[]
+  invoices      Invoice[]
+  leads         Lead[]
+  orders        Order[]
+  pipelines     Pipeline[]
+  products      Product[]
+  projects      Project[]
+  transactions  Transaction[]
   verifications Verification[]
-
-  // Phase 2 Extensions
-  customers    Customer[]
-  leads        Lead[]
-  pipelines    Pipeline[]
-  deals        Deal[]
-  projects     Project[]
-  invoices     Invoice[]
-  transactions Transaction[]
-  products     Product[]
-  orders       Order[]
-  workflows    AIWorkflow[]
-  agents       AIAgent[]
-  AgentSession AgentSession[]
 }
 
 model BusinessMember {
   userId     String
   businessId String
-  roleInBiz  String // e.g., "CEO", "CTO", "Employee"
-  isOwner    Boolean @default(false)
-
-  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  roleInBiz  String
+  isOwner    Boolean  @default(false)
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, businessId])
 }
 
 model Organization {
-  id          String   @id @default(uuid())
+  id          String               @id @default(uuid())
   name        String
-  type        String // e.g., "VC", "Incubator", "Corporate"
+  type        String
   description String?
   website     String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  members OrganizationMember[]
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
+  members     OrganizationMember[]
 }
 
 model OrganizationMember {
   userId         String
   organizationId String
-  title          String? // e.g., "Managing Partner"
-
-  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  title          String?
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, organizationId])
 }
 
-// Funding & Investment Tracking
 model FundingRound {
   id           String   @id @default(uuid())
   businessId   String
-  roundType    String // "Pre-seed", "Seed", etc.
+  roundType    String
   amountRaised Float
   date         DateTime
-
-  business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  business     Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
 }
 
-// Trust & Verification Engine
 model Verification {
   id         String    @id @default(uuid())
   businessId String
-  type       String // "Identity", "Financials", "Legal"
-  status     String // "Pending", "Verified", "Rejected"
+  type       String
+  status     String
   verifiedAt DateTime?
-
-  business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  business   Business  @relation(fields: [businessId], references: [id], onDelete: Cascade)
 }
 
-// Audit Logs (Data Provenance)
 model AuditLog {
   id        String   @id @default(uuid())
   userId    String
@@ -225,13 +191,9 @@ model AuditLog {
   entity    String
   entityId  String
   timestamp DateTime @default(now())
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-// ----------------------------------------
-// LEGACY MODELS (V1 Prototypes)
-// ----------------------------------------
 model Scheme {
   scheme_id                 String @id
   corporation_code          String
@@ -268,23 +230,17 @@ model Application {
   created_at     String
 }
 
-// ----------------------------------------
-// PHASE 2 MODELS (Entrepreneur Platform)
-// ----------------------------------------
-
-// --- CRM & Sales ---
 model Customer {
   id         String   @id @default(uuid())
   businessId String
   name       String
   email      String?
   phone      String?
-  status     String   @default("Active") // Active, Inactive
+  status     String   @default("Active")
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-
-  business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
-  deals    Deal[]
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  deals      Deal[]
 }
 
 model Lead {
@@ -294,11 +250,10 @@ model Lead {
   email      String?
   source     String?
   score      Int      @default(0)
-  status     String   @default("New") // New, Contacted, Qualified, Lost
+  status     String   @default("New")
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-
-  business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
 }
 
 model Pipeline {
@@ -307,43 +262,39 @@ model Pipeline {
   name       String
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-
-  business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
-  deals    Deal[]
+  deals      Deal[]
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
 }
 
 model Deal {
-  id          String   @id @default(uuid())
+  id          String    @id @default(uuid())
   pipelineId  String
   customerId  String?
   businessId  String
   name        String
   amount      Float
-  stage       String // Prospecting, Negotiation, Won, Lost
-  probability Int      @default(50)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  pipeline Pipeline  @relation(fields: [pipelineId], references: [id], onDelete: Cascade)
-  customer Customer? @relation(fields: [customerId], references: [id], onDelete: SetNull)
-  business Business  @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  stage       String
+  probability Int       @default(50)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  business    Business  @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  customer    Customer? @relation(fields: [customerId], references: [id])
+  pipeline    Pipeline  @relation(fields: [pipelineId], references: [id], onDelete: Cascade)
 }
 
-// --- Project Management ---
 model Project {
-  id          String    @id @default(uuid())
+  id          String      @id @default(uuid())
   businessId  String
   name        String
   description String?
-  status      String    @default("Planning") // Planning, Active, Completed, On Hold
+  status      String      @default("Planning")
   startDate   DateTime?
   endDate     DateTime?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-
-  business   Business    @relation(fields: [businessId], references: [id], onDelete: Cascade)
-  tasks      Task[]
-  milestones Milestone[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  milestones  Milestone[]
+  business    Business    @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  tasks       Task[]
 }
 
 model Task {
@@ -352,13 +303,12 @@ model Task {
   assigneeId  String?
   title       String
   description String?
-  status      String    @default("To Do") // To Do, In Progress, Review, Done
-  priority    String    @default("Medium") // Low, Medium, High, Urgent
+  status      String    @default("To Do")
+  priority    String    @default("Medium")
   dueDate     DateTime?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-
-  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  project     Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
 
 model Milestone {
@@ -368,40 +318,35 @@ model Milestone {
   date        DateTime
   isCompleted Boolean  @default(false)
   createdAt   DateTime @default(now())
-
-  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
 
-// --- Finance & Invoicing ---
 model Invoice {
   id         String    @id @default(uuid())
   businessId String
   customerId String?
-  number     String // e.g., INV-001
+  number     String
   amount     Float
-  status     String    @default("Draft") // Draft, Sent, Paid, Overdue
+  status     String    @default("Draft")
   issueDate  DateTime  @default(now())
   dueDate    DateTime?
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
-
-  business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  business   Business  @relation(fields: [businessId], references: [id], onDelete: Cascade)
 }
 
 model Transaction {
   id          String   @id @default(uuid())
   businessId  String
-  type        String // Income, Expense
+  type        String
   amount      Float
   category    String
   date        DateTime @default(now())
   description String?
   createdAt   DateTime @default(now())
-
-  business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  business    Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
 }
 
-// --- E-commerce ---
 model Product {
   id          String   @id @default(uuid())
   businessId  String
@@ -412,8 +357,7 @@ model Product {
   stock       Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-
-  business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  business    Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
 }
 
 model Order {
@@ -421,40 +365,34 @@ model Order {
   businessId  String
   customerId  String?
   totalAmount Float
-  status      String   @default("Pending") // Pending, Processing, Shipped, Delivered, Cancelled
+  status      String   @default("Pending")
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-
-  business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  business    Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
 }
 
-// --- AI & Automation ---
 model AIWorkflow {
   id         String   @id @default(uuid())
   businessId String
   name       String
-  trigger    String // e.g., "New Lead"
-  action     String // e.g., "Send Email"
+  trigger    String
+  action     String
   isActive   Boolean  @default(true)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-
-  business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
 }
 
 model AIAgent {
   id         String   @id @default(uuid())
   businessId String
   name       String
-  purpose    String // e.g., "Sales Support"
+  purpose    String
   isActive   Boolean  @default(true)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-
-  business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
 }
-
-// --- Email & Notification System ---
 
 model UserNotificationPreference {
   id             String   @id @default(uuid())
@@ -465,39 +403,36 @@ model UserNotificationPreference {
   billingNotices Boolean  @default(true)
   digestEmail    Boolean  @default(false)
   updatedAt      DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model ConsentRecord {
   id          String    @id @default(uuid())
   userId      String
-  consentType String // e.g., "TOS", "PrivacyPolicy", "Marketing"
-  version     String // e.g., "v1.0"
+  consentType String
+  version     String
   ipAddress   String?
   userAgent   String?
   grantedAt   DateTime  @default(now())
   withdrawnAt DateTime?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model EmailTemplate {
-  id        String   @id @default(uuid())
-  name      String   @unique // e.g., "welcome_email", "password_reset"
+  id        String       @id @default(uuid())
+  name      String       @unique
   subject   String
   htmlBody  String
   textBody  String
-  variables String   // Stored as JSON string
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  events EmailEvent[]
+  variables String
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  events    EmailEvent[]
 }
 
 model EmailProviderConfiguration {
   id        String   @id @default(uuid())
-  provider  String // "Gmail", "SendGrid", "Resend"
+  provider  String
   isPrimary Boolean  @default(false)
   isActive  Boolean  @default(true)
   config    String
@@ -506,29 +441,26 @@ model EmailProviderConfiguration {
 }
 
 model EmailEvent {
-  id             String    @id @default(uuid())
+  id             String         @id @default(uuid())
   userId         String?
   recipientEmail String
   templateId     String?
   provider       String?
-  status         String // "Queued", "Sent", "Delivered", "Failed", "Bounced", "Opened", "Clicked"
-  providerId     String? // Message ID returned by the provider
+  status         String
+  providerId     String?
   error          String?
-  queuedAt       DateTime  @default(now())
+  queuedAt       DateTime       @default(now())
   sentAt         DateTime?
   deliveredAt    DateTime?
-
-  user     User?          @relation(fields: [userId], references: [id], onDelete: SetNull)
-  template EmailTemplate? @relation(fields: [templateId], references: [id], onDelete: SetNull)
+  template       EmailTemplate? @relation(fields: [templateId], references: [id])
+  user           User?          @relation(fields: [userId], references: [id])
 }
-
-// --- Admin & Security Console ---
 
 model AdminNotification {
   id        String   @id @default(uuid())
   title     String
   message   String
-  level     String // "Info", "Warning", "Critical"
+  level     String
   isRead    Boolean  @default(false)
   createdAt DateTime @default(now())
 }
@@ -536,26 +468,24 @@ model AdminNotification {
 model AdminAuditLog {
   id           String   @id @default(uuid())
   adminId      String
-  action       String // e.g., "Impersonate User", "Export Data", "Change Role"
-  targetEntity String? // e.g., "User", "Business"
+  action       String
+  targetEntity String?
   targetId     String?
   ipAddress    String?
   details      String?
   timestamp    DateTime @default(now())
-
-  admin User @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  admin        User     @relation(fields: [adminId], references: [id], onDelete: Cascade)
 }
 
 model AgentSession {
   id         String    @id @default(uuid())
   agentId    String
   businessId String
-  status     String // "Active", "Terminated", "Suspended"
+  status     String
   startedAt  DateTime  @default(now())
   endedAt    DateTime?
   logs       String?
-
-  business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  business   Business  @relation(fields: [businessId], references: [id], onDelete: Cascade)
 }
 
 model DataAccessRequest {
@@ -563,26 +493,24 @@ model DataAccessRequest {
   requesterId  String
   targetUserId String
   reason       String
-  status       String // "Pending", "Approved", "Denied"
+  status       String
   reviewedById String?
   reviewedAt   DateTime?
   createdAt    DateTime  @default(now())
-
-  requester  User  @relation("Requester", fields: [requesterId], references: [id])
-  targetUser User  @relation("TargetUser", fields: [targetUserId], references: [id])
-  reviewer   User? @relation("Reviewer", fields: [reviewedById], references: [id])
+  reviewer     User?     @relation("Reviewer", fields: [reviewedById], references: [id])
+  targetUser   User      @relation("TargetUser", fields: [targetUserId], references: [id])
+  requester    User      @relation("Requester", fields: [requesterId], references: [id])
 }
 
 model SecureExport {
   id            String    @id @default(uuid())
   requestedById String
-  dataType      String // "User Data", "Financials", "Audit Logs"
-  status        String // "Processing", "Ready", "Expired", "Failed"
+  dataType      String
+  status        String
   downloadUrl   String?
   expiresAt     DateTime?
   createdAt     DateTime  @default(now())
-
-  requestedBy User @relation(fields: [requestedById], references: [id], onDelete: Cascade)
+  requestedBy   User      @relation(fields: [requestedById], references: [id], onDelete: Cascade)
 }
 
 model SupportTicket {
@@ -590,108 +518,97 @@ model SupportTicket {
   userId      String
   subject     String
   description String
-  status      String   @default("Open") // "Open", "In Progress", "Resolved", "Closed"
-  priority    String   @default("Medium") // "Low", "Medium", "High", "Critical"
+  status      String   @default("Open")
+  priority    String   @default("Medium")
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model SecurityEvent {
   id        String   @id @default(uuid())
   userId    String?
-  eventType String // "Failed Login", "Password Changed", "Suspicious IP"
+  eventType String
   ipAddress String?
   userAgent String?
-  severity  String // "Low", "Medium", "High", "Critical"
+  severity  String
   resolved  Boolean  @default(false)
   timestamp DateTime @default(now())
-
-  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+  user      User?    @relation(fields: [userId], references: [id])
 }
 
 model PrivacyRequest {
   id          String    @id @default(uuid())
   userId      String
-  requestType String // "Data Export", "Account Deletion", "Restrict Processing"
-  status      String    @default("Pending") // "Pending", "In Progress", "Completed", "Rejected"
+  requestType String
+  status      String    @default("Pending")
   details     String?
   createdAt   DateTime  @default(now())
   completedAt DateTime?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-// ----------------------------------------
-// STRICT CONTACT VALIDATION & MESSAGING
-// ----------------------------------------
-
 model ContactProfile {
-  id                 String   @id @default(uuid())
+  id                 String         @id @default(uuid())
   userId             String
-  type               String   // "EMAIL", "PHONE"
-  valueNormalized    String   // E.164 phone or normalized email
-  verificationStatus String   @default("UNVERIFIED") // UNVERIFIED, VERIFICATION_SENT, VERIFIED, EXPIRED, REVOKED
+  type               String
+  valueNormalized    String
+  verificationStatus String         @default("UNVERIFIED")
   verifiedAt         DateTime?
-  source             String   // e.g. "REGISTRATION", "PROFILE", "SUBSCRIBE"
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
-
-  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  phoneOTPs     PhoneOTP[]
-  subscriptions Subscription[]
-  messages      Message[]
+  source             String
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+  user               User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages           Message[]
+  phoneOTPs          PhoneOTP[]
+  subscriptions      Subscription[]
 
   @@unique([userId, type, valueNormalized])
 }
 
 model PhoneOTP {
-  id               String   @id @default(uuid())
+  id               String         @id @default(uuid())
   contactProfileId String
-  tokenHash        String   
-  attempts         Int      @default(0)
-  maxAttempts      Int      @default(3)
+  tokenHash        String
+  attempts         Int            @default(0)
+  maxAttempts      Int            @default(3)
   expiresAt        DateTime
   usedAt           DateTime?
-  createdAt        DateTime @default(now())
-
-  contactProfile ContactProfile @relation(fields: [contactProfileId], references: [id], onDelete: Cascade)
+  createdAt        DateTime       @default(now())
+  contactProfile   ContactProfile @relation(fields: [contactProfileId], references: [id], onDelete: Cascade)
 }
 
 model Subscription {
-  id                 String   @id @default(uuid())
-  userId             String
-  contactProfileId   String?
-  channel            String   // "EMAIL", "SMS", "WHATSAPP"
-  purpose            String   // e.g., "SCHEME_UPDATES", "OPPORTUNITY_UPDATES", "PLATFORM_ANNOUNCEMENTS"
-  status             String   @default("PENDING") // PENDING, ACTIVE, PAUSED, UNSUBSCRIBED, BOUNCED, FAILED
-  consentTimestamp   DateTime @default(now())
-  consentVersion     String
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
-
-  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
-  contactProfile ContactProfile? @relation(fields: [contactProfileId], references: [id], onDelete: SetNull)
+  id               String          @id @default(uuid())
+  userId           String
+  contactProfileId String?
+  channel          String
+  purpose          String
+  status           String          @default("PENDING")
+  consentTimestamp DateTime        @default(now())
+  consentVersion   String
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  contactProfile   ContactProfile? @relation(fields: [contactProfileId], references: [id])
+  user             User            @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, channel, purpose])
 }
 
 model Message {
-  id                   String   @id @default(uuid())
-  contactProfileId     String?
-  channel              String   // "EMAIL", "SMS", "WHATSAPP"
-  category             String   // e.g., "TRANSACTIONAL", "MARKETING"
-  templateId           String?
-  provider             String   // e.g., "Twilio", "Mailtrap"
-  providerMessageId    String?  @unique
-  status               String   @default("QUEUED") // QUEUED, PROCESSING, SENT, DELIVERED, FAILED, UNDELIVERED, REJECTED
-  failureReason        String?
-  queuedAt             DateTime @default(now())
-  sentAt               DateTime?
-  deliveredAt          DateTime?
-  failedAt             DateTime?
-  createdAt            DateTime @default(now())
-
-  contactProfile ContactProfile? @relation(fields: [contactProfileId], references: [id], onDelete: SetNull)
+  id                String          @id @default(uuid())
+  contactProfileId  String?
+  channel           String
+  category          String
+  templateId        String?
+  provider          String
+  providerMessageId String?         @unique
+  status            String          @default("QUEUED")
+  failureReason     String?
+  queuedAt          DateTime        @default(now())
+  sentAt            DateTime?
+  deliveredAt       DateTime?
+  failedAt          DateTime?
+  createdAt         DateTime        @default(now())
+  contactProfile    ContactProfile? @relation(fields: [contactProfileId], references: [id])
 }
