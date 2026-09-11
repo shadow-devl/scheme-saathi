@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
+import { API_URL } from '../config';
 
 export type UserRole = 'USER' | 'ENTREPRENEUR' | 'INVESTOR' | 'ADMIN' | 'MENTOR' | 'APPLICANT' | 'PARTNER';
 
@@ -33,7 +34,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (storedToken) {
         setToken(storedToken);
         try {
-          const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/me`, {
+          const res = await fetch(`${API_URL}/api/auth/me`, {
             headers: { Authorization: `Bearer ${storedToken}` }
           });
           if (res.ok) {

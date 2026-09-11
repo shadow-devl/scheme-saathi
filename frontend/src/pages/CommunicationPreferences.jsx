@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PhoneInput from '../components/common/PhoneInput';
 import OTPVerificationModal from '../components/common/OTPVerificationModal';
+import { API_URL } from '../config';
 
 const CommunicationPreferences = () => {
   const [phone, setPhone] = useState('');
@@ -15,7 +16,7 @@ const CommunicationPreferences = () => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('http://localhost:3001/api/contact/phone/send-otp', {
+      const res = await fetch(`${API_URL}/api/contact/phone/send-otp`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -37,7 +38,7 @@ const CommunicationPreferences = () => {
 
   const handleVerifyOtp = async (otp) => {
     const token = localStorage.getItem('token');
-    const res = await fetch('http://localhost:3001/api/contact/phone/verify-otp', {
+    const res = await fetch(`${API_URL}/api/contact/phone/verify-otp`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -65,7 +66,7 @@ const CommunicationPreferences = () => {
       if (channels.SMS) selectedChannels.push({ channel: 'SMS', contact: phone });
       if (channels.WHATSAPP) selectedChannels.push({ channel: 'WHATSAPP', contact: phone });
 
-      const res = await fetch('http://localhost:3001/api/contact/subscribe', {
+      const res = await fetch(`${API_URL}/api/contact/subscribe`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

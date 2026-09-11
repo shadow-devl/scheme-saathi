@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Send, Bell, Mail, MessageCircle, Smartphone } from 'lucide-react';
 import { useState } from 'react';
 import PhoneInput from '../common/PhoneInput';
+import { API_URL } from '../../config';
 
 export default function NewsletterSection() {
   const { t } = useTranslation();
@@ -35,7 +36,7 @@ export default function NewsletterSection() {
     
     try {
       const selectedChannels = Object.keys(channels).filter((k) => channels[k as keyof typeof channels]);
-      const res = await fetch('http://localhost:3001/api/contact/public-subscribe', {
+      const res = await fetch(`${API_URL}/api/contact/public-subscribe`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, phone, channels: selectedChannels })
